@@ -1,5 +1,4 @@
 import { useSignal } from "@preact/signals";
-import Counter from "../islands/Counter.tsx";
 import { Handlers } from "$fresh/server.ts";
 
 export const handler: Handlers = {
@@ -26,7 +25,6 @@ export default function Home() {
 					Try updating this message in the
 					<code class="mx-2">./routes/index.tsx</code> file, and refresh.
 				</p>
-				<Counter count={count} />
 			</div>
 		</div>
 	);
