@@ -40,7 +40,7 @@ export const handler: Handlers = {
 	},
 };
 
-export default function Home({ data }: PageProps<Data>) {
+export default function Home({ data }: PageProps<Data | undefined>) {
 	return (
 		<main class="flex flex-col md:flex-row h-screen bg-surface">
 			<aside class="w-full px-4 py-8">
@@ -64,17 +64,17 @@ export default function Home({ data }: PageProps<Data>) {
 						name="email"
 						id="email"
 					/>
-					{data?.error?.email && (
+					{data?.status === "error" && data.error.email && (
 						<span class="text-error">{data.error.email}</span>
 					)}
 					<button
 						type="submit"
 						class="bg-primary w-full p-4 rounded-full text-onPrimary my-4 text-lg cursor-pointer"
-						disabled={!!data?.success}
+						disabled={data?.status === "success"}
 					>
 						Sign in
 					</button>
-					{data?.success?.message && (
+					{data?.status === "success" && (
 						<span class="text-tertiary">{data.success.message}</span>
 					)}
 				</form>
