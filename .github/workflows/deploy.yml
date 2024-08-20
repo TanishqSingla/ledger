@@ -5,6 +5,9 @@ on:
   pull_request:
     branches: master
 
+env:
+  JWT_SECRET: temp
+
 jobs:
   deploy:
     name: Deploy
