@@ -9,6 +9,5 @@ import "$std/dotenv/load.ts";
 import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 import config from "./fresh.config.ts";
-import "https://deno.land/std@0.224.0/dotenv/load.ts"
 
 await start(manifest, config);
