@@ -7,6 +7,8 @@ on:
 
 env:
   JWT_SECRET: temp
+  TURSO_DATABASE_URL: libsql://test.turso.io
+  TURSO_AUTH_TOKEN: secret
 
 jobs:
   deploy:
