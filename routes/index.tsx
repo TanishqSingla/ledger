@@ -2,6 +2,8 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { getCookies } from "@std/http/cookie";
 import { verify } from "@zaubrik/djwt";
 import { cryptoKey } from "../utils/secrets.ts";
+import { findUser } from "../db/Users.ts";
+import { EMAIL_REGEX } from "../utils/constants.ts";
 
 type Data = {
 	status: "error";
@@ -34,6 +36,48 @@ export const handler: Handlers = {
 				{
 					status: "error",
 					error: { message: err.message },
+				} satisfies Data,
+			);
+		}
+	},
+	async POST(req, ctx) {
+		try {
+			const formData = await req.formData();
+			const email = formData.get("email");
+
+			if (!email || !EMAIL_REGEX.test(email.toString())) {
+				return ctx.render(
+					{
+						status: "error",
+						error: {
+							email: "Invalid email",
+						},
+					} satisfies Data,
+				);
+			}
+
+			const user = await findUser(email.toString());
+			if (user.rows.length === 0) {
+				return ctx.render(
+					{
+						status: "error",
+						error: {
+							email: "User does not exist",
+						},
+					} satisfies Data,
+				);
+			}
+
+			return Response.redirect(ctx.url.origin + "/dashboard");
+		} catch (err) {
+			console.log(err);
+
+			return ctx.render(
+				{
+					status: "error",
+					error: {
+						message: err.message as string,
+					},
 				} satisfies Data,
 			);
 		}
