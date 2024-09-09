@@ -4,6 +4,8 @@ import { verify } from "@zaubrik/djwt";
 import { cryptoKey } from "../utils/secrets.ts";
 import { findUser } from "../db/Users.ts";
 import { EMAIL_REGEX } from "../utils/constants.ts";
+import { sendEmail } from "../utils/mailer.ts";
+import { kv } from "../utils/db.ts";
 
 type Data = {
 	status: "error";
@@ -22,12 +24,12 @@ export const handler: Handlers = {
 	async GET(req, ctx) {
 		const cookies = getCookies(req.headers);
 
-		if (!cookies.jwt) {
+		if (!cookies.token) {
 			return ctx.render();
 		}
 
 		try {
-			await verify(cookies.jwt, cryptoKey);
+			await verify(cookies.token, cryptoKey);
 
 			return Response.redirect(ctx.url.origin + "/dashboard");
 		} catch (err) {
@@ -56,8 +58,8 @@ export const handler: Handlers = {
 				);
 			}
 
-			const user = await findUser(email.toString());
-			if (user.rows.length === 0) {
+			const result = await findUser(email.toString());
+			if (result.rows.length === 0) {
 				return ctx.render(
 					{
 						status: "error",
@@ -68,7 +70,36 @@ export const handler: Handlers = {
 				);
 			}
 
-			return Response.redirect(ctx.url.origin + "/dashboard");
+			const user = result.rows[0] as unknown as User;
+
+			const verificationCode = Math.floor(Math.random() * 1000000);
+			await kv.set(["verify", user.email_id], {
+				verification_code: verificationCode,
+			}, {
+				expireIn: 60 * 1000,
+			});
+
+			try {
+				const emailResult = await sendEmail({
+					subject: "One Time Password",
+					to: [user.email_id],
+					body: `Your verification code is <br /> <p>${verificationCode}</p>`,
+				});
+
+				console.log("Email sent", emailResult);
+			} catch (err) {
+				console.log(err);
+				return ctx.render(
+					{
+						status: "error",
+						error: { message: "Error with email client contact admin" },
+					} satisfies Data,
+				);
+			}
+
+			return Response.redirect(
+				ctx.url.origin + "/auth/verify" + `?email=${user.email_id}`,
+			);
 		} catch (err) {
 			console.log(err);
 
@@ -86,43 +117,39 @@ export const handler: Handlers = {
 
 export default function Home({ data }: PageProps<Data | undefined>) {
 	return (
-		<main class="flex flex-col md:flex-row h-screen bg-surface">
-			<aside class="w-full px-4 py-8">
-				<a href="/">
-					<h1 class="text-3xl text-onSurface">Ledger</h1>
-				</a>
-			</aside>
-			<section class="h-full w-full">
-				<form
-					action="/"
-					method="POST"
-					class="rounded-xl bg-secondaryContainer p-4 w-11/12 mx-auto text-onSecondaryContainer mt-24"
+		<section class="h-full w-full md:grid md:place-items-center">
+			<form
+				action="/"
+				method="POST"
+				class="rounded-3xl bg-secondaryContainer p-4 w-11/12 mx-auto text-onSecondaryContainer mt-24 max-w-3xl"
+			>
+				<h3 class="text-2xl mb-4 mt-2 text-onSecondaryContainer font-semibold">
+					Log in
+				</h3>
+				<label class="block my-2 text-onSecondaryContainer" for="email">
+					Email
+				</label>
+				<input
+					class="w-full bg-surfaceBright p-4 text-lg rounded-lg"
+					placeholder="example@example.com"
+					required
+					type="email"
+					name="email"
+					id="email"
+				/>
+				{data?.status === "error" && data.error.email && (
+					<span class="text-error">{data.error.email}</span>
+				)}
+				<button
+					type="submit"
+					class="bg-primary w-full p-4 rounded-full text-onPrimary my-8 text-lg cursor-pointer"
 				>
-					<h3 class="text-2xl mb-4 mt-2">Log in</h3>
-					<label class="block my-2">Email</label>
-					<input
-						class="w-full border border-black bg-surfaceBright p-4 text-lg rounded-lg"
-						placeholder="example@example.com"
-						required
-						type="email"
-						name="email"
-						id="email"
-					/>
-					{data?.status === "error" && data.error.email && (
-						<span class="text-error">{data.error.email}</span>
-					)}
-					<button
-						type="submit"
-						class="bg-primary w-full p-4 rounded-full text-onPrimary my-4 text-lg cursor-pointer"
-						disabled={data?.status === "success"}
-					>
-						Sign in
-					</button>
-					{data?.status === "success" && (
-						<span class="text-tertiary">{data.success.message}</span>
-					)}
-				</form>
-			</section>
-		</main>
+					Sign in
+				</button>
+				{data?.status === "success" && (
+					<span class="text-onPrimaryContainer">{data.success.message}</span>
+				)}
+			</form>
+		</section>
 	);
 }
