@@ -9,6 +9,7 @@ env:
   JWT_SECRET: temp
   TURSO_DATABASE_URL: libsql://test.turso.io
   TURSO_AUTH_TOKEN: secret
+  RESEND_API_KEY: re_123545
 
 jobs:
   deploy:
