@@ -6,6 +6,7 @@ import { findUser } from "../db/Users.ts";
 import { EMAIL_REGEX } from "../utils/constants.ts";
 import { sendEmail } from "../utils/mailer.ts";
 import { kv } from "../utils/db.ts";
+import { User } from "../types.ts";
 
 type Data = {
 	status: "error";
