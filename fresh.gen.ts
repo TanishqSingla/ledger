@@ -6,6 +6,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
 import * as $auth_verify from "./routes/auth/verify.tsx";
+import * as $dashboard_index from "./routes/dashboard/index.tsx";
 import * as $index from "./routes/index.tsx";
 
 import { type Manifest } from "$fresh/server.ts";
@@ -16,6 +17,7 @@ const manifest = {
 		"./routes/_app.tsx": $_app,
 		"./routes/_layout.tsx": $_layout,
 		"./routes/auth/verify.tsx": $auth_verify,
+		"./routes/dashboard/index.tsx": $dashboard_index,
 		"./routes/index.tsx": $index,
 	},
 	islands: {},
