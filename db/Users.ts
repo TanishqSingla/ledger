@@ -1,20 +1,22 @@
-import { turso } from "../utils/db.ts";
+import { kv } from "../utils/db.ts";
 
-export type Users = {
+export type User = {
 	email_id: string;
 };
 
 export const getUsers = async () => {
-	const result = await turso.execute("SELECT * FROM Users");
+	const { value } = await kv.get<User[]>(["users"]);
 
-	return result;
+	return value;
 };
 
-export const findUser = async (email: string) => {
-	const result = await turso.execute({
-		sql: "SELECT * FROM Users WHERE email_id = ?",
-		args: [email],
-	});
+export const findUser = async (email: string): Promise<User | null> => {
+	const { value } = await kv.get<User[]>(["users"]);
 
-	return result;
+	if (!value) return null;
+
+	const user = value.find((user) => user.email_id === email);
+	if (!user) return null;
+
+	return user;
 };
