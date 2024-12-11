@@ -6,7 +6,6 @@ import { findUser } from "../db/Users.ts";
 import { EMAIL_REGEX } from "../utils/constants.ts";
 import { sendEmail } from "../utils/mailer.ts";
 import { kv } from "../utils/db.ts";
-import { User } from "../types.ts";
 
 type Data = {
 	status: "error";
@@ -59,8 +58,8 @@ export const handler: Handlers = {
 				);
 			}
 
-			const result = await findUser(email.toString());
-			if (result.rows.length === 0) {
+			const user = await findUser(email.toString());
+			if (!user) {
 				return ctx.render(
 					{
 						status: "error",
@@ -70,8 +69,6 @@ export const handler: Handlers = {
 					} satisfies Data,
 				);
 			}
-
-			const user = result.rows[0] as unknown as User;
 
 			const verificationCode = Math.floor(Math.random() * 1000000);
 			await kv.set(["verify", user.email_id], {
