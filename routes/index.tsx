@@ -140,7 +140,7 @@ export default function Home({ data }: PageProps<Data | undefined>) {
 				)}
 				<button
 					type="submit"
-					class="bg-primary w-full p-4 rounded-full text-onPrimary my-8 text-lg cursor-pointer"
+					class="bg-primary/80 w-full p-4 rounded-full text-onPrimary my-8 text-lg cursor-pointer hover:bg-primary/70 active:bg-primary"
 				>
 					Sign in
 				</button>
