@@ -9,11 +9,9 @@ export const config: LayoutConfig = {
 
 export const handler: Handlers = {
 	async GET(req, ctx) {
-		const cookies = getCookies(req.headers);
-
-		if (!cookies.token) {
-			return Response.redirect(ctx.url.origin);
-		}
+		const data = {
+			email_id: ctx.state.email_id
+		};
 
 		try {
 			await verify(cookies.token, cryptoKey);
@@ -24,6 +22,7 @@ export const handler: Handlers = {
 
 			return Response.redirect(ctx.url.origin);
 		}
+		return ctx.render(data);
 	},
 };
 
