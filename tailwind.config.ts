@@ -55,6 +55,17 @@ export default {
 				surfaceContainerHigh: "#F0E7D9",
 				surfaceContainerHighest: "#EAE1D4",
 			},
+			fontSize: {
+				"display": "96px",
+				"size1": "72px",
+				"size2": "64px",
+				"size3": "48px",
+				"size4": "40px",
+				"size5": "32px",
+				"size6": "24px",
+				"subhead-large": "20px",
+				"subhead-medium": "16px"
+			}
 		},
 	},
 } satisfies Config;
