@@ -3,7 +3,6 @@ on:
   release:
     types:
       - published
-      - edited
 
 env:
   JWT_SECRET: temp
@@ -24,7 +23,7 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
         with:
-          ref: $GITHUB_REF_NAME
+          ref: ${{ github.ref_name }}
 
       - name: Install Deno
         uses: denoland/setup-deno@v2
