@@ -24,7 +24,7 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
         with:
-          ref: $GITHUB_REF
+          ref: $GITHUB_REF_NAME
 
       - name: Install Deno
         uses: denoland/setup-deno@v2
