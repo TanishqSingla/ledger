@@ -6,6 +6,7 @@ import { findUser } from "../db/Users.ts";
 import { EMAIL_REGEX } from "../utils/constants.ts";
 import { sendEmail } from "../utils/mailer.ts";
 import { kv } from "../utils/db.ts";
+import Input from "../ui/Input.tsx";
 
 type Data = {
 	status: "error";
@@ -121,14 +122,16 @@ export default function Home({ data }: PageProps<Data | undefined>) {
 				method="POST"
 				class="rounded-3xl bg-secondaryContainer p-4 w-11/12 mx-auto text-onSecondaryContainer mt-24 max-w-3xl"
 			>
-				<h3 class="text-2xl mb-4 mt-2 text-onSecondaryContainer font-semibold">
+				<h3 class="text-size5 mb-4 mt-2 text-onSecondaryContainer font-semibold">
 					Log in
 				</h3>
-				<label class="block my-2 text-onSecondaryContainer" for="email">
+				<label
+					class="block my-2 text-onSecondaryContainer text-size6"
+					for="email"
+				>
 					Email
 				</label>
-				<input
-					class="w-full bg-surfaceBright p-4 text-lg rounded-lg"
+				<Input
 					placeholder="example@example.com"
 					required
 					type="email"
@@ -140,7 +143,7 @@ export default function Home({ data }: PageProps<Data | undefined>) {
 				)}
 				<button
 					type="submit"
-					class="bg-primary/80 w-full p-4 rounded-full text-onPrimary my-8 text-lg cursor-pointer hover:bg-primary/70 active:bg-primary"
+					class="bg-primary/80 w-full p-4 rounded-full text-onPrimary my-8 text-lg cursor-pointer hover:bg-primary/70 active:bg-primary text-size6"
 				>
 					Sign in
 				</button>
