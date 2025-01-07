@@ -6,10 +6,14 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
 import * as $auth_verify from "./routes/auth/verify.tsx";
+import * as $dashboard_layout from "./routes/dashboard/_layout.tsx";
+import * as $dashboard_middleware from "./routes/dashboard/_middleware.ts";
+import * as $dashboard_create_index from "./routes/dashboard/create/index.tsx";
 import * as $dashboard_index from "./routes/dashboard/index.tsx";
 import * as $index from "./routes/index.tsx";
-
-import { type Manifest } from "$fresh/server.ts";
+import * as $dashboard_CreateForm from "./islands/dashboard/CreateForm.tsx";
+import * as $dashboard_index_1 from "./islands/dashboard/index.tsx";
+import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
 	routes: {
@@ -17,10 +21,16 @@ const manifest = {
 		"./routes/_app.tsx": $_app,
 		"./routes/_layout.tsx": $_layout,
 		"./routes/auth/verify.tsx": $auth_verify,
+		"./routes/dashboard/_layout.tsx": $dashboard_layout,
+		"./routes/dashboard/_middleware.ts": $dashboard_middleware,
+		"./routes/dashboard/create/index.tsx": $dashboard_create_index,
 		"./routes/dashboard/index.tsx": $dashboard_index,
 		"./routes/index.tsx": $index,
 	},
-	islands: {},
+	islands: {
+		"./islands/dashboard/CreateForm.tsx": $dashboard_CreateForm,
+		"./islands/dashboard/index.tsx": $dashboard_index_1,
+	},
 	baseUrl: import.meta.url,
 } satisfies Manifest;
 

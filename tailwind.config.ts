@@ -64,8 +64,8 @@ export default {
 				"size5": "32px",
 				"size6": "24px",
 				"subhead-large": "20px",
-				"subhead-medium": "16px"
-			}
+				"subhead-medium": "16px",
+			},
 		},
 	},
 } satisfies Config;
