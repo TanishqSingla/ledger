@@ -3,6 +3,7 @@ import { create } from "@zaubrik/djwt";
 import { kv } from "../../utils/db.ts";
 import { cryptoKey } from "../../utils/secrets.ts";
 import { Cookie, setCookie } from "jsr:@std/http@^1.0.3/cookie";
+import Input from "../../ui/Input.tsx";
 
 type Data = {
 	email?: string;
@@ -78,11 +79,10 @@ export default function Verify({ data }: PageProps<Data>) {
 				>
 					Enter verification code
 				</label>
-				<input
+				<Input
 					name="verification_code"
 					id="verification_code"
 					placeholder="XXX-XX-XXX"
-					class="w-full bg-surfaceBright p-4 text-lg rounded-lg"
 				/>
 				{data?.error && <span class="text-error">{data.error}</span>}
 				<button
