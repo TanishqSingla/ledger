@@ -3,7 +3,7 @@ import { create } from "@zaubrik/djwt";
 import { kv } from "../../utils/db.ts";
 import { cryptoKey } from "../../utils/secrets.ts";
 import { Cookie, setCookie } from "jsr:@std/http@^1.0.3/cookie";
-import Input from "../../ui/Input.tsx";
+import Input from "../../components/Input.tsx";
 
 type Data = {
 	email?: string;

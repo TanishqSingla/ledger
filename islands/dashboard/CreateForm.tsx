@@ -1,5 +1,5 @@
+import Input from "../../components/Input.tsx";
 import { Data } from "../../routes/dashboard/create/index.tsx";
-import Input from "../../ui/Input.tsx";
 import { useState } from "preact/hooks";
 
 type CreateFormProps = {
