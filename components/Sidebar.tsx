@@ -1,27 +1,51 @@
 import { twMerge } from "tailwind-merge";
 
+type SidebarItem = {
+	slug: string;
+	label: string;
+	subItems?: SidebarItem[];
+};
+
 const SidebarConfig = [
 	{
 		slug: "/dashboard/create",
 		label: "Create",
+		subItems: [{
+			slug: "/dashboard/create/record",
+			label: "Create Record",
+		}, {
+			slug: "/dashboard/create/add-account",
+			label: "Add Account",
+		}],
 	},
 ];
+
+function SidebarItem({ item, active }: { item: SidebarItem; active: string }) {
+	return (
+		<div class={"space-y-2"}>
+			<a
+				class={twMerge(
+					"px-4 py-2 text-onSurface hover:bg-surfaceContainerHighest transition rounded-3xl text-body-large cursor-pointer block",
+					active === item.slug && "bg-surfaceContainerHigh",
+				)}
+				href={item.slug}
+			>
+				{item.label}
+			</a>
+			<div class="ml-2">
+				{item?.subItems &&
+					item.subItems.map((subItem, index) => (
+						<SidebarItem key={index} item={subItem} active={active} />
+					))}
+			</div>
+		</div>
+	);
+}
 
 export default function Sidebar({ active }: { active: string }) {
 	return (
 		<div class="w-[280px] h-[calc(100vh-120px)] rounded-2xl bg-surface my-4 px-3">
-			{SidebarConfig.map((item, index) => (
-				<a
-					class={twMerge(
-						"px-4 py-2 text-onSurface hover:bg-secondaryFixedDim transition rounded-2xl text-subhead-large cursor-pointer block",
-						active === item.slug && "bg-secondary text-onSecondary",
-					)}
-					key={index}
-					href={item.slug}
-				>
-					{item.label}
-				</a>
-			))}
+			{SidebarConfig.map((item) => <SidebarItem item={item} active={active} />)}
 		</div>
 	);
 }
