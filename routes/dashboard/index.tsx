@@ -1,7 +1,7 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Dashboard from "../../islands/dashboard/index.tsx";
 import { Account } from "../../types.ts";
-import { GetAccounts } from "../../db/Accounts.ts";
+import { GetAllAccounts } from "../../db/Transactions.ts";
 
 export type Data = {
 	email_id: string;
@@ -27,10 +27,10 @@ export const handler: Handlers = {
 		} as Data["filters"];
 		Object.assign(data, { filters });
 
-		const accounts = await GetAccounts();
+		const accounts = await GetAllAccounts();
 
 		if (data) {
-			Object.assign(data, { accounts: accounts });
+			Object.assign(data, { accounts: accounts || [] });
 		}
 
 		return ctx.render(data);
@@ -52,12 +52,16 @@ export default function DashboardPage({ data }: PageProps<Data>) {
 					defaultValue={data.filters.accountId}
 				>
 					<option value="all">All</option>
-					{data.accounts.map((account) => (
-						<option value={account.id} id={account.id}>{account.Name}</option>
-					))}
+					{data.accounts.flatMap((account) =>
+						account.IsUserOwned
+							? (
+								<option value={account.pk} id={account.pk}>
+									{account.BankDetails.AccountName}
+								</option>
+							)
+							: []
+					)}
 				</select>
-
-				<AccountFilter data={data} />
 
 				<label htmlFor="status">Status:</label>
 				<select
@@ -80,7 +84,7 @@ export default function DashboardPage({ data }: PageProps<Data>) {
 				</button>
 			</form>
 
-			<div class="my-4">
+			<div class="my-4 bg-surfaceContainerHighest rounded-md p-4">
 				<Dashboard filters={data.filters} />
 			</div>
 
@@ -93,30 +97,3 @@ export default function DashboardPage({ data }: PageProps<Data>) {
 		</section>
 	);
 }
-
-const AccountFilter = ({ data }: { data: Data }) => {
-	if (!data.filters.accountId || data.filters.accountId == "all") {
-		return null;
-	}
-
-	const selectedAccount = data.accounts.find((account) =>
-		account.id == data.filters.accountId
-	);
-
-	return (
-		<>
-			<label htmlFor="account-no">Account Number</label>
-			<select
-				id="account-no"
-				name="account-no"
-				class="px-4 py-2 rounded-lg"
-				defaultValue={data.filters.accountNo}
-			>
-				<option>All</option>
-				{selectedAccount?.Accounts.map((account) => (
-					<option value={account} key={account}>{account}</option>
-				))}
-			</select>
-		</>
-	);
-};
