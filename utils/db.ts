@@ -3,6 +3,7 @@ import { DynamoDBDocumentClient } from "https://esm.sh/@aws-sdk/lib-dynamodb";
 
 export const kv = await Deno.openKv();
 
+// @ts-ignore: constructor type is wrong
 const dynamoClient = new DynamoDBClient({
 	endpoint: "http://localhost:8000",
 	region: "ap-south-1",

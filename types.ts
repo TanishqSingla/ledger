@@ -3,10 +3,9 @@ type id = string;
 export type Account = {
 	pk: `ACC#${id}`;
 	sk: `ACC#${id}`;
-	AccountId: id;
+	AccountName: string;
 	IsUserOwned: boolean;
 	BankDetails: {
-		AccountName: string;
 		AccountNumber?: string;
 		IFSC?: string;
 	};

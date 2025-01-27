@@ -1,3 +1,4 @@
+import { KV_KEYS } from "../utils/constants.ts";
 import { kv } from "../utils/db.ts";
 
 export type User = {
@@ -5,7 +6,7 @@ export type User = {
 };
 
 export const getUsers = async () => {
-	const { value } = await kv.get<User[]>(["users"]);
+	const { value } = await kv.get<User[]>([KV_KEYS.USERS]);
 
 	return value;
 };
