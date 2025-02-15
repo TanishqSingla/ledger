@@ -8,14 +8,19 @@ type SidebarItem = {
 
 const SidebarConfig = [
 	{
-		slug: "/dashboard/create",
-		label: "Create",
+		slug: "/dashboard/bills",
+		label: "Bills",
 		subItems: [{
-			slug: "/dashboard/create/record",
-			label: "Create Record",
-		}, {
-			slug: "/dashboard/create/add-account",
-			label: "Add Account",
+			slug: "/dashboard/bills/create",
+			label: "Create Bill",
+		}],
+	},
+	{
+		slug: "/dashboard/vendors",
+		label: "Vendors",
+		subItems: [{
+			slug: "/dashboard/vendors/create",
+			label: "Create Vendors",
 		}],
 	},
 ];

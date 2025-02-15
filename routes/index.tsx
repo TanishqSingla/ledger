@@ -33,7 +33,7 @@ export const handler: Handlers = {
 			await verify(cookies.token, cryptoKey);
 
 			return Response.redirect(ctx.url.origin + "/dashboard");
-		} catch (err) {
+		} catch (err: any) {
 			console.log(err);
 			return ctx.render(
 				{
@@ -99,7 +99,7 @@ export const handler: Handlers = {
 			return Response.redirect(
 				ctx.url.origin + "/auth/verify" + `?email=${user.email_id}`,
 			);
-		} catch (err) {
+		} catch (err: any) {
 			console.log(err);
 
 			return ctx.render(

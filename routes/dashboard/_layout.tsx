@@ -13,7 +13,9 @@ export default function Layout({ Component, url }: PageProps) {
 			</header>
 			<div class="flex">
 				<Sidebar active={url.pathname} />
-				<div class="flex-grow bg-surfaceContainerLowest text-onSurface rounded-3xl">
+				<div
+					class="flex-grow bg-surfaceContainerLowest text-onSurface rounded-3xl"
+				>
 					<Component />
 				</div>
 			</div>

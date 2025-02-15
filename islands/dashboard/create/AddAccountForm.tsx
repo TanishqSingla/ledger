@@ -1,6 +1,5 @@
 import { useState } from "preact/hooks";
 import Input from "../../../components/Input.tsx";
-import { type AddAccountBody } from "../../../db/Transactions.ts";
 
 export default function AddAccountForm() {
 	const [loading, setLoading] = useState(false);
@@ -15,7 +14,7 @@ export default function AddAccountForm() {
 			accountNumber: formData.get("accountNumber")?.toString().trim()!,
 			ifsc: formData.get("ifsc")?.toString()!,
 			isUserOwned: !!formData.get("isUserOwned"),
-		} satisfies AddAccountBody;
+		}
 
 		try {
 			await fetch("/dashboard/create/add-account", {
