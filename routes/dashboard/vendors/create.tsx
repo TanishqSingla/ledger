@@ -7,7 +7,7 @@ export const handler: Handlers = {
 	POST: async function (req, ctx) {
 		const formData = await req.formData();
 
-		const resp = await PutVendor({ vendor_name: formData.get("vendor_name") });
+		const resp = await PutVendor({ vendor_name: formData.get("vendor_name") as string });
 
 		return ctx.render();
 	},

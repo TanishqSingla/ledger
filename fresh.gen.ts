@@ -19,7 +19,6 @@ import * as $dashboard_vendors_create from "./routes/dashboard/vendors/create.ts
 import * as $dashboard_vendors_index from "./routes/dashboard/vendors/index.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $Combobox from "./islands/Combobox.tsx";
-import * as $dashboard_CreateForm from "./islands/dashboard/CreateForm.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
 import * as $dashboard_vendors_CreateVendorModal from "./islands/dashboard/vendors/CreateVendorModal.tsx";
 import type { Manifest } from "$fresh/server.ts";
@@ -45,7 +44,6 @@ const manifest = {
 	},
 	islands: {
 		"./islands/Combobox.tsx": $Combobox,
-		"./islands/dashboard/CreateForm.tsx": $dashboard_CreateForm,
 		"./islands/dashboard/create/AddAccountForm.tsx":
 			$dashboard_create_AddAccountForm,
 		"./islands/dashboard/vendors/CreateVendorModal.tsx":
