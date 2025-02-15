@@ -7,8 +7,7 @@ on:
 env:
   JWT_SECRET: temp
   RESEND_API_KEY: re_123545
-  AWS_ACCESS_KEY_ID: "DUMMY"
-  AWS_SECRET_ACCESS_KEY: "DUMMY"
+  MONGODB_URI: mongodb://user:password@localhost:27017
 
 jobs:
   deploy:
