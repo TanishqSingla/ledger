@@ -6,8 +6,8 @@ export const handler: Handlers = {
 	POST: async function (req, ctx) {
 		const query = await req.json();
 
-		const result = (await vendors()).find({
-			$or: [{ vendor_name: { $regex: query.value, $options: "i" } }],
+		const result = await (await vendors()).find({
+			vendor_name: { $regex: query.value, $options: "i" },
 		}).toArray();
 
 		return new Response(JSON.stringify({ data: result }));

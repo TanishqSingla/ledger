@@ -14,7 +14,7 @@ export async function QueryBills({ limit }: { limit?: number }) {
 		limit,
 	};
 
-	const resp = (await bills()).find({}, queryOptions).toArray();
+	const resp = await (await bills()).find({}, queryOptions).toArray();
 
 	return resp;
 }

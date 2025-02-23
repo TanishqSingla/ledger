@@ -21,6 +21,8 @@ import * as $index from "./routes/index.tsx";
 import * as $Combobox from "./islands/Combobox.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
 import * as $dashboard_vendors_CreateVendorModal from "./islands/dashboard/vendors/CreateVendorModal.tsx";
+import * as $dashboard_vendors_VendorSearchbox from "./islands/dashboard/vendors/VendorSearchbox.tsx";
+import * as $dashboard_vendors_VendorsTable from "./islands/dashboard/vendors/VendorsTable.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -48,6 +50,10 @@ const manifest = {
 			$dashboard_create_AddAccountForm,
 		"./islands/dashboard/vendors/CreateVendorModal.tsx":
 			$dashboard_vendors_CreateVendorModal,
+		"./islands/dashboard/vendors/VendorSearchbox.tsx":
+			$dashboard_vendors_VendorSearchbox,
+		"./islands/dashboard/vendors/VendorsTable.tsx":
+			$dashboard_vendors_VendorsTable,
 	},
 	baseUrl: import.meta.url,
 } satisfies Manifest;
