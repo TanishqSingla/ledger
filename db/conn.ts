@@ -8,15 +8,26 @@ if (!MONGODB_URI) {
 	Deno.exit(1);
 }
 
-const client = new MongoClient(MONGODB_URI);
+export const getDB = async () => {
+	const client = new MongoClient(MONGODB_URI);
 
-try {
-	await client.db("admin").command({ ping: 1 });
-} catch (err) {
-	console.error(err);
-	Deno.exit(1);
+	try {
+		await client.db("admin").command({ ping: 1 });
+		return client.db(DB_NAME);
+	} catch (err) {
+		console.error(err);
+		Deno.exit(1);
+	}
+};
+
+export const vendors = async () => {
+	const db = await getDB();
+
+	return db.collection("vendors");
+};
+
+export const bills = async () => {
+	const db = await getDB();
+
+	return db.collection("bills")
 }
-
-export const db = client.db(DB_NAME);
-export const vendors = db.collection("vendors");
-export const bills = db.collection("bills");

@@ -14,7 +14,7 @@ export async function QueryBills({ limit }: { limit?: number }) {
 		limit,
 	};
 
-	const resp = await bills.find({}, queryOptions).toArray();
+	const resp = (await bills()).find({}, queryOptions).toArray();
 
 	return resp;
 }
@@ -31,13 +31,13 @@ export async function PutBill(
 		updated_at: new Date(Date.now()).toUTCString(),
 	} satisfies Bill;
 
-	const resp = await bills.insertOne({ ...doc });
+	const resp = (await bills()).insertOne({ ...doc });
 
 	return resp;
 }
 
 export async function GetBillFromId(bill_id: string) {
-	const resp = await bills.findOne({ bill_id });
+	const resp = (await bills()).findOne({ bill_id });
 
 	return resp;
 }

@@ -11,7 +11,7 @@ export type Vendor = {
 export type VendorDocument = Vendor & MongoDocument;
 
 export async function GetAllVendors() {
-	const resp = await vendors.find().toArray();
+	const resp = (await vendors()).find().toArray();
 
 	return resp;
 }
@@ -27,13 +27,13 @@ export async function PutVendor(body: Pick<Vendor, "vendor_name">) {
 		updated_at: new Date(Date.now()).toUTCString(),
 	};
 
-	const resp = await vendors.insertOne(doc);
+	const resp = (await vendors()).insertOne(doc);
 
 	return resp;
 }
 
 export async function GetVendorFromId(id: string) {
-	const resp = await vendors.findOne({ vendor_id: id });
+	const resp = (await vendors()).findOne({ vendor_id: id });
 
 	return resp;
 }
