@@ -15,6 +15,7 @@
 	"imports": {
 		"$fresh/": "https://deno.land/x/fresh@1.7.3/",
 		"$std/": "https://deno.land/std@0.216.0/",
+		"class-variance-authority": "npm:class-variance-authority@^0.7.1",
 		"ketu": "npm:ketu@^0.1.19",
 		"mongodb": "npm:mongodb@6.13.0",
     "preact": "https://esm.sh/preact@10.25.0",

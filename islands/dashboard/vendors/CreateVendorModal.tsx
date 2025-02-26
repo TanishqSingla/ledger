@@ -3,6 +3,8 @@ import Input from "../../../components/Input.tsx";
 import { Button } from "ketu";
 import { twMerge } from "tailwind-merge";
 
+import { buttonVariants } from "../../../components/Button.tsx";
+
 export default function CreateVendorModal() {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -63,12 +65,23 @@ export default function CreateVendorModal() {
 							<form
 								onSubmit={handleSubmit}
 							>
-								<label htmlFor="vendor_name">Vendor Name</label>
+								<label htmlFor="vendor_name" class="text-label-large">Vendor Name</label>
 								<Input
 									placeholder="Vendor Name"
 									name="vendor_name"
 									id="vendor_name"
+									required
 								/>
+
+								<label htmlFor="email" class="text-label-large">
+									Vendor Email
+									<Input placeholder="Email" id="email" name="email" />
+								</label>
+
+								<label htmlFor="phone" class="text-label-large">
+									Vendor Phone
+									<Input placeholder="Phone" id="phone" name="phone" />
+								</label>
 
 								<Button
 									class={twMerge(
@@ -83,6 +96,17 @@ export default function CreateVendorModal() {
 									{isError && "Retry?"}
 									{isSuccess && "Add another"}
 									{!loading && !isError && !isSuccess && "Create"}
+								</Button>
+
+								<Button
+									class={twMerge(buttonVariants({
+										variant: "destructive",
+										className: "px-4 py-2 rounded-xl h-auto ml-2",
+									}))}
+									type="button"
+									onClick={() => setOpen(false)}
+								>
+									Close
 								</Button>
 							</form>
 						</div>

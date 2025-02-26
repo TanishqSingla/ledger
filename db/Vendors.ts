@@ -1,5 +1,6 @@
 import { MongoDocument } from "../types.ts";
 import { vendors } from "./conn.ts";
+import { nanoid } from 'https://cdn.jsdelivr.net/npm/nanoid/nanoid.js'
 
 export type Vendor = {
 	vendor_id: string;
@@ -22,7 +23,7 @@ export async function QueryVendors() {
 export async function PutVendor(body: Pick<Vendor, "vendor_name">) {
 	const doc = {
 		...body,
-		vendor_id: crypto.randomUUID(),
+		vendor_id: nanoid(12),
 		created_at: new Date(Date.now()).toUTCString(),
 		updated_at: new Date(Date.now()).toUTCString(),
 	};
