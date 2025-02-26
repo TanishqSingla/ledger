@@ -20,7 +20,7 @@ export default function VendorCreate() {
 
 			<form class="border border-primary p-4 max-w-screen-sm rounded-xl" method="POST">
 				<label htmlFor="vendor_name">Vendor Name</label>
-				<Input placeholder="Vendor Name" name="vendor_name" id="vendor_name" />
+				<Input placeholder="Vendor Name" name="vendor_name" id="vendor_name" required />
 
 				<Button class="bg-tertiary text-onTertiary px-4 py-2 rounded-xl my-4">
 					Create

@@ -16,6 +16,7 @@ export default function VendorsTable(
 					<th class="px-4 py-2 bg-surfaceContainer text-left">
 						Created At
 					</th>
+					<th class="px-4 py-2 bg-surfaceContainer text-left"/>
 				</tr>
 			</thead>
 			<tbody>
@@ -35,6 +36,15 @@ export default function VendorsTable(
 								<td class="py-2 px-4">{vendor?.phone}</td>
 								<td class="py-2 px-4">
 									{new Date(vendor.created_at).toLocaleString()}
+								</td>
+								<td class="py-2 px-4">
+									<a
+										href={`/dashboard/vendors/${vendor.vendor_id}`}
+										class="hover:underline text-blue-500"
+										target={"_blank"}
+									>
+										view more
+									</a>
 								</td>
 							</tr>
 						)
