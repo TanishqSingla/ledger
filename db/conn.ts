@@ -31,3 +31,9 @@ export const bills = async () => {
 
 	return db.collection("bills")
 }
+
+export const accounts = async () => {
+	const db = await getDB();
+
+	return db.collection("accounts")
+}

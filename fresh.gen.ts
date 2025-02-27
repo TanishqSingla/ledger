@@ -11,6 +11,8 @@ import * as $api_protected_vendor from "./routes/api/(protected)/vendor.ts";
 import * as $auth_verify from "./routes/auth/verify.tsx";
 import * as $dashboard_layout from "./routes/dashboard/_layout.tsx";
 import * as $dashboard_middleware from "./routes/dashboard/_middleware.ts";
+import * as $dashboard_accounts_create from "./routes/dashboard/accounts/create.tsx";
+import * as $dashboard_accounts_index from "./routes/dashboard/accounts/index.tsx";
 import * as $dashboard_bills_id_ from "./routes/dashboard/bills/[id].tsx";
 import * as $dashboard_bills_create from "./routes/dashboard/bills/create.tsx";
 import * as $dashboard_bills_index from "./routes/dashboard/bills/index.tsx";
@@ -37,6 +39,8 @@ const manifest = {
 		"./routes/auth/verify.tsx": $auth_verify,
 		"./routes/dashboard/_layout.tsx": $dashboard_layout,
 		"./routes/dashboard/_middleware.ts": $dashboard_middleware,
+		"./routes/dashboard/accounts/create.tsx": $dashboard_accounts_create,
+		"./routes/dashboard/accounts/index.tsx": $dashboard_accounts_index,
 		"./routes/dashboard/bills/[id].tsx": $dashboard_bills_id_,
 		"./routes/dashboard/bills/create.tsx": $dashboard_bills_create,
 		"./routes/dashboard/bills/index.tsx": $dashboard_bills_index,

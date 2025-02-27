@@ -19,6 +19,10 @@ const SidebarConfig = [
 		slug: "/dashboard/vendors",
 		label: "Vendors",
 	},
+	{
+		slug: "/dashboard/accounts",
+		label: "Accounts"
+	}
 ];
 
 function SidebarItem({ item, active }: { item: SidebarItem; active: string }) {
