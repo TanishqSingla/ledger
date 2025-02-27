@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 
 import { buttonVariants } from "../../../components/Button.tsx";
 import { vendorsSignal } from "./VendorsTable.tsx";
+import { Loader } from "../../../components/icons/index.tsx";
 
 export default function CreateVendorModal() {
 	const [open, setOpen] = useState(false);
@@ -37,9 +38,10 @@ export default function CreateVendorModal() {
 				method: "PUT",
 				body: JSON.stringify(body),
 			});
+			const data = await resp.json();
 
 			if (resp.status == 201) {
-				vendorsSignal.value = [...vendorsSignal.value, body];
+				vendorsSignal.value = [...vendorsSignal.value, data.data];
 				console.log(vendorsSignal);
 				setIsSuccess(true);
 				setIsError(false);
@@ -110,31 +112,36 @@ export default function CreateVendorModal() {
 									<Input placeholder="Phone" id="phone" name="phone" />
 								</label>
 
-								<Button
-									class={twMerge(
-										"bg-tertiary text-onTertiary px-4 py-2 rounded-xl my-4",
-										isSuccess &&
-											"bg-transparent border border-tertiary text-tertiary",
-										isError && "bg-transparent border border-error text-error",
-									)}
-									disabled={loading}
-								>
-									{loading && "loading..."}
-									{isError && "Retry?"}
-									{isSuccess && "Add another"}
-									{!loading && !isError && !isSuccess && "Create"}
-								</Button>
+								<div class="flex items-center gap-2">
+									<Button
+										class={twMerge(
+											"bg-tertiary text-onTertiary px-4 py-2 rounded-xl my-4 flex items-center",
+											isError &&
+												"bg-transparent border border-error text-error",
+										)}
+										disabled={loading}
+									>
+										{loading && (
+											<span class="mr-1">
+												<Loader />
+											</span>
+										)}
+										{isError && "Retry?"}
+										{isSuccess && "Add another"}
+										{!isError && !isSuccess && "Create"}
+									</Button>
 
-								<Button
-									class={twMerge(buttonVariants({
-										variant: "destructive",
-										className: "px-4 py-2 rounded-xl h-auto ml-2",
-									}))}
-									type="button"
-									onClick={() => setOpen(false)}
-								>
-									Close
-								</Button>
+									<Button
+										class={twMerge(buttonVariants({
+											variant: "destructiveOutline",
+											className: "px-4 py-2 rounded-xl ml-2 flex h-auto",
+										}))}
+										type="button"
+										onClick={() => setOpen(false)}
+									>
+										Close
+									</Button>
+								</div>
 							</form>
 						</div>
 					</div>

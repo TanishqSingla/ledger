@@ -18,10 +18,6 @@ const SidebarConfig = [
 	{
 		slug: "/dashboard/vendors",
 		label: "Vendors",
-		subItems: [{
-			slug: "/dashboard/vendors/create",
-			label: "Create Vendors",
-		}],
 	},
 ];
 

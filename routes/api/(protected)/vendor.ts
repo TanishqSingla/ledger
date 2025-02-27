@@ -3,7 +3,7 @@ import { vendors } from "../../../db/conn.ts";
 import { DeleteVendor, PutVendor } from "../../../db/Vendors.ts";
 
 export const handler: Handlers = {
-	POST: async function (req, ctx) {
+	POST: async function (req, _ctx) {
 		const query = await req.json();
 
 		const result = await (await vendors()).find({
@@ -12,14 +12,21 @@ export const handler: Handlers = {
 
 		return new Response(JSON.stringify({ data: result }));
 	},
-	PUT: async function (req, ctx) {
+	PUT: async function (req, _ctx) {
 		const values = await req.json();
 
-		const resp = await PutVendor({ vendor_name: values["vendor_name"] });
+		const resp = await PutVendor({
+			vendor_name: values["vendor_name"],
+			email: values["email"],
+			phone: values["phone"],
+		});
 
 		if (resp.acknowledged) {
 			return new Response(
-				JSON.stringify({ message: "Vendor added successfully" }),
+				JSON.stringify({
+					message: "Vendor added successfully",
+					data: resp.data,
+				}),
 				{ status: 201 },
 			);
 		}
@@ -28,7 +35,7 @@ export const handler: Handlers = {
 			status: 400,
 		});
 	},
-	DELETE: async function (req, ctx) {
+	DELETE: async function (req, _ctx) {
 		const values = await req.json();
 
 		const resp = await DeleteVendor(values.vendor_id);
@@ -36,7 +43,7 @@ export const handler: Handlers = {
 		if (resp.acknowledged) {
 			return new Response(
 				JSON.stringify({ message: "Vendor deleted successfully" }),
-				{ status: 201 },
+				{ status: 200 },
 			);
 		}
 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "preact/hooks";
 import Input from "../components/Input.tsx";
-import { ComponentProps } from "preact/src/index.d.ts";
 import { Vendor } from "../db/Vendors.ts";
+import { signal } from "@preact/signals";
 
-type ComboBoxProps = {} & ComponentProps<"input">;
+export const selectedVendor = signal<Vendor>();
 
-export default function ComboBox(props: ComboBoxProps) {
+export default function ComboBox() {
 	const [value, setValue] = useState("");
 	const [vendors, setVendors] = useState<Vendor[]>([]);
 	const [loading, setLoading] = useState(false);
@@ -16,29 +16,29 @@ export default function ComboBox(props: ComboBoxProps) {
 		fetch("/api/vendor", {
 			method: "PUT",
 			body: JSON.stringify({
-				vendor_name: value,
-				vendor_id: crypto.randomUUID(),
+				vendor_name: selectedVendor.value?.vendor_name,
 			}),
 		}).then((resp) => resp.json())
 			.then(() => {
-				setValue(value);
 				setValueSelected(true);
 			}).finally(() => setLoading(false));
 	};
 
 	const handleInput = (event: any) => {
 		if (valueSelected) setValueSelected(false);
-		setValue(event.target.value);
+		setValue(event.currentTarget.value);
 	};
 
 	const handleSelect = (vendor: Vendor) => {
-		console.log(vendor);
+		selectedVendor.value = vendor;
 		setValue(vendor.vendor_name);
 		setValueSelected(true);
 	};
 
 	const showCreateOption = () => {
-		const exactMatch = vendors.find((vendor) => vendor.vendor_name == value);
+		const exactMatch = vendors.find((vendor) =>
+			vendor.vendor_name == selectedVendor.value?.vendor_name
+		);
 
 		if (exactMatch) {
 			return false;
@@ -54,7 +54,9 @@ export default function ComboBox(props: ComboBoxProps) {
 			setLoading(true);
 			fetch("/api/vendor", {
 				method: "POST",
-				body: JSON.stringify({ value: value.trim() }),
+				body: JSON.stringify({
+					value,
+				}),
 			}).then((data) => data.json()).then((data) => setVendors(data.data))
 				.finally(() => setLoading(false));
 		}, 300);
@@ -69,8 +71,8 @@ export default function ComboBox(props: ComboBoxProps) {
 			<Input
 				value={value}
 				onInput={handleInput}
-				name={props.name}
 				autocomplete={"off"}
+				placeholder={"Select Vendor"}
 			/>
 			{!!value && !valueSelected && (
 				<div class="shadow-lg rounded-xl border border-secondary absolute top-full w-full bg-surfaceContainerHigh mt-1 overflow-hidden">

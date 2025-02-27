@@ -26,7 +26,9 @@ export async function DeleteVendor(vendor_id: string) {
 	return resp;
 }
 
-export async function PutVendor(body: Pick<Vendor, "vendor_name">) {
+export async function PutVendor(
+	body: Partial<Pick<Vendor, "vendor_name" | "email" | "phone">>,
+) {
 	const doc = {
 		...body,
 		vendor_id: nanoid(12),
@@ -36,7 +38,7 @@ export async function PutVendor(body: Pick<Vendor, "vendor_name">) {
 
 	const resp = await (await vendors()).insertOne(doc);
 
-	return resp;
+	return { ...resp, data: doc };
 }
 
 export async function GetVendorFromId(id: string) {

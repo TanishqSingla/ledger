@@ -1,23 +1,17 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Button } from "ketu";
-import { QueryBills } from "../../../db/Bills.ts";
+import { BillDocument, QueryBills } from "../../../db/Bills.ts";
 import Input from "../../../components/Input.tsx";
 
 type Data = {
-	bills: {
-		bill_number: string;
-		vendor: string;
-		vendor_id: string;
-		bill_date: string;
-		due_date: string;
-		amount: number;
-		status: string;
-	}[];
+	bills: BillDocument[];
 };
 
 export const handler: Handlers = {
-	GET: async function (req, ctx) {
-		const data = await QueryBills({});
+	GET: async function (_req, ctx) {
+		const limit = +ctx.params?.limit || 50;
+
+		const data = await QueryBills({ limit });
 
 		return ctx.render({ bills: data });
 	},
@@ -37,7 +31,11 @@ export default function Bills({ data }: PageProps<Data>) {
 				</div>
 
 				<div class="ml-auto">
-					<Button as="a" href="/dashboard/bills/create" class="bg-tertiary text-onTertiary px-4 py-2 rounded-xl">
+					<Button
+						as="a"
+						href="/dashboard/bills/create"
+						class="bg-tertiary text-onTertiary px-4 py-2 rounded-xl"
+					>
 						Create
 					</Button>
 				</div>
@@ -61,11 +59,11 @@ export default function Bills({ data }: PageProps<Data>) {
 							return (
 								<tr
 									class="even:bg-surfaceContainerLow/60 bg-surfaceContainerLowest hover:bg-surfaceContainerHigh"
-									key={bill.bill_date}
+									key={bill.bill_id}
 								>
 									<td class="px-4 py-2 text-label-large">
-										<a href={`/dashboard/bills/${bill.bill_number}`}>
-											{bill.bill_number}
+										<a href={`/dashboard/bills/${bill.bill_id}`}>
+											{bill.bill_id}
 										</a>
 									</td>
 									<td class="px-4 py-2 text-label-large">
@@ -73,11 +71,11 @@ export default function Bills({ data }: PageProps<Data>) {
 											href={`/dashboard/vendors/${bill.vendor_id}`}
 											class="hover:underline"
 										>
-											{bill.vendor}
+											{bill.vendor_name}
 										</a>
 									</td>
-									<td class="px-4 py-2 text-label-large">{bill.bill_date}</td>
-									<td class="px-4 py-2 text-label-large">{bill.due_date}</td>
+									<td class="px-4 py-2 text-label-large">{bill.created_at}</td>
+									<td class="px-4 py-2 text-label-large">{bill.created_at}</td>
 									<td class="px-4 py-2 text-label-large">
 										{Number(bill.amount).toLocaleString("en-IN")}
 									</td>

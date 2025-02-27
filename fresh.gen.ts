@@ -6,6 +6,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
 import * as $api_protected_middleware from "./routes/api/(protected)/_middleware.ts";
+import * as $api_protected_bill from "./routes/api/(protected)/bill.ts";
 import * as $api_protected_vendor from "./routes/api/(protected)/vendor.ts";
 import * as $auth_verify from "./routes/auth/verify.tsx";
 import * as $dashboard_layout from "./routes/dashboard/_layout.tsx";
@@ -15,10 +16,10 @@ import * as $dashboard_bills_create from "./routes/dashboard/bills/create.tsx";
 import * as $dashboard_bills_index from "./routes/dashboard/bills/index.tsx";
 import * as $dashboard_index from "./routes/dashboard/index.tsx";
 import * as $dashboard_vendors_id_ from "./routes/dashboard/vendors/[id].tsx";
-import * as $dashboard_vendors_create from "./routes/dashboard/vendors/create.tsx";
 import * as $dashboard_vendors_index from "./routes/dashboard/vendors/index.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $Combobox from "./islands/Combobox.tsx";
+import * as $dashboard_bills_CreateBillForm from "./islands/dashboard/bills/CreateBillForm.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
 import * as $dashboard_vendors_CreateVendorModal from "./islands/dashboard/vendors/CreateVendorModal.tsx";
 import * as $dashboard_vendors_VendorSearchbox from "./islands/dashboard/vendors/VendorSearchbox.tsx";
@@ -31,6 +32,7 @@ const manifest = {
 		"./routes/_app.tsx": $_app,
 		"./routes/_layout.tsx": $_layout,
 		"./routes/api/(protected)/_middleware.ts": $api_protected_middleware,
+		"./routes/api/(protected)/bill.ts": $api_protected_bill,
 		"./routes/api/(protected)/vendor.ts": $api_protected_vendor,
 		"./routes/auth/verify.tsx": $auth_verify,
 		"./routes/dashboard/_layout.tsx": $dashboard_layout,
@@ -40,12 +42,13 @@ const manifest = {
 		"./routes/dashboard/bills/index.tsx": $dashboard_bills_index,
 		"./routes/dashboard/index.tsx": $dashboard_index,
 		"./routes/dashboard/vendors/[id].tsx": $dashboard_vendors_id_,
-		"./routes/dashboard/vendors/create.tsx": $dashboard_vendors_create,
 		"./routes/dashboard/vendors/index.tsx": $dashboard_vendors_index,
 		"./routes/index.tsx": $index,
 	},
 	islands: {
 		"./islands/Combobox.tsx": $Combobox,
+		"./islands/dashboard/bills/CreateBillForm.tsx":
+			$dashboard_bills_CreateBillForm,
 		"./islands/dashboard/create/AddAccountForm.tsx":
 			$dashboard_create_AddAccountForm,
 		"./islands/dashboard/vendors/CreateVendorModal.tsx":
