@@ -39,6 +39,9 @@ function VendorsTable() {
 			<thead>
 				<tr>
 					<th class="px-4 py-2 bg-surfaceContainer text-left">
+						S. No.
+					</th>
+					<th class="px-4 py-2 bg-surfaceContainer text-left">
 						Vendor Name
 					</th>
 					<th class="px-4 py-2 bg-surfaceContainer text-left">Email</th>
@@ -50,10 +53,14 @@ function VendorsTable() {
 				</tr>
 			</thead>
 			<tbody>
-				{vendorsSignal.value.flatMap((vendor) =>
+				{vendorsSignal.value.flatMap((vendor, index) =>
 					vendor.vendor_name.toLowerCase().startsWith(vendorSearch.value)
 						? (
-							<tr key={vendor.vendor_id} class="border-b last:border-none">
+							<tr
+								key={vendor.vendor_id}
+								class="border-b last:border-none hover:bg-tertiaryContainer/20"
+							>
+								<td class="py-2 px-4">{index}</td>
 								<td class="py-2 px-4">
 									<a
 										href={`/dashboard/vendors/${vendor.vendor_id}`}

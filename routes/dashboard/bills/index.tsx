@@ -58,7 +58,7 @@ export default function Bills({ data }: PageProps<Data>) {
 						{data.bills.map((bill) => {
 							return (
 								<tr
-									class="even:bg-surfaceContainerLow/60 bg-surfaceContainerLowest hover:bg-surfaceContainerHigh"
+									class="even:bg-surfaceContainerLow/60 bg-surfaceContainerLowest hover:bg-tertiaryContainer/20"
 									key={bill.bill_id}
 								>
 									<td class="px-4 py-2 text-label-large">

@@ -53,7 +53,9 @@ export const CrossCircle = ({ width = 15, height = 15, fill = "none" }) => (
 	</svg>
 );
 
-export const Loader = ({ fill = "none", className }: { className?: string, fill?: string }) => (
+export const Loader = (
+	{ fill = "none", className }: { className?: string; fill?: string },
+) => (
 	<svg
 		class={twMerge("mr-3 -ml-1 size-5 animate-spin text-white", className)}
 		xmlns="http://www.w3.org/2000/svg"
@@ -73,6 +75,42 @@ export const Loader = ({ fill = "none", className }: { className?: string, fill?
 			class="opacity-75"
 			fill="currentColor"
 			d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+		>
+		</path>
+	</svg>
+);
+
+export const PlusIcon = ({ width = 15, height = 15, fill = "none" }) => (
+	<svg
+		width={width}
+		height={height}
+		viewBox="0 0 15 15"
+		fill={fill}
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path
+			d="M8 2.75C8 2.47386 7.77614 2.25 7.5 2.25C7.22386 2.25 7 2.47386 7 2.75V7H2.75C2.47386 7 2.25 7.22386 2.25 7.5C2.25 7.77614 2.47386 8 2.75 8H7V12.25C7 12.5261 7.22386 12.75 7.5 12.75C7.77614 12.75 8 12.5261 8 12.25V8H12.25C12.5261 8 12.75 7.77614 12.75 7.5C12.75 7.22386 12.5261 7 12.25 7H8V2.75Z"
+			fill="currentColor"
+			fill-rule="evenodd"
+			clip-rule="evenodd"
+		>
+		</path>
+	</svg>
+);
+
+export const CrossIcon = ({ width = 15, height = 15, fill = "none" }) => (
+	<svg
+		width={width}
+		height={height}
+		viewBox="0 0 15 15"
+		fill={fill}
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<path
+			d="M12.8536 2.85355C13.0488 2.65829 13.0488 2.34171 12.8536 2.14645C12.6583 1.95118 12.3417 1.95118 12.1464 2.14645L7.5 6.79289L2.85355 2.14645C2.65829 1.95118 2.34171 1.95118 2.14645 2.14645C1.95118 2.34171 1.95118 2.65829 2.14645 2.85355L6.79289 7.5L2.14645 12.1464C1.95118 12.3417 1.95118 12.6583 2.14645 12.8536C2.34171 13.0488 2.65829 13.0488 2.85355 12.8536L7.5 8.20711L12.1464 12.8536C12.3417 13.0488 12.6583 13.0488 12.8536 12.8536C13.0488 12.6583 13.0488 12.3417 12.8536 12.1464L8.20711 7.5L12.8536 2.85355Z"
+			fill="currentColor"
+			fill-rule="evenodd"
+			clip-rule="evenodd"
 		>
 		</path>
 	</svg>
