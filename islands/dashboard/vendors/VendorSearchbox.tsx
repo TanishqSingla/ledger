@@ -6,15 +6,15 @@ export const vendorSearch = signal("");
 
 export default function VendorSearchBox({ ...props }: ComponentProps<"input">) {
 	return (
-		<div class="flex items-center bg-surfaceBright rounded-xl">
+		<div class="flex items-center bg-surfaceBright rounded-xl focus-within:ring-2 overflow-hidden">
 			<Input
-				type="search"
 				onInput={(e) => vendorSearch.value = e.currentTarget.value}
 				value={vendorSearch.value}
-				placeholder={"search"}
+				placeholder={"Search vendor"}
+				class="focus:ring-0 outline-none"
 				{...props}
 			/>
-			<button onClick={() => vendorSearch.value = ""} title="clear" class="mr-2">
+			<button onClick={() => vendorSearch.value = ""} title="clear" class="mr-2 outline-none focus:ring-1">
 				<svg
 					width="15"
 					height="15"

@@ -1,6 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { vendors } from "../../../db/conn.ts";
-import { PutVendor } from "../../../db/Vendors.ts";
+import { DeleteVendor, PutVendor } from "../../../db/Vendors.ts";
 
 export const handler: Handlers = {
 	POST: async function (req, ctx) {
@@ -20,6 +20,22 @@ export const handler: Handlers = {
 		if (resp.acknowledged) {
 			return new Response(
 				JSON.stringify({ message: "Vendor added successfully" }),
+				{ status: 201 },
+			);
+		}
+
+		return new Response(JSON.stringify({ message: "error adding vendor" }), {
+			status: 400,
+		});
+	},
+	DELETE: async function (req, ctx) {
+		const values = await req.json();
+
+		const resp = await DeleteVendor(values.vendor_id);
+
+		if (resp.acknowledged) {
+			return new Response(
+				JSON.stringify({ message: "Vendor deleted successfully" }),
 				{ status: 201 },
 			);
 		}

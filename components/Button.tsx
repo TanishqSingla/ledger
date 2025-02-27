@@ -5,14 +5,13 @@ export const buttonVariants = cva(
 	{
 		variants: {
 			variant: {
-				default:
-					"bg-primary text-onPrimary shadow hover:bg-primary/90",
-				destructive:
-					"bg-error text-onError shadow-sm hover:bg-error/90",
+				default: "bg-primary text-onPrimary shadow hover:bg-primary/90",
+				destructive: "bg-error text-onError shadow-sm hover:bg-error/90",
+				destructiveOutline: "border border-error text-error shadow-sm hover:bg-error/90 hover:text-onError",
 				outline:
 					"border border-input bg-background shadow-sm hover:bg-tertiary hover:onTertiary",
 				secondary:
-					"bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+					"bg-secondary text-onSecondary shadow-sm hover:bg-secondary/80",
 				ghost: "hover:bg-tertiary hover:onTertiary",
 				link: "text-primary underline-offset-4 hover:underline",
 			},
@@ -29,3 +28,7 @@ export const buttonVariants = cva(
 		},
 	},
 );
+
+export default function Button() {
+	return <Button></Button>;
+}

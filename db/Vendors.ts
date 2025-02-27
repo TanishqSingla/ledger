@@ -1,6 +1,6 @@
 import { MongoDocument } from "../types.ts";
 import { vendors } from "./conn.ts";
-import { nanoid } from 'https://cdn.jsdelivr.net/npm/nanoid/nanoid.js'
+import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
 
 export type Vendor = {
 	vendor_id: string;
@@ -20,6 +20,12 @@ export async function GetAllVendors() {
 export async function QueryVendors() {
 }
 
+export async function DeleteVendor(vendor_id: string) {
+	const resp = await (await vendors()).deleteOne({ vendor_id });
+
+	return resp;
+}
+
 export async function PutVendor(body: Pick<Vendor, "vendor_name">) {
 	const doc = {
 		...body,
@@ -28,7 +34,7 @@ export async function PutVendor(body: Pick<Vendor, "vendor_name">) {
 		updated_at: new Date(Date.now()).toUTCString(),
 	};
 
-	const resp = (await vendors()).insertOne(doc);
+	const resp = await (await vendors()).insertOne(doc);
 
 	return resp;
 }
