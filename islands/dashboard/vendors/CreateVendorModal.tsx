@@ -6,12 +6,22 @@ import { twMerge } from "tailwind-merge";
 import { buttonVariants } from "../../../components/Button.tsx";
 import { vendorsSignal } from "./VendorsTable.tsx";
 import { CrossIcon, Loader } from "../../../components/icons/index.tsx";
+import { useMutation } from "../../../hooks/useMutation.ts";
+import { putVendor } from "../../../services/vendor.ts";
 
 export default function CreateVendorModal() {
 	const [open, setOpen] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const [isSuccess, setIsSuccess] = useState(false);
-	const [isError, setIsError] = useState(false);
+
+	const mutation = useMutation({
+		mutationFn: putVendor,
+		onSuccess: (data) => {
+			vendorsSignal.value = [...vendorsSignal.value, data.data];
+
+			setTimeout(() => {
+				mutation.reset();
+			}, 3000);
+		},
+	});
 
 	useEffect(() => {
 		if (open) {
@@ -23,36 +33,19 @@ export default function CreateVendorModal() {
 		};
 	}, [open]);
 
-	const handleSubmit = async (e: SubmitEvent) => {
+	const handleSubmit = (e: SubmitEvent) => {
 		e.preventDefault();
-		setLoading(true);
 		const formData = new FormData(e.target as HTMLFormElement);
 
 		const body = {
 			vendor_name: formData.get("vendor_name") as string,
-			...(!!formData.get("email") && { email: formData.get("email") }),
-			...(!!formData.get("phone") && { phone: formData.get("phone") }),
+			...(!!formData.get("email") &&
+				{ email: formData.get("email")?.toString() }),
+			...(!!formData.get("phone") &&
+				{ phone: formData.get("phone")?.toString() }),
 		};
-		try {
-			const resp = await fetch("/api/vendor", {
-				method: "PUT",
-				body: JSON.stringify(body),
-			});
-			const data = await resp.json();
 
-			if (resp.status == 201) {
-				vendorsSignal.value = [...vendorsSignal.value, data.data];
-				console.log(vendorsSignal);
-				setIsSuccess(true);
-				setIsError(false);
-			}
-		} catch (err) {
-			console.log(err);
-			setIsSuccess(false);
-			setIsError(true);
-		} finally {
-			setLoading(false);
-		}
+		mutation.mutate(body);
 	};
 
 	return (
@@ -100,20 +93,21 @@ export default function CreateVendorModal() {
 								<div class="flex items-center gap-2">
 									<Button
 										class={twMerge(
-											"bg-tertiary text-onTertiary px-4 py-2 rounded-xl my-4 flex items-center",
-											isError &&
-												"bg-transparent border border-error text-error",
+											buttonVariants({ variant: "default" }),
+											(mutation.isSuccess ||
+												mutation.isError) &&
+												buttonVariants({ variant: "secondary" }),
 										)}
-										disabled={loading}
+										disabled={mutation.isLoading}
 									>
-										{loading && (
+										{mutation.isLoading && (
 											<span class="mr-1">
 												<Loader />
 											</span>
 										)}
-										{isError && "Retry?"}
-										{isSuccess && "Add another"}
-										{!isError && !isSuccess && "Create"}
+										{mutation.isError && "Retry?"}
+										{mutation.isSuccess && "Add another"}
+										{!mutation.isError && !mutation.isSuccess && "Create"}
 									</Button>
 
 									<Button
@@ -123,9 +117,8 @@ export default function CreateVendorModal() {
 										}))}
 										type="button"
 										onClick={() => {
+											mutation.reset();
 											setOpen(false);
-											setIsError(false);
-											setIsSuccess(false);
 										}}
 									>
 										Close
