@@ -1,6 +1,9 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { GetAllVendors, VendorDocument } from "../../../db/Vendors.ts";
-import CreateVendorModal from "../../../islands/dashboard/vendors/CreateVendorModal.tsx";
+import {
+	CreateVendorDialogContent,
+	CreateVendorDialogTrigger,
+} from "../../../islands/dashboard/vendors/CreateVendorModal.tsx";
 import VendorSearchBox from "../../../islands/dashboard/vendors/VendorSearchbox.tsx";
 import VendorsTable from "../../../islands/dashboard/vendors/VendorsTable.tsx";
 
@@ -26,7 +29,8 @@ export default function Vendors({ data }: PageProps<Data>) {
 				</div>
 
 				<div class="ml-auto">
-					<CreateVendorModal />
+					<CreateVendorDialogTrigger />
+					<CreateVendorDialogContent />
 				</div>
 			</div>
 			<div class="rounded-xl overflow-hidden relative mt-8 border">
