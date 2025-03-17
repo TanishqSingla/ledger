@@ -44,5 +44,5 @@ export async function PutBill(
 export async function GetBillFromId(bill_id: string) {
 	const resp = (await bills()).findOne({ bill_id });
 
-	return resp;
+	return resp as Promise<BillDocument>;
 }

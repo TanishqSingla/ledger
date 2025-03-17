@@ -2,8 +2,13 @@ import { useState } from "preact/hooks";
 
 export function useMutation<T extends (...args: any) => any>({
 	mutationFn,
-	onSuccess,
-}: { mutationFn: T; onSuccess: (data: Awaited<ReturnType<T>>) => void }) {
+	onSuccess = () => {},
+	onError = () => {},
+}: {
+	mutationFn: T;
+	onSuccess?: (data: Awaited<ReturnType<T>>) => void;
+	onError?: (err: any) => void;
+}) {
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +23,8 @@ export function useMutation<T extends (...args: any) => any>({
 
 			setIsSuccess(true);
 		} catch (err) {
+			onError(err);
+			
 			setIsError(true);
 		} finally {
 			setIsLoading(false);
@@ -37,5 +44,4 @@ export function useMutation<T extends (...args: any) => any>({
 		mutate,
 		reset,
 	};
-};
-
+}

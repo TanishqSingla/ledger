@@ -12,11 +12,26 @@ export const putVendor = async (body: PutVendorPayload) => {
 		body: JSON.stringify(body),
 	});
 
-	const data: { message: string, data: VendorDocument } = await response.json();
+	const data: { message: string; data: VendorDocument } = await response.json();
 
 	if (response.status > 400) {
 		throw new Error(data.message);
 	}
 
+	return data;
+};
+
+export const deleteVendor = async (body: { vendor_id: string }) => {
+	const response = await fetch("/api/vendor", {
+		method: "DELETE",
+		body: JSON.stringify(body),
+	});
+
+	const data = await response.json();
+
+	if (response.status > 400) {
+		throw new Error(data)
+	}
+	
 	return data;
 };

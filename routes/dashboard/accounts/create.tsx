@@ -1,4 +1,3 @@
-import { twMerge } from "tailwind-merge";
 import Input from "../../../components/Input.tsx";
 import { buttonVariants } from "../../../components/Button.tsx";
 import { Handlers } from "$fresh/server.ts";
@@ -32,7 +31,7 @@ export default function Create() {
 					<Input name="account_name" required />
 				</label>
 
-				<button class={twMerge(buttonVariants({ variant: "default" }))}>
+				<button class={buttonVariants({ variant: "secondary" })}>
 					Create
 				</button>
 			</form>

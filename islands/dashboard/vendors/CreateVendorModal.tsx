@@ -15,7 +15,7 @@ const openSignal = signal(false);
 export const CreateVendorDialogTrigger = () => {
 	return (
 		<button
-			class="bg-tertiary text-onTertiary px-4 py-2 rounded-xl"
+			class={buttonVariants({ variant: "default" })}
 			onClick={() => openSignal.value = !openSignal.value}
 		>
 			Create
@@ -76,10 +76,16 @@ export function CreateVendorDialogContent() {
 		if (!modalContentRef.current?.contains(event.relatedTarget)) {
 			modalContentRef.current?.focus();
 		}
-	}
+	};
 
 	return openSignal.value && (
-		<div class="fixed top-0 left-0 h-screen w-screen bg-black/40 z-10 items-center justify-center flex" onFocusOutCapture={focusOutHandler} tabindex={0} ref={modalContentRef} role="dialog">
+		<div
+			class="fixed top-0 left-0 h-screen w-screen bg-black/40 z-10 items-center justify-center flex"
+			onFocusOutCapture={focusOutHandler}
+			tabindex={0}
+			ref={modalContentRef}
+			role="dialog"
+		>
 			<div class="z-20 bg-white max-w-screen-sm w-full rounded-xl">
 				<div class="flex justify-between p-4">
 					<h1 class="text-title-large">Create vendor</h1>
@@ -118,7 +124,10 @@ export function CreateVendorDialogContent() {
 						<div class="flex items-center gap-2">
 							<Button
 								class={twMerge(
-									buttonVariants({ variant: "default", class: "block mt-4" }),
+									buttonVariants({
+										variant: "default",
+										class: "flex items-center mt-4",
+									}),
 									(mutation.isSuccess ||
 										mutation.isError) &&
 										buttonVariants({ variant: "secondary" }),

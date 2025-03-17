@@ -8,14 +8,13 @@ export const config: LayoutConfig = {
 export default function Layout({ Component, url }: PageProps) {
 	return (
 		<>
-			<header class="p-4 text-onBackground rounded-2xl ">
+			<header class="p-4 text-onBackground rounded-2xl flex justify-between">
 				<a class="text-headline-large" href="/dashboard">Ledger</a>
+				<div>Profile</div>
 			</header>
 			<div class="flex">
 				<Sidebar active={url.pathname} />
-				<div
-					class="flex-grow bg-surfaceContainerLowest text-onSurface rounded-3xl"
-				>
+				<div class="flex-grow bg-surfaceContainerLowest text-onSurface rounded-3xl">
 					<Component />
 				</div>
 			</div>
