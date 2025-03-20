@@ -20,12 +20,14 @@ import * as $dashboard_index from "./routes/dashboard/index.tsx";
 import * as $dashboard_vendors_id_ from "./routes/dashboard/vendors/[id].tsx";
 import * as $dashboard_vendors_index from "./routes/dashboard/vendors/index.tsx";
 import * as $index from "./routes/index.tsx";
+import * as $logout from "./routes/logout.tsx";
 import * as $Combobox from "./islands/Combobox.tsx";
 import * as $dashboard_bills_CreateBillForm from "./islands/dashboard/bills/CreateBillForm.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
 import * as $dashboard_vendors_CreateVendorModal from "./islands/dashboard/vendors/CreateVendorModal.tsx";
 import * as $dashboard_vendors_VendorSearchbox from "./islands/dashboard/vendors/VendorSearchbox.tsx";
 import * as $dashboard_vendors_VendorsTable from "./islands/dashboard/vendors/VendorsTable.tsx";
+import * as $molecules_profile_dropdown from "./islands/molecules/profile-dropdown.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -48,6 +50,7 @@ const manifest = {
 		"./routes/dashboard/vendors/[id].tsx": $dashboard_vendors_id_,
 		"./routes/dashboard/vendors/index.tsx": $dashboard_vendors_index,
 		"./routes/index.tsx": $index,
+		"./routes/logout.tsx": $logout,
 	},
 	islands: {
 		"./islands/Combobox.tsx": $Combobox,
@@ -61,6 +64,7 @@ const manifest = {
 			$dashboard_vendors_VendorSearchbox,
 		"./islands/dashboard/vendors/VendorsTable.tsx":
 			$dashboard_vendors_VendorsTable,
+		"./islands/molecules/profile-dropdown.tsx": $molecules_profile_dropdown,
 	},
 	baseUrl: import.meta.url,
 } satisfies Manifest;

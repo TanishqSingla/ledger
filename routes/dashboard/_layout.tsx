@@ -1,5 +1,6 @@
 import { LayoutConfig, PageProps } from "$fresh/server.ts";
 import Sidebar from "../../components/Sidebar.tsx";
+import ProfileDropdown from "../../islands/molecules/profile-dropdown.tsx";
 
 export const config: LayoutConfig = {
 	skipInheritedLayouts: true,
@@ -10,7 +11,9 @@ export default function Layout({ Component, url }: PageProps) {
 		<>
 			<header class="p-4 text-onBackground rounded-2xl flex justify-between">
 				<a class="text-headline-large" href="/dashboard">Ledger</a>
-				<div>Profile</div>
+				<div>
+					<ProfileDropdown />
+				</div>
 			</header>
 			<div class="flex">
 				<Sidebar active={url.pathname} />
