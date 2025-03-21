@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "preact/hooks";
-import { CircleUserRound } from "../../components/icons/index.tsx"; import { logout } from "../../services/auth.ts";
+import { CircleUserRound } from "../../components/icons/index.tsx";
 
 export default function ProfileDropdown() {
 	const dialogRef = useRef<HTMLDialogElement>(null);
@@ -43,7 +43,11 @@ export default function ProfileDropdown() {
 
 	return (
 		<div className={"relative"}>
-			<button ref={triggerRef} onClick={() => dialogRef.current?.showModal()}>
+			<button
+				ref={triggerRef}
+				onClick={() => dialogRef.current?.showModal()}
+				aria-label={"profile button"}
+			>
 				<CircleUserRound />
 			</button>
 			<dialog
