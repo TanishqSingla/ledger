@@ -1,4 +1,5 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
+import Badge from "../../../components/atoms/badge.tsx";
 import { GetBillFromId } from "../../../db/Bills.ts";
 
 type Data = {
@@ -15,6 +16,12 @@ export const handler: Handlers = {
 	},
 };
 
+const badgeTypeStatusMap = {
+	"PENDING": "warning",
+	"IN_PAYMENT": "neutral",
+	"PAID": "success"
+} as const;
+
 export default function Bill({ params, data }: PageProps<Data>) {
 	return (
 		<main className="p-6">
@@ -29,6 +36,7 @@ export default function Bill({ params, data }: PageProps<Data>) {
 			{data.bill?._id
 				? (
 					<section className={"mt-6"}>
+						<Badge variant={badgeTypeStatusMap[data.bill.status]} text={data.bill.status} className="w-24 text-center"/>
 						<p>
 							Vendor:{" "}
 							<a
