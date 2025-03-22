@@ -52,19 +52,21 @@ export default function ProfileDropdown() {
 			</button>
 			<dialog
 				ref={dialogRef}
-				className={`m-0 bg-surfaceContainerLow rounded-xl backdrop:bg-transparent shadow -translate-x-1/4 flex flex-col`}
+				className={`m-0 bg-surfaceContainerLow rounded-xl backdrop:bg-transparent shadow -translate-x-1/4`}
 			>
-				<button
-					className={"cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"}
-				>
-					Profile
-				</button>
-				<a
-					className={"cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"}
-					href={"/logout"}
-				>
-					Logout
-				</a>
+				<div className={'flex flex-col'}>
+					<button
+						className={"cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"}
+					>
+						Profile
+					</button>
+					<a
+						className={"cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"}
+						href={"/logout"}
+					>
+						Logout
+					</a>
+				</div>
 			</dialog>
 		</div>
 	);

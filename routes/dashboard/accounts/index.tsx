@@ -1,4 +1,5 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { NoData } from "../../../components/icons/index.tsx";
 import { AccountDocument, GetAllAccounts } from "../../../db/Accounts.ts";
 
 type Data = {
@@ -28,9 +29,20 @@ export default function Accounts({ data }: PageProps<Data>) {
 				</a>
 			</div>
 
-			<div class="rounded-xl overflow-hidden relative mt-8 border">
-				{data.accounts.map((account) => <p>{account.account_name}</p>)}
-			</div>
+			{data.accounts.length
+				? (
+					<div class="rounded-xl overflow-hidden relative mt-8 border">
+						{data.accounts.map((account) => <p>{account.account_name}</p>)}
+					</div>
+				)
+				: (
+					<div
+						className={"flex gap-4 flex-col items-center justify-center rounded-xl overflow-hidden relative mt-8 border min-h-60"}
+					>
+						<NoData width={128} height={128} />
+						<p className={"text-center"}>No Data</p>
+					</div>
+				)}
 		</div>
 	);
 }
