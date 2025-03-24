@@ -6,3 +6,9 @@ export const KV_KEYS = {
 	USERS: "users",
 	ACCOUNTS: "accounts",
 };
+
+export const billStatusBadgeMap = {
+	"PENDING": { variant: "warning", text: "Pending" },
+	"IN_PAYMENT": { variant: "neutral", text: "In Payment" },
+	"PAID": { variant: "success", text: "Paid" },
+} as const;

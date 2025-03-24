@@ -9,6 +9,9 @@ export type Bill = {
 	vendor_id: string;
 	vendor_name: string;
 	status: "PENDING" | "IN_PAYMENT" | "PAID";
+	history?: { action: string; user: string }[];
+	comments?: { comment: string; user: string }[];
+	invoices?: string[];
 };
 
 export type BillDocument = Bill & MongoDocument;
@@ -24,13 +27,14 @@ export async function QueryBills({ limit }: { limit?: number }) {
 }
 
 export async function PutBill(
-	bill: Pick<Bill, "vendor_id" | "vendor_name" | "amount" | "status">,
+	bill: Bill,
 ) {
 	const doc = {
 		bill_id: nanoid(12),
 		vendor_id: bill.vendor_id,
 		vendor_name: bill.vendor_name,
 		amount: bill.amount,
+		invoices: bill?.invoices,
 		status: bill.status || "PENDING",
 		created_at: new Date(Date.now()).toUTCString(),
 		updated_at: new Date(Date.now()).toUTCString(),

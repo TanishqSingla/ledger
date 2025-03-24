@@ -5,6 +5,7 @@ import { Button } from "ketu";
 import { twMerge } from "tailwind-merge";
 import { buttonVariants } from "../../../components/Button.tsx";
 import {
+	NoData,
 	OpenInNewWindow,
 	TrashIcon,
 } from "../../../components/icons/index.tsx";
@@ -28,6 +29,7 @@ function VendorsTable() {
 		);
 	};
 
+	console.log(vendorsSignal.value);
 	return (
 		<table class="table-auto w-full border-collapse">
 			<thead>
@@ -44,7 +46,19 @@ function VendorsTable() {
 				</tr>
 			</thead>
 			<tbody>
-				{vendorsSignal.value.flatMap((vendor) =>
+				{!vendorsSignal.value.length && (
+					<tr
+						className={"min-h-60"}
+					>
+						<td colspan={7}>
+							<div className={"flex flex-col items-center justify-center my-8"}>
+								<NoData width={128} height={128} />
+								<p className={"text-center"}>No Data</p>
+							</div>
+						</td>
+					</tr>
+				)}
+				{vendorsSignal.value.length > 0 && vendorsSignal.value.flatMap((vendor) =>
 					vendor.vendor_name.toLowerCase().startsWith(vendorSearch.value)
 						? (
 							<tr

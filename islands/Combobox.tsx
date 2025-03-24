@@ -5,7 +5,7 @@ import { signal } from "@preact/signals";
 
 export const selectedVendor = signal<Vendor>();
 
-export default function ComboBox() {
+export const VendorComboBox = () => {
 	const [value, setValue] = useState("");
 	const [vendors, setVendors] = useState<Vendor[]>([]);
 	const [loading, setLoading] = useState(false);
@@ -73,6 +73,7 @@ export default function ComboBox() {
 				onInput={handleInput}
 				autocomplete={"off"}
 				placeholder={"Select Vendor"}
+				name={'vendor'}
 			/>
 			{!!value && !valueSelected && (
 				<div class="shadow-lg rounded-xl border border-secondary absolute top-full w-full bg-surfaceContainerHigh mt-1 overflow-hidden">

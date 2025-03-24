@@ -8,7 +8,10 @@ env:
   JWT_SECRET: temp
   RESEND_API_KEY: re_123545
   MONGODB_URI: mongodb://user:password@localhost:27017
+  AWS_ACCESS_KEY_ID: temp
+  SECRET_ACCESS_KEY: temp
 
+  STORAGE_BUCKET_NAME: bucket_name
 jobs:
   deploy:
     name: Deploy

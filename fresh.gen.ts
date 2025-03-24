@@ -7,6 +7,7 @@ import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
 import * as $api_protected_middleware from "./routes/api/(protected)/_middleware.ts";
 import * as $api_protected_bill from "./routes/api/(protected)/bill.ts";
+import * as $api_protected_s3 from "./routes/api/(protected)/s3.ts";
 import * as $api_protected_vendor from "./routes/api/(protected)/vendor.ts";
 import * as $auth_verify from "./routes/auth/verify.tsx";
 import * as $dashboard_layout from "./routes/dashboard/_layout.tsx";
@@ -37,6 +38,7 @@ const manifest = {
 		"./routes/_layout.tsx": $_layout,
 		"./routes/api/(protected)/_middleware.ts": $api_protected_middleware,
 		"./routes/api/(protected)/bill.ts": $api_protected_bill,
+		"./routes/api/(protected)/s3.ts": $api_protected_s3,
 		"./routes/api/(protected)/vendor.ts": $api_protected_vendor,
 		"./routes/auth/verify.tsx": $auth_verify,
 		"./routes/dashboard/_layout.tsx": $dashboard_layout,

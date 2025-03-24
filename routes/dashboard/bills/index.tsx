@@ -2,6 +2,10 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import { Button } from "ketu";
 import { BillDocument, QueryBills } from "../../../db/Bills.ts";
 import Input from "../../../components/Input.tsx";
+import Badge from "../../../components/atoms/badge.tsx";
+import { billStatusBadgeMap } from "../../../utils/constants.ts";
+import { NoData } from "../../../components/icons/index.tsx";
+import { buttonVariants } from "../../../components/Button.tsx";
 
 type Data = {
 	bills: BillDocument[];
@@ -34,7 +38,10 @@ export default function Bills({ data }: PageProps<Data>) {
 					<Button
 						as="a"
 						href="/dashboard/bills/create"
-						class="bg-tertiary text-onTertiary px-4 py-2 rounded-xl"
+						class={buttonVariants({
+							variant: "default",
+							className: "px-4 py-2",
+						})}
 					>
 						Create
 					</Button>
@@ -55,7 +62,21 @@ export default function Bills({ data }: PageProps<Data>) {
 						</tr>
 					</thead>
 					<tbody>
-						{data.bills.map((bill) => {
+						{!data.bills.length && (
+							<tr
+								className={"min-h-60"}
+							>
+								<td colspan={7}>
+									<div
+										className={"flex flex-col items-center justify-center my-8"}
+									>
+										<NoData width={128} height={128} />
+										<p className={"text-center"}>No Data</p>
+									</div>
+								</td>
+							</tr>
+						)}
+						{data.bills.length > 0 && data.bills.map((bill) => {
 							return (
 								<tr
 									class="even:bg-surfaceContainerLow/60 bg-surfaceContainerLowest hover:bg-tertiaryContainer/20"
@@ -79,7 +100,13 @@ export default function Bills({ data }: PageProps<Data>) {
 									<td class="px-4 py-2 text-label-large">
 										{Number(bill.amount).toLocaleString("en-IN")}
 									</td>
-									<td class="px-4 py-2 text-label-large">{bill.status}</td>
+									<td class="px-4 py-2 text-label-large">
+										<Badge
+											variant={billStatusBadgeMap[bill.status].variant}
+											text={billStatusBadgeMap[bill.status].text}
+											className="w-24 text-center"
+										/>
+									</td>
 								</tr>
 							);
 						})}
