@@ -2,6 +2,8 @@ import { useEffect, useState } from "preact/hooks";
 import Input from "../components/Input.tsx";
 import { Vendor } from "../db/Vendors.ts";
 import { signal } from "@preact/signals";
+import { useMutation } from "../hooks/useMutation.ts";
+import { putVendor } from '../services/vendor.ts'
 
 export const selectedVendor = signal<Vendor>();
 
@@ -11,17 +13,20 @@ export const VendorComboBox = () => {
 	const [loading, setLoading] = useState(false);
 	const [valueSelected, setValueSelected] = useState(false);
 
+	const createMutation = useMutation({
+		mutationFn: putVendor,
+		onSuccess: (data) => {
+			setValueSelected(true);
+			selectedVendor.value = data.data
+		},
+		onError: (err) => {
+			console.log(err);
+			setValueSelected(false);
+		}
+	});
+
 	const handleCreate = () => {
-		setLoading(true);
-		fetch("/api/vendor", {
-			method: "PUT",
-			body: JSON.stringify({
-				vendor_name: selectedVendor.value?.vendor_name,
-			}),
-		}).then((resp) => resp.json())
-			.then(() => {
-				setValueSelected(true);
-			}).finally(() => setLoading(false));
+		createMutation.mutate({ vendor_name: value });
 	};
 
 	const handleInput = (event: any) => {
@@ -71,14 +76,15 @@ export const VendorComboBox = () => {
 			<Input
 				value={value}
 				onInput={handleInput}
+				disabled={createMutation.isLoading}
 				autocomplete={"off"}
 				placeholder={"Select Vendor"}
-				name={'vendor'}
+				name={"vendor"}
 			/>
 			{!!value && !valueSelected && (
 				<div class="shadow-lg rounded-xl border border-secondary absolute top-full w-full bg-surfaceContainerHigh mt-1 overflow-hidden">
 					{loading && <>loading...</>}
-					{!loading && showCreateOption() && (
+					{(!loading || createMutation.isLoading) && showCreateOption() && (
 						<div
 							class="bg-surfaceContainerLowest hover:bg-surfaceContainerLow py-2 px-4 cursor-pointer"
 							onClick={handleCreate}
@@ -106,4 +112,4 @@ export const VendorComboBox = () => {
 			)}
 		</div>
 	);
-}
+};

@@ -28,6 +28,7 @@ import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/Ad
 import * as $dashboard_vendors_CreateVendorModal from "./islands/dashboard/vendors/CreateVendorModal.tsx";
 import * as $dashboard_vendors_VendorSearchbox from "./islands/dashboard/vendors/VendorSearchbox.tsx";
 import * as $dashboard_vendors_VendorsTable from "./islands/dashboard/vendors/VendorsTable.tsx";
+import * as $molecules_display_preference from "./islands/molecules/display-preference.tsx";
 import * as $molecules_profile_dropdown from "./islands/molecules/profile-dropdown.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
@@ -66,6 +67,7 @@ const manifest = {
 			$dashboard_vendors_VendorSearchbox,
 		"./islands/dashboard/vendors/VendorsTable.tsx":
 			$dashboard_vendors_VendorsTable,
+		"./islands/molecules/display-preference.tsx": $molecules_display_preference,
 		"./islands/molecules/profile-dropdown.tsx": $molecules_profile_dropdown,
 	},
 	baseUrl: import.meta.url,

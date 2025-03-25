@@ -39,7 +39,7 @@ export default function Bills({ data }: PageProps<Data>) {
 						as="a"
 						href="/dashboard/bills/create"
 						class={buttonVariants({
-							variant: "default",
+							variant: "filled",
 							className: "px-4 py-2",
 						})}
 					>

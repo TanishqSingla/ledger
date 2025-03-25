@@ -7,12 +7,11 @@ export const vendorSearch = signal("");
 
 export default function VendorSearchBox({ ...props }: ComponentProps<"input">) {
 	return (
-		<div class="bg-surfaceBright rounded-xl focus-within:ring-2 overflow-hidden relative">
+		<div class="overflow-hidden relative">
 			<Input
 				onInput={(e) => vendorSearch.value = e.currentTarget.value}
 				value={vendorSearch.value}
 				placeholder={"Search vendor"}
-				class="focus:ring-0 outline-none"
 				{...props}
 			/>
 			{!!vendorSearch.value && (

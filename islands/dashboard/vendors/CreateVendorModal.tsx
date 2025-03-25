@@ -1,5 +1,4 @@
 import Input from "../../../components/Input.tsx";
-import { Button } from "ketu";
 import { twMerge } from "tailwind-merge";
 
 import { buttonVariants } from "../../../components/Button.tsx";
@@ -57,7 +56,7 @@ export default function CreateVendorModal() {
 	return (
 		<>
 			<button
-				class={buttonVariants({ variant: "default" })}
+				class={buttonVariants({ variant: "filled" })}
 				onClick={() => dialogRef.current?.showModal()}
 			>
 				Create
@@ -80,13 +79,13 @@ export default function CreateVendorModal() {
 						>
 							<label htmlFor="vendor_name" class="text-label-large">
 								Vendor Name
+								<Input
+									placeholder="Vendor Name"
+									name="vendor_name"
+									id="vendor_name"
+									required
+								/>
 							</label>
-							<Input
-								placeholder="Vendor Name"
-								name="vendor_name"
-								id="vendor_name"
-								required
-							/>
 
 							<label htmlFor="email" class="text-label-large">
 								Vendor Email
@@ -99,15 +98,15 @@ export default function CreateVendorModal() {
 							</label>
 
 							<div class="flex items-center gap-2">
-								<Button
+								<button
 									class={twMerge(
 										buttonVariants({
-											variant: "default",
-											class: "flex items-center mt-4",
+											variant: "filled",
+											className: "flex items-center mt-4",
 										}),
 										(mutation.isSuccess ||
 											mutation.isError) &&
-											buttonVariants({ variant: "secondary" }),
+											buttonVariants({ variant: "outline" }),
 									)}
 									disabled={mutation.isLoading}
 								>
@@ -119,7 +118,7 @@ export default function CreateVendorModal() {
 									{mutation.isError && "Retry?"}
 									{mutation.isSuccess && "Add another"}
 									{!mutation.isError && !mutation.isSuccess && "Create"}
-								</Button>
+								</button>
 							</div>
 						</form>
 					</div>

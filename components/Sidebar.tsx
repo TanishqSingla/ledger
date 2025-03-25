@@ -21,8 +21,8 @@ const SidebarConfig = [
 	},
 	{
 		slug: "/dashboard/accounts",
-		label: "Accounts"
-	}
+		label: "Accounts",
+	},
 ];
 
 function SidebarItem({ item, active }: { item: SidebarItem; active: string }) {
@@ -31,7 +31,7 @@ function SidebarItem({ item, active }: { item: SidebarItem; active: string }) {
 			<a
 				class={twMerge(
 					"px-4 py-2 text-onSurface hover:bg-surfaceContainerHighest transition rounded-3xl text-body-large cursor-pointer block",
-					active === item.slug && "bg-surfaceContainerHigh",
+					active === item.slug && "bg-secondaryContainer text-onSurface",
 				)}
 				href={item.slug}
 			>
@@ -49,7 +49,7 @@ function SidebarItem({ item, active }: { item: SidebarItem; active: string }) {
 
 export default function Sidebar({ active }: { active: string }) {
 	return (
-		<div class="w-[280px] h-[calc(100vh-120px)] rounded-2xl bg-surface my-4 px-3">
+		<div class="w-[280px] h-full rounded-2xl bg-surfaceContainer p-3">
 			{SidebarConfig.map((item) => <SidebarItem item={item} active={active} />)}
 		</div>
 	);

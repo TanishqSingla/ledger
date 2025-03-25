@@ -30,8 +30,8 @@ export const deleteVendor = async (body: { vendor_id: string }) => {
 	const data = await response.json();
 
 	if (response.status > 400) {
-		throw new Error(data)
+		throw new Error(data);
 	}
-	
+
 	return data;
 };

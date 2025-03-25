@@ -15,7 +15,7 @@ export default function Layout({ Component, url }: PageProps) {
 					<ProfileDropdown />
 				</div>
 			</header>
-			<div class="flex">
+			<div class="flex h-[calc(100vh-72px)]">
 				<Sidebar active={url.pathname} />
 				<div class="flex-grow bg-surfaceContainerLowest text-onSurface rounded-3xl">
 					<Component />
