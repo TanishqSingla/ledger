@@ -29,7 +29,6 @@ function VendorsTable() {
 		);
 	};
 
-	console.log(vendorsSignal.value);
 	return (
 		<table class="table-auto w-full border-collapse">
 			<thead>

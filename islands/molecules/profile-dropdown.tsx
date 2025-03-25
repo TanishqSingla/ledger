@@ -1,22 +1,20 @@
-import { useCallback, useEffect, useRef } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 import { CircleUserRound } from "../../components/icons/index.tsx";
 
 export default function ProfileDropdown() {
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const triggerRef = useRef<HTMLButtonElement>(null);
 
-	const handleOutsideClick = useCallback((event: MouseEvent) => {
+	const handleOutsideClick = (event: MouseEvent) => {
 		const rect = dialogRef.current?.getBoundingClientRect()!;
 		const outsideDialog = event.clientY <= rect.top ||
 			event.clientX <= rect.left || event.clientX >= rect.right ||
 			event.clientY >= rect.bottom;
 
 		if (outsideDialog) dialogRef.current?.close();
-	}, []);
+	};
 
 	useEffect(() => {
-		dialogRef.current?.addEventListener("click", handleOutsideClick);
-
 		const observer = new ResizeObserver((_entries) => {
 			if (!dialogRef.current || !triggerRef.current) return;
 
@@ -37,7 +35,8 @@ export default function ProfileDropdown() {
 		observer.observe(dialogRef.current!);
 
 		return () => {
-			dialogRef.current?.removeEventListener("click", handleOutsideClick);
+			observer.unobserve(document.body);
+			observer.unobserve(dialogRef.current!);
 		};
 	}, []);
 
@@ -53,6 +52,7 @@ export default function ProfileDropdown() {
 			<dialog
 				ref={dialogRef}
 				className={`m-0 bg-surfaceContainerLow rounded-xl backdrop:bg-transparent shadow -translate-x-1/4`}
+				onClick={handleOutsideClick}
 			>
 				<div className={'flex flex-col'}>
 					<button
