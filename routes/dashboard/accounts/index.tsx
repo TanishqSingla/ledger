@@ -1,6 +1,8 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { Button } from "ketu";
 import { NoData } from "../../../components/icons/index.tsx";
 import { AccountDocument, GetAllAccounts } from "../../../db/Accounts.ts";
+import { buttonVariants } from "../../../components/Button.tsx";
 
 type Data = {
 	accounts: AccountDocument[];
@@ -21,12 +23,13 @@ export default function Accounts({ data }: PageProps<Data>) {
 			<p class="text-headline-small">User owned accounts</p>
 
 			<div class="my-4">
-				<a
+				<Button
+					as="a"
+					className={buttonVariants({ variant: "filled" })}
 					href="/dashboard/accounts/create"
-					class="rounded-lg bg-primary px-4 py-2 text-onPrimary"
 				>
 					Create
-				</a>
+				</Button>
 			</div>
 
 			{data.accounts.length

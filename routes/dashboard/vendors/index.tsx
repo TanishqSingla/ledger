@@ -1,8 +1,8 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { GetAllVendors, VendorDocument } from "../../../db/Vendors.ts";
 import CreateVendorModal from "../../../islands/dashboard/vendors/CreateVendorModal.tsx";
+import VendorsData from "../../../islands/dashboard/vendors/vendors-data.tsx";
 import VendorSearchBox from "../../../islands/dashboard/vendors/VendorSearchbox.tsx";
-import VendorsTable from "../../../islands/dashboard/vendors/VendorsTable.tsx";
 import DisplayPreference from "../../../islands/molecules/display-preference.tsx";
 
 type Data = {
@@ -26,14 +26,14 @@ export default function Vendors({ data }: PageProps<Data>) {
 					<VendorSearchBox />
 				</div>
 
-				<DisplayPreference />
+				<div class={"ml-auto flex gap-4"}>
+					<DisplayPreference />
 
-				<CreateVendorModal />
+					<CreateVendorModal />
+				</div>
 			</section>
 
-			<section class="rounded-xl overflow-hidden relative mt-8 border">
-				<VendorsTable vendors={data.vendors} />
-			</section>
+			<VendorsData vendors={data.vendors} />
 		</div>
 	);
 }

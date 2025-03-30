@@ -53,6 +53,8 @@ export default function CreateVendorModal() {
 		mutation.mutate(body);
 	};
 
+	const handleClose = () => dialogRef.current?.close()
+
 	return (
 		<>
 			<button
@@ -63,47 +65,49 @@ export default function CreateVendorModal() {
 			</button>
 			<dialog ref={dialogRef} className={"rounded-xl"}>
 				<div class="z-20 bg-white max-w-screen-sm">
-					<div class="flex justify-between p-4">
+					<div class="flex justify-between px-4 my-4">
 						<h1 class="text-title-large">Create vendor</h1>
 						<button
 							aria-label={"Close"}
-							onClick={() => dialogRef.current?.close()}
+							onClick={() => handleClose}
 						>
 							<CrossIcon />
 						</button>
 					</div>
-					<hr />
-					<div class="p-4">
+					<div class="px-4 my-4">
 						<form
 							onSubmit={handleSubmit}
 						>
-							<label htmlFor="vendor_name" class="text-label-large">
-								Vendor Name
-								<Input
-									placeholder="Vendor Name"
-									name="vendor_name"
-									id="vendor_name"
-									required
-								/>
-							</label>
+							<div className={"my-4"}>
+								<label htmlFor="vendor_name" class="text-label-large">
+									Vendor Name
+									<Input
+										placeholder="Vendor Name"
+										name="vendor_name"
+										id="vendor_name"
+										required
+									/>
+								</label>
 
-							<label htmlFor="email" class="text-label-large">
-								Vendor Email
-								<Input placeholder="Email" id="email" name="email" />
-							</label>
+								<label htmlFor="email" class="text-label-large">
+									Vendor Email
+									<Input placeholder="Email" id="email" name="email" />
+								</label>
 
-							<label htmlFor="phone" class="text-label-large">
-								Vendor Phone
-								<Input placeholder="Phone" id="phone" name="phone" />
-							</label>
+								<label htmlFor="phone" class="text-label-large">
+									Vendor Phone
+									<Input placeholder="Phone" id="phone" name="phone" />
+								</label>
+							</div>
 
-							<div class="flex items-center gap-2">
+							<div class="flex items-center justify-end gap-2">
+								<button className={buttonVariants({ variant: "text" })} type='button' onClick={handleClose}>
+									Cancel
+								</button>
+
 								<button
 									class={twMerge(
-										buttonVariants({
-											variant: "filled",
-											className: "flex items-center mt-4",
-										}),
+										buttonVariants({ variant: "filled" }),
 										(mutation.isSuccess ||
 											mutation.isError) &&
 											buttonVariants({ variant: "outline" }),

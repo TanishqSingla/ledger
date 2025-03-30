@@ -29,7 +29,7 @@ export default function Bills({ data }: PageProps<Data>) {
 			<div class="flex my-8">
 				<div class="flex gap-4">
 					<Input type="search" placeholder={"search"} autofocus />
-					<Button class="text-tertiary border border-tertiary px-4 py-2 rounded-xl hover:bg-tertiary hover:text-onTertiary transition">
+					<Button className={buttonVariants({ variant: "outline" })}>
 						Search
 					</Button>
 				</div>
@@ -40,7 +40,7 @@ export default function Bills({ data }: PageProps<Data>) {
 						href="/dashboard/bills/create"
 						class={buttonVariants({
 							variant: "filled",
-							className: "px-4 py-2",
+							className: "inline-flex items-center",
 						})}
 					>
 						Create

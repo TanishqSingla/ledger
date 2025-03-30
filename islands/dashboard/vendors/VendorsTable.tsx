@@ -14,7 +14,7 @@ import { deleteVendor } from "../../../services/vendor.ts";
 
 export const vendorsSignal = signal<VendorDocument[]>([]);
 
-function VendorsTable() {
+export function VendorsTable() {
 	const mutation = useMutation({
 		mutationFn: deleteVendor,
 		onError: (err) => {
@@ -108,11 +108,4 @@ function VendorsTable() {
 			</tbody>
 		</table>
 	);
-}
-
-export default function WithSignal(
-	{ vendors }: { vendors: VendorDocument[] },
-) {
-	vendorsSignal.value = vendors;
-	return <VendorsTable />;
 }

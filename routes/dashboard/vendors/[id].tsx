@@ -18,7 +18,16 @@ export const handler: Handlers = {
 export default function VendorPage({ data }: PageProps<Data>) {
 	return (
 		<div class="p-4">
-			<h1 class="text-display-small">{data.vendor.vendor_name}</h1>
+			<h1 class="text-display-small">
+				Vendor{" "}
+				<span className={"text-title-medium text-primary"}>#{data.vendor.vendor_id}</span>
+			</h1>
+
+			<section className={""}>
+				<p>Name: {data.vendor.vendor_name}</p>
+				<p>Email: {data.vendor.email || "-"}</p>
+				<p>Phone: {data.vendor.phone || "-"}</p>
+			</section>
 		</div>
 	);
 }
