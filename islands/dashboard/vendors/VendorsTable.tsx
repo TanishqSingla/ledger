@@ -1,5 +1,3 @@
-import { signal } from "@preact/signals";
-import { VendorDocument } from "../../../db/Vendors.ts";
 import { vendorSearch } from "./VendorSearchbox.tsx";
 import { Button } from "ketu";
 import { twMerge } from "tailwind-merge";
@@ -9,25 +7,11 @@ import {
 	OpenInNewWindow,
 	TrashIcon,
 } from "../../../components/icons/index.tsx";
-import { useMutation } from "../../../hooks/useMutation.ts";
-import { deleteVendor } from "../../../services/vendor.ts";
+import useVendor from "../../../hooks/vendor/useVendor.ts";
 
-export const vendorsSignal = signal<VendorDocument[]>([]);
 
 export function VendorsTable() {
-	const mutation = useMutation({
-		mutationFn: deleteVendor,
-		onError: (err) => {
-			console.log(err);
-		},
-	});
-
-	const handleDelete = async (vendor: VendorDocument) => {
-		await mutation.mutate({ vendor_id: vendor.vendor_id });
-		vendorsSignal.value = vendorsSignal.value?.filter((_vendor) =>
-			_vendor.vendor_id != vendor.vendor_id
-		);
-	};
+	const { data, deleteMutation, handleDelete } = useVendor();
 
 	return (
 		<table class="table-auto w-full border-collapse">
@@ -45,7 +29,7 @@ export function VendorsTable() {
 				</tr>
 			</thead>
 			<tbody>
-				{!vendorsSignal.value.length && (
+				{(!data.value || !data.value.length) && (
 					<tr
 						className={"min-h-60"}
 					>
@@ -57,7 +41,7 @@ export function VendorsTable() {
 						</td>
 					</tr>
 				)}
-				{vendorsSignal.value.length > 0 && vendorsSignal.value.flatMap((vendor) =>
+				{data.value  && data.value.flatMap((vendor) =>
 					vendor.vendor_name.toLowerCase().startsWith(vendorSearch.value)
 						? (
 							<tr
@@ -96,7 +80,7 @@ export function VendorsTable() {
 										title="Remove vendor"
 										aria-label="Remove vendor"
 										onClick={() => handleDelete(vendor)}
-										disabled={mutation.isLoading}
+										disabled={deleteMutation.isLoading}
 									>
 										<TrashIcon />
 									</Button>

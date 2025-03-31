@@ -2,24 +2,14 @@ import Input from "../../../components/Input.tsx";
 import { twMerge } from "tailwind-merge";
 
 import { buttonVariants } from "../../../components/Button.tsx";
-import { vendorsSignal } from "./VendorsTable.tsx";
 import { CrossIcon, Loader } from "../../../components/icons/index.tsx";
-import { useMutation } from "../../../hooks/useMutation.ts";
-import { putVendor } from "../../../services/vendor.ts";
 import { useCallback, useEffect, useRef } from "preact/hooks";
+import useVendor from "../../../hooks/vendor/useVendor.ts";
 
 export default function CreateVendorModal() {
-	const dialogRef = useRef<HTMLDialogElement>(null);
-	const mutation = useMutation({
-		mutationFn: putVendor,
-		onSuccess: (data) => {
-			vendorsSignal.value = [...vendorsSignal.value, data.data];
+	const { createMutation } = useVendor();
 
-			setTimeout(() => {
-				mutation.reset();
-			}, 3000);
-		},
-	});
+	const dialogRef = useRef<HTMLDialogElement>(null);
 
 	const handleOutsideClick = useCallback((event: MouseEvent) => {
 		const rect = dialogRef.current?.getBoundingClientRect()!;
@@ -50,7 +40,7 @@ export default function CreateVendorModal() {
 				{ phone: formData.get("phone")?.toString() }),
 		};
 
-		mutation.mutate(body);
+		createMutation.mutate(body);
 	};
 
 	const handleClose = () => dialogRef.current?.close()
@@ -69,7 +59,7 @@ export default function CreateVendorModal() {
 						<h1 class="text-title-large">Create vendor</h1>
 						<button
 							aria-label={"Close"}
-							onClick={() => handleClose}
+							onClick={handleClose}
 						>
 							<CrossIcon />
 						</button>
@@ -108,20 +98,20 @@ export default function CreateVendorModal() {
 								<button
 									class={twMerge(
 										buttonVariants({ variant: "filled" }),
-										(mutation.isSuccess ||
-											mutation.isError) &&
+										(createMutation.isSuccess ||
+											createMutation.isError) &&
 											buttonVariants({ variant: "outline" }),
 									)}
-									disabled={mutation.isLoading}
+									disabled={createMutation.isLoading}
 								>
-									{mutation.isLoading && (
+									{createMutation.isLoading && (
 										<span class="mr-1">
 											<Loader />
 										</span>
 									)}
-									{mutation.isError && "Retry?"}
-									{mutation.isSuccess && "Add another"}
-									{!mutation.isError && !mutation.isSuccess && "Create"}
+									{createMutation.isError && "Retry?"}
+									{createMutation.isSuccess && "Add another"}
+									{!createMutation.isError && !createMutation.isSuccess && "Create"}
 								</button>
 							</div>
 						</form>
