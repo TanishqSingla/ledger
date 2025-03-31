@@ -1,33 +1,35 @@
-import { computed, effect, signal } from "@preact/signals";
+import { effect, signal } from "@preact/signals";
 import { GridIcon, ListIcon } from "../../components/icons/index.tsx";
+import { useEffect } from "preact/hooks";
 
 export const DISPLAY_TYPE = {
 	LIST: "LIST",
 	GRID: "GRID",
 } as const;
 
-export const displayTypeSignal = signal<string | null>();
-
-export const displayTypeComputed = computed(() => {
-	if (!displayTypeSignal.value) {
-		if (localStorage)
-			return localStorage.getItem('displayType') || DISPLAY_TYPE.GRID;
-
-		return DISPLAY_TYPE.GRID;
-	}
-
-	return displayTypeSignal.value;
-})
+export const displayTypeSignal = signal<string>();
 
 effect(() => {
-	if (displayTypeComputed.value)
-		localStorage.setItem('displayType', displayTypeComputed.value)
+	if (typeof localStorage !== "undefined" && displayTypeSignal.value) {
+		localStorage.setItem("displayType", displayTypeSignal.value);
+	}
 });
 
 export default function DisplayPreference() {
 	const handleClick = (event: any) => {
 		displayTypeSignal.value = event.currentTarget.value;
 	};
+
+	useEffect(() => {
+		const localDisplayType = localStorage.getItem("displayType");
+
+		if (localDisplayType) {
+			displayTypeSignal.value = localDisplayType;
+		} else {
+			displayTypeSignal.value = DISPLAY_TYPE.GRID;
+			localStorage.setItem("displayType", displayTypeSignal.value);
+		}
+	}, []);
 
 	return (
 		<div
@@ -38,7 +40,7 @@ export default function DisplayPreference() {
 				value={DISPLAY_TYPE.LIST}
 				className={"px-4 py-2 text-onSurface hover:bg-onSurface data-[selected=true]:bg-secondaryContainer hover:bg-opacity-[0.08]"}
 				aria-selected={false}
-				data-selected={displayTypeComputed.value === DISPLAY_TYPE.LIST}
+				data-selected={displayTypeSignal.value === DISPLAY_TYPE.LIST}
 				onClick={handleClick}
 			>
 				<ListIcon />
@@ -48,7 +50,7 @@ export default function DisplayPreference() {
 				value={DISPLAY_TYPE.GRID}
 				className={"py-2 px-4 text-onSurface hover:bg-onSurface data-[selected=true]:bg-secondaryContainer hover:bg-opacity-[0.08]"}
 				aria-selected={false}
-				data-selected={displayTypeComputed.value === DISPLAY_TYPE.GRID}
+				data-selected={displayTypeSignal.value === DISPLAY_TYPE.GRID}
 				onClick={handleClick}
 			>
 				<GridIcon />
