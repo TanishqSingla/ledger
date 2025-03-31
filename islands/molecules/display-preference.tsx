@@ -1,12 +1,20 @@
-import { signal } from "@preact/signals";
+import { effect, signal } from "@preact/signals";
 import { GridIcon, ListIcon } from "../../components/icons/index.tsx";
 
 export const DISPLAY_TYPE = {
 	LIST: "LIST",
 	GRID: "GRID",
-};
+} as const;
 
-export const displayTypeSignal = signal(DISPLAY_TYPE.GRID);
+export const displayTypeSignal = signal<string>(DISPLAY_TYPE.GRID);
+
+if (localStorage.getItem('displayType')) {
+	displayTypeSignal.value = localStorage.getItem('displayType')!;
+}
+
+effect(() => {
+	localStorage.setItem('displayType', displayTypeSignal.value);
+})
 
 export default function DisplayPreference() {
 	const handleClick = (event: any) => {
