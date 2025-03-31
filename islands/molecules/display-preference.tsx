@@ -10,7 +10,10 @@ export const displayTypeSignal = signal<string | null>();
 
 export const displayTypeComputed = computed(() => {
 	if (!displayTypeSignal.value) {
-		return localStorage.getItem('displayType') || DISPLAY_TYPE.GRID;
+		if (localStorage)
+			return localStorage.getItem('displayType') || DISPLAY_TYPE.GRID;
+
+		return DISPLAY_TYPE.GRID;
 	}
 
 	return displayTypeSignal.value;
