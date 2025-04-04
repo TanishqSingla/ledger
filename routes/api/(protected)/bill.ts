@@ -7,7 +7,7 @@ export const handler: Handlers = {
 
 		const resp = await PutBill({ ...values });
 
-		if (resp.acknowledged) {
+	if (resp.acknowledged) {
 			return new Response(
 				JSON.stringify({
 					message: "Vendor added successfully",

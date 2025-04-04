@@ -6,9 +6,11 @@ import { selectedVendor, VendorComboBox } from "../../Combobox.tsx";
 export default function CreateBillForm() {
 	const [files, setFiles] = useState<FileList>();
 	const [uploadFileError, setUploadFileError] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	const handleSubmit = async (event: SubmitEvent) => {
 		event.preventDefault();
+		setLoading(true);
 
 		const formData = new FormData(event.target as HTMLFormElement);
 
@@ -56,8 +58,16 @@ export default function CreateBillForm() {
 				method: "PUT",
 				body: JSON.stringify(body),
 			});
+
+			const data = await resp.json();
+
+			if (data.data) {
+				window.location.href = '/dashboard/bills/' + data.data.id;
+			}
 		} catch (err) {
 			console.log(err);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -115,6 +125,7 @@ export default function CreateBillForm() {
 			<div>
 				<button
 					type="submit"
+					disabled={loading}
 					class="bg-tertiary text-onTertiary px-4 py-2 rounded-2xl disabled:bg-tertiary/60"
 				>
 					Add bill
