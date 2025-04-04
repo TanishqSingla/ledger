@@ -1,7 +1,9 @@
 import { useState } from "preact/hooks";
 import Input from "../../../components/Input.tsx";
 import { Bill } from "../../../db/Bills.ts";
+import { Loader } from "../../../components/icons/index.tsx";
 import { selectedVendor, VendorComboBox } from "../../Combobox.tsx";
+import { buttonVariants } from "../../../components/Button.tsx";
 
 export default function CreateBillForm() {
 	const [files, setFiles] = useState<FileList>();
@@ -60,9 +62,8 @@ export default function CreateBillForm() {
 			});
 
 			const data = await resp.json();
-
 			if (data.data) {
-				window.location.href = '/dashboard/bills/' + data.data.id;
+				globalThis.location.href = '/dashboard/bills/' + data.data.bill_id;
 			}
 		} catch (err) {
 			console.log(err);
@@ -126,8 +127,13 @@ export default function CreateBillForm() {
 				<button
 					type="submit"
 					disabled={loading}
-					class="bg-tertiary text-onTertiary px-4 py-2 rounded-2xl disabled:bg-tertiary/60"
+					class={buttonVariants({ variant: 'filled'})}
 				>
+					{loading && (
+						<span class="mr-1">
+							<Loader />
+						</span>
+					)}
 					Add bill
 				</button>
 			</div>

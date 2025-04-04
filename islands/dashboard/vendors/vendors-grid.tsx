@@ -1,3 +1,4 @@
+import { Button } from "ketu";
 import { buttonVariants } from "../../../components/Button.tsx";
 import { NoData, TrashIcon } from "../../../components/icons/index.tsx";
 import useVendor from "../../../hooks/vendor/useVendor.ts";
@@ -27,14 +28,16 @@ export function VendorsGrid() {
 							</p>
 
 							<div className={"mt-4 flex gap-4 items-center"}>
-								<button
+								<Button
 									className={buttonVariants({
 										variant: "text",
 										className: "ml-auto",
 									})}
+									as={"a"}
+									href={`/dashboard/vendors/${vendor.vendor_id}`}
 								>
 									View
-								</button>
+								</Button>
 
 								<button
 									title={"Delete"}
