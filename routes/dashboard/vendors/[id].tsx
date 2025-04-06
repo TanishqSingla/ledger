@@ -14,16 +14,15 @@ export const handler: Handlers = {
 	GET: async function (_req, ctx) {
 		const { id } = ctx.params;
 
-		const vendor = await GetVendorFromId(id);
+		const queries = await Promise.all([
+			GetVendorFromId(id),
+			QueryBills({
+				limit: 5,
+				vendor_id: id,
+			}),
+		]);
 
-		let recentBills: BillDocument[] = [];
-
-		recentBills = await QueryBills({
-			limit: 5,
-			vendor_id: id,
-		});
-
-		return ctx.render({ vendor, recentBills });
+		return ctx.render({ vendor: queries[0], recentBills: queries[1] });
 	},
 };
 
