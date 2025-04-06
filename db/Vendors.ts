@@ -41,7 +41,7 @@ export async function PutVendor(
 	return { ...resp, data: doc };
 }
 
-export async function GetVendorFromId(id: string) {
+export async function GetVendorFromId(id: string): Promise<VendorDocument> {
 	const resp = (await vendors()).findOne({ vendor_id: id });
 
 	return resp;

@@ -16,9 +16,12 @@ export type Bill = {
 
 export type BillDocument = Bill & MongoDocument;
 
-export async function QueryBills({ limit }: { limit?: number }) {
+export async function QueryBills(
+	{ limit, vendor_id }: { limit?: number; vendor_id?: string },
+): Promise<BillDocument[]> {
 	const queryOptions = {
 		limit,
+		vendor_id,
 	} satisfies FindOptions;
 
 	const resp = await (await bills()).find({}, queryOptions).toArray();
