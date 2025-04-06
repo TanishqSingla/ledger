@@ -47,8 +47,9 @@ export default function VendorPage({ data }: PageProps<Data>) {
 				<p>Phone: {data.vendor.phone || "-"}</p>
 			</section>
 
-			<section className={"rounded-xl overflow-hidden relative mt-8 border"}>
-				<table class="table-auto w-full border-collapse">
+			<h2 className={"mt-8 text-title-large"}>Recent Payments</h2>
+			<section className={"rounded-xl overflow-hidden relative"}>
+				<table class="table-auto w-full border-collapse border">
 					<thead>
 						<tr>
 							{colConfig.map((col) => (
