@@ -78,7 +78,6 @@ export default function CreateBillForm() {
 		if (!files) return;
 
 		const size = [...files].reduce((acc, file) => file.size + acc, 0);
-		console.log(files, size);
 		if (size > 5_000_000) {
 			setUploadFileError("File size exceeds limit");
 			return;

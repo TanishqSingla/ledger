@@ -33,7 +33,10 @@ export const FileUpload = ({ handleUpload }: FileUploadProps) => {
 
 		const files = dataTransfer?.files;
 		if (files) {
-			handleUpload([...files]);
+			const allowedFiles = [...files].filter((file) =>
+				file.type === "application/pdf" || file.type.includes("image/")
+			);
+			handleUpload(allowedFiles);
 		}
 	};
 
@@ -54,7 +57,6 @@ export const FileUpload = ({ handleUpload }: FileUploadProps) => {
 				onDragEnter={highlight}
 				onDragOver={highlight}
 				onDragLeave={unhighlight}
-				onDragEnd={unhighlight}
 				onDrop={handleDrop}
 				data-active={active}
 			>
