@@ -1,12 +1,13 @@
 import { useState } from "preact/hooks";
 import Input from "../../../components/Input.tsx";
 import { Bill } from "../../../db/Bills.ts";
-import { Loader } from "../../../components/icons/index.tsx";
+import { CrossIcon, Loader } from "../../../components/icons/index.tsx";
 import { selectedVendor, VendorComboBox } from "../../Combobox.tsx";
 import { buttonVariants } from "../../../components/Button.tsx";
+import { FileUpload } from "./file-input.tsx";
 
 export default function CreateBillForm() {
-	const [files, setFiles] = useState<FileList>();
+	const [files, setFiles] = useState<File[]>([]);
 	const [uploadFileError, setUploadFileError] = useState("");
 	const [loading, setLoading] = useState(false);
 
@@ -17,6 +18,7 @@ export default function CreateBillForm() {
 		const formData = new FormData(event.target as HTMLFormElement);
 
 		if (!selectedVendor.value) {
+			setLoading(false);
 			return;
 		}
 
@@ -63,7 +65,7 @@ export default function CreateBillForm() {
 
 			const data = await resp.json();
 			if (data.data) {
-				globalThis.location.href = '/dashboard/bills/' + data.data.bill_id;
+				globalThis.location.href = "/dashboard/bills/" + data.data.bill_id;
 			}
 		} catch (err) {
 			console.log(err);
@@ -72,19 +74,23 @@ export default function CreateBillForm() {
 		}
 	};
 
-	const handleUpload = (event: any) => {
-		const target = event.currentTarget as HTMLInputElement;
-		if (!target.files) return;
+	const handleUpload = (files: File[]) => {
+		if (!files) return;
 
-		const size = [...target.files].reduce((acc, file) => file.size + acc, 0);
-		console.log(size);
+		const size = [...files].reduce((acc, file) => file.size + acc, 0);
+		console.log(files, size);
 		if (size > 5_000_000) {
 			setUploadFileError("File size exceeds limit");
 			return;
 		}
 
-		setFiles(target.files);
+		setFiles((prev) => [...prev, ...files]);
 		setUploadFileError("");
+	};
+
+	const removeFile = (index: number) => {
+		files?.splice(index, 1);
+		setFiles(files);
 	};
 
 	return (
@@ -117,17 +123,33 @@ export default function CreateBillForm() {
 				</select>
 			</label>
 
-			<label class="text-title-medium block">
-				<p>Attach invoice:</p>
-				<input type="file" name="invoices" onChange={handleUpload} />
-			</label>
+			<FileUpload handleUpload={handleUpload} />
+			<div className={"flex flex-wrap gap-4"}>
+				{files && [...files].map((file, index) => {
+					return (
+						<div
+							className={"inline-flex items-center border border-outlineVariant h-8 rounded-lg px-2"}
+						>
+							<span>{file.name}</span>
+							<button
+								type={"button"}
+								className={"ml-2"}
+								onClick={() => removeFile(index)}
+								aria-label={"remove file"}
+							>
+								<CrossIcon height={14} width={14} />
+							</button>
+						</div>
+					);
+				})}
+			</div>
 			{uploadFileError && <p className={"text-error"}>{uploadFileError}</p>}
 
 			<div>
 				<button
 					type="submit"
 					disabled={loading}
-					class={buttonVariants({ variant: 'filled'})}
+					class={buttonVariants({ variant: "filled" })}
 				>
 					{loading && (
 						<span class="mr-1">

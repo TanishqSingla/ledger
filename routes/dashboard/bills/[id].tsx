@@ -56,7 +56,13 @@ export default function Bill({ params, data }: PageProps<Data>) {
 								</a>
 							</p>{" "}
 							<p>Date: {new Date(data.bill.created_at).toLocaleString()}</p>
-							<embed src={data.file} width="100%" height={600} type="text/plain"></embed>
+							<embed
+								src={data.file}
+								width="100%"
+								height={600}
+								type="text/plain"
+							>
+							</embed>
 						</>
 					)
 					: <></>}

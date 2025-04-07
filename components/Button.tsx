@@ -13,7 +13,7 @@ export const buttonVariants = cva(
 					"border border-outline text-primary bg-transparent hover:bg-primary hover:bg-opacity-[0.08] active:bg-primary active:bg-opacity-[0.1]",
 				secondary:
 					"bg-secondary text-onSecondary shadow-sm hover:bg-secondary/80",
-				text: 'text-primary hover:bg-opacity-[0.08] hover:bg-primary',
+				text: "text-primary hover:bg-opacity-[0.08] hover:bg-primary",
 				link: "text-primary underline-offset-4 hover:underline",
 			},
 			size: {

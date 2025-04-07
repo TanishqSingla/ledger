@@ -7,7 +7,9 @@ import {
 import { VendorsGrid } from "./vendors-grid.tsx";
 import { VendorsTable } from "./VendorsTable.tsx";
 
-export default function VendorsData({ vendors }: { vendors: VendorDocument[] }) {
+export default function VendorsData(
+	{ vendors }: { vendors: VendorDocument[] },
+) {
 	vendorsSignal.value = vendors;
 
 	if (displayTypeSignal.value === DISPLAY_TYPE.LIST) {

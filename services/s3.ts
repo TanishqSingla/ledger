@@ -21,7 +21,7 @@ export const uploadFile = async (key: string, body: Blob, type?: string) => {
 		Bucket: bucketName,
 		Key: key,
 		Body: body,
-		ContentType: type
+		ContentType: type,
 	});
 
 	const response = await s3Client.send(command);

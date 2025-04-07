@@ -24,7 +24,7 @@ export function useMutation<T extends (...args: any) => any>({
 			setIsSuccess(true);
 		} catch (err) {
 			onError(err);
-			
+
 			setIsError(true);
 		} finally {
 			setIsLoading(false);

@@ -18,10 +18,10 @@
 		"class-variance-authority": "npm:class-variance-authority@^0.7.1",
 		"ketu": "npm:ketu@^0.1.21",
 		"mongodb": "npm:mongodb@6.13.0",
-    "preact": "https://esm.sh/preact@10.25.0",
-    "preact/": "https://esm.sh/preact@10.25.0/",
-    "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
-    "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+		"preact": "https://esm.sh/preact@10.25.0",
+		"preact/": "https://esm.sh/preact@10.25.0/",
+		"@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
+		"@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
 		"@std/http": "jsr:@std/http@^1.0.3",
 		"@zaubrik/djwt": "jsr:@zaubrik/djwt@^3.0.2",
 		"tailwind-merge": "npm:tailwind-merge@^2.5.5",
@@ -29,5 +29,10 @@
 		"tailwindcss/": "npm:/tailwindcss@3.4.1/",
 		"tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js"
 	},
-	"compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact",  "noImplicitAny": true, "strict": true }
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "preact",
+		"noImplicitAny": true,
+		"strict": true
+	}
 }

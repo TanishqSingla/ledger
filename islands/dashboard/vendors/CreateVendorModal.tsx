@@ -43,7 +43,7 @@ export default function CreateVendorModal() {
 		createMutation.mutate(body);
 	};
 
-	const handleClose = () => dialogRef.current?.close()
+	const handleClose = () => dialogRef.current?.close();
 
 	return (
 		<>
@@ -91,7 +91,11 @@ export default function CreateVendorModal() {
 							</div>
 
 							<div class="flex items-center justify-end gap-2">
-								<button className={buttonVariants({ variant: "text" })} type='button' onClick={handleClose}>
+								<button
+									className={buttonVariants({ variant: "text" })}
+									type="button"
+									onClick={handleClose}
+								>
 									Cancel
 								</button>
 
@@ -111,7 +115,8 @@ export default function CreateVendorModal() {
 									)}
 									{createMutation.isError && "Retry?"}
 									{createMutation.isSuccess && "Add another"}
-									{!createMutation.isError && !createMutation.isSuccess && "Create"}
+									{!createMutation.isError && !createMutation.isSuccess &&
+										"Create"}
 								</button>
 							</div>
 						</form>

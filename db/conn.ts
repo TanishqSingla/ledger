@@ -29,11 +29,11 @@ export const vendors = async () => {
 export const bills = async () => {
 	const db = await getDB();
 
-	return db.collection("bills")
-}
+	return db.collection("bills");
+};
 
 export const accounts = async () => {
 	const db = await getDB();
 
-	return db.collection("accounts")
-}
+	return db.collection("accounts");
+};

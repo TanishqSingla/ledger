@@ -1,16 +1,16 @@
-version: '3.8'
+version: "3.8"
 
 services:
   mongodb:
-    image: mongo:latest          # Official MongoDB Docker image
-    container_name: ledger_db      # Name of the container
+    image: mongo:latest # Official MongoDB Docker image
+    container_name: ledger_db # Name of the container
     ports:
-      - "27017:27017"            # Expose MongoDB on localhost:27017
+      - "27017:27017" # Expose MongoDB on localhost:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root     # Set MongoDB root username
-      MONGO_INITDB_ROOT_PASSWORD: password  # Set MongoDB root password
+      MONGO_INITDB_ROOT_USERNAME: root # Set MongoDB root username
+      MONGO_INITDB_ROOT_PASSWORD: password # Set MongoDB root password
     volumes:
-      - mongodb_data:/data/db    # Persist MongoDB data in a Docker volume
+      - mongodb_data:/data/db # Persist MongoDB data in a Docker volume
 
 volumes:
   mongodb_data:

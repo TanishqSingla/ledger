@@ -3,7 +3,7 @@ import Input from "../components/Input.tsx";
 import { Vendor } from "../db/Vendors.ts";
 import { signal } from "@preact/signals";
 import { useMutation } from "../hooks/useMutation.ts";
-import { putVendor } from '../services/vendor.ts'
+import { putVendor } from "../services/vendor.ts";
 
 export const selectedVendor = signal<Vendor>();
 
@@ -17,12 +17,12 @@ export const VendorComboBox = () => {
 		mutationFn: putVendor,
 		onSuccess: (data) => {
 			setValueSelected(true);
-			selectedVendor.value = data.data
+			selectedVendor.value = data.data;
 		},
 		onError: (err) => {
 			console.log(err);
 			setValueSelected(false);
-		}
+		},
 	});
 
 	const handleCreate = () => {

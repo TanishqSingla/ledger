@@ -9,7 +9,7 @@ export default function App({ Component }: PageProps) {
 				<title>ledger</title>
 				<link rel="stylesheet" href="/styles.css" />
 			</head>
-			<body class='bg-background'>
+			<body class="bg-background">
 				<Component />
 			</body>
 		</html>

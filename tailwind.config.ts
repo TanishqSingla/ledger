@@ -77,10 +77,16 @@ export default {
 					fontWeight: 500,
 				}],
 				"label-large": ["14px", { lineHeight: "20px", letterSpacing: "0.1px" }],
-				"label-medium": ["12px", { lineHeight: "16px", letterSpacing: "0.5px" }],
+				"label-medium": ["12px", {
+					lineHeight: "16px",
+					letterSpacing: "0.5px",
+				}],
 				"label-small": ["11px", { lineHeight: "16px", letterSpacing: "0.5px" }],
 				"body-large": ["16px", { lineHeight: "24px", letterSpacing: "0.5px" }],
-				"body-medium": ["14px", { letterSpacing: "0.25px", lineHeight: "20px" }],
+				"body-medium": ["14px", {
+					letterSpacing: "0.25px",
+					lineHeight: "20px",
+				}],
 				"body-small": ["12px", { letterSpacing: "0.4px", lineHeight: "16px" }],
 			},
 		},

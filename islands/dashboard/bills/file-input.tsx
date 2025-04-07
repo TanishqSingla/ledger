@@ -1,0 +1,76 @@
+import { useRef, useState } from "preact/hooks";
+import { AddFiles } from "../../../components/icons/index.tsx";
+
+type FileUploadProps = {
+	handleUpload: (files: File[]) => void;
+};
+
+export const FileUpload = ({ handleUpload }: FileUploadProps) => {
+	const [active, setActive] = useState(false);
+
+	const dropAreaRef = useRef<HTMLLabelElement>(null);
+
+	const highlight = (event: DragEvent) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		if (active) return;
+		setActive(true);
+	};
+	const unhighlight = (event: DragEvent) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		if (!active) return;
+		setActive(false);
+	};
+
+	const handleDrop = (event: DragEvent) => {
+		event.preventDefault();
+		event.stopPropagation();
+
+		const dataTransfer = event.dataTransfer;
+
+		const files = dataTransfer?.files;
+		if (files) {
+			handleUpload([...files]);
+		}
+	};
+
+	const handleFileChange = (event: any) => {
+		const target = event.currentTarget as HTMLInputElement;
+
+		if (target.files) {
+			handleUpload([...target.files]);
+		}
+	};
+
+	return (
+		<>
+			<label
+				className={`h-40 rounded-xl w-full grid place-items-center bg-surfaceBright cursor-pointer border border-surfaceVariant border-dashed data-[active=true]:border-surfaceTint`}
+				for={"invoices"}
+				ref={dropAreaRef}
+				onDragEnter={highlight}
+				onDragOver={highlight}
+				onDragLeave={unhighlight}
+				onDragEnd={unhighlight}
+				onDrop={handleDrop}
+				data-active={active}
+			>
+				<AddFiles height={"72"} width={"72"} />
+				<p>
+					Attach invoices
+				</p>
+			</label>
+			<input
+				type="file"
+				multiple
+				id="invoices"
+				name="invoices"
+				class={"hidden"}
+				onChange={handleFileChange}
+			/>
+		</>
+	);
+};

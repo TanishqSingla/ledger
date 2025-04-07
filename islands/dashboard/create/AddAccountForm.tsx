@@ -14,7 +14,7 @@ export default function AddAccountForm() {
 			accountNumber: formData.get("accountNumber")?.toString().trim()!,
 			ifsc: formData.get("ifsc")?.toString()!,
 			isUserOwned: !!formData.get("isUserOwned"),
-		}
+		};
 
 		try {
 			await fetch("/dashboard/create/add-account", {
@@ -22,7 +22,7 @@ export default function AddAccountForm() {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(body)
+				body: JSON.stringify(body),
 			});
 		} catch (err) {
 			console.log(err);
@@ -38,7 +38,12 @@ export default function AddAccountForm() {
 		>
 			<label class="text-title-medium my-4 block" htmlFor="accountName">
 				Account Name:
-				<Input class="text-body-medium" name="accountName" id="accountName" required />
+				<Input
+					class="text-body-medium"
+					name="accountName"
+					id="accountName"
+					required
+				/>
 			</label>
 
 			<label class="text-title-medium block" htmlFor="accountNumber">

@@ -9,7 +9,6 @@ import {
 } from "../../../components/icons/index.tsx";
 import useVendor from "../../../hooks/vendor/useVendor.ts";
 
-
 export function VendorsTable() {
 	const { data, deleteMutation, handleDelete } = useVendor();
 
@@ -41,7 +40,7 @@ export function VendorsTable() {
 						</td>
 					</tr>
 				)}
-				{data.value  && data.value.flatMap((vendor) =>
+				{data.value && data.value.flatMap((vendor) =>
 					vendor.vendor_name.toLowerCase().startsWith(vendorSearch.value)
 						? (
 							<tr

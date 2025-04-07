@@ -18,6 +18,8 @@ export async function handler(req: Request, ctx: FreshContext) {
 	} catch (err) {
 		console.log(err);
 
-		return new Response(JSON.stringify({ error: "unauthorized" }), { status: 401 }) 
+		return new Response(JSON.stringify({ error: "unauthorized" }), {
+			status: 401,
+		});
 	}
 }

@@ -27,6 +27,7 @@ import * as $profile_middleware from "./routes/profile/_middleware.tsx";
 import * as $profile_index from "./routes/profile/index.tsx";
 import * as $Combobox from "./islands/Combobox.tsx";
 import * as $dashboard_bills_CreateBillForm from "./islands/dashboard/bills/CreateBillForm.tsx";
+import * as $dashboard_bills_file_input from "./islands/dashboard/bills/file-input.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
 import * as $dashboard_vendors_CreateVendorModal from "./islands/dashboard/vendors/CreateVendorModal.tsx";
 import * as $dashboard_vendors_VendorSearchbox from "./islands/dashboard/vendors/VendorSearchbox.tsx";
@@ -67,6 +68,7 @@ const manifest = {
 		"./islands/Combobox.tsx": $Combobox,
 		"./islands/dashboard/bills/CreateBillForm.tsx":
 			$dashboard_bills_CreateBillForm,
+		"./islands/dashboard/bills/file-input.tsx": $dashboard_bills_file_input,
 		"./islands/dashboard/create/AddAccountForm.tsx":
 			$dashboard_create_AddAccountForm,
 		"./islands/dashboard/vendors/CreateVendorModal.tsx":
