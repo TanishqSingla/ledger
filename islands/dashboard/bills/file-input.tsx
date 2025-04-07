@@ -70,6 +70,7 @@ export const FileUpload = ({ handleUpload }: FileUploadProps) => {
 				name="invoices"
 				class={"hidden"}
 				onChange={handleFileChange}
+				accept={"images/*,.pdf"}
 			/>
 		</>
 	);

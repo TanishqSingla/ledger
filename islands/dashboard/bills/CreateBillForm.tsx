@@ -89,8 +89,7 @@ export default function CreateBillForm() {
 	};
 
 	const removeFile = (index: number) => {
-		files?.splice(index, 1);
-		setFiles(files);
+		setFiles(files.toSpliced(index, 1));
 	};
 
 	return (
@@ -125,7 +124,7 @@ export default function CreateBillForm() {
 
 			<FileUpload handleUpload={handleUpload} />
 			<div className={"flex flex-wrap gap-4"}>
-				{files && [...files].map((file, index) => {
+				{files && files.map((file, index) => {
 					return (
 						<div
 							className={"inline-flex items-center border border-outlineVariant h-8 rounded-lg px-2"}
