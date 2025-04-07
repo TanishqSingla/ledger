@@ -22,6 +22,9 @@ import * as $dashboard_vendors_id_ from "./routes/dashboard/vendors/[id].tsx";
 import * as $dashboard_vendors_index from "./routes/dashboard/vendors/index.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $logout from "./routes/logout.tsx";
+import * as $profile_layout from "./routes/profile/_layout.tsx";
+import * as $profile_middleware from "./routes/profile/_middleware.tsx";
+import * as $profile_index from "./routes/profile/index.tsx";
 import * as $Combobox from "./islands/Combobox.tsx";
 import * as $dashboard_bills_CreateBillForm from "./islands/dashboard/bills/CreateBillForm.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
@@ -56,6 +59,9 @@ const manifest = {
 		"./routes/dashboard/vendors/index.tsx": $dashboard_vendors_index,
 		"./routes/index.tsx": $index,
 		"./routes/logout.tsx": $logout,
+		"./routes/profile/_layout.tsx": $profile_layout,
+		"./routes/profile/_middleware.tsx": $profile_middleware,
+		"./routes/profile/index.tsx": $profile_index,
 	},
 	islands: {
 		"./islands/Combobox.tsx": $Combobox,

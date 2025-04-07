@@ -54,12 +54,13 @@ export default function ProfileDropdown() {
 				className={`m-0 bg-surfaceContainerLow rounded-xl backdrop:bg-transparent shadow -translate-x-1/4`}
 				onClick={handleOutsideClick}
 			>
-				<div className={'flex flex-col'}>
-					<button
+				<div className={"flex flex-col"}>
+					<a
+						href={"/profile"}
 						className={"cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"}
 					>
 						Profile
-					</button>
+					</a>
 					<a
 						className={"cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"}
 						href={"/logout"}
