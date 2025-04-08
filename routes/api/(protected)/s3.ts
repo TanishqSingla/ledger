@@ -12,7 +12,7 @@ export const handler: Handlers = {
 			const id = nanoid(8);
 			const resp = await uploadFile(id, invoices, invoices.type);
 
-			return new Response(JSON.stringify({ ...resp, invoices: [id] }), {
+			return new Response(JSON.stringify({ ...resp, invoice: id }), {
 				status: resp.$metadata.httpStatusCode,
 			});
 		} catch (err: any) {

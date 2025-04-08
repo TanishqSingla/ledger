@@ -5,6 +5,7 @@ import { CrossIcon, Loader } from "../../../components/icons/index.tsx";
 import { selectedVendor, VendorComboBox } from "../../Combobox.tsx";
 import { buttonVariants } from "../../../components/Button.tsx";
 import { FileUpload } from "./file-input.tsx";
+import { uploadFileApi } from "../../../services/bill.ts";
 
 export default function CreateBillForm() {
 	const [files, setFiles] = useState<File[]>([]);
@@ -30,30 +31,23 @@ export default function CreateBillForm() {
 				(formData.get("status")?.toString() || "PENDING") as Bill["status"],
 		};
 
-		const file = formData.get("invoices") as File;
-		if (file.size > 5_000_000) {
+		const fileSize = [...files].reduce((acc, file) => file.size + acc, 0);
+		if (fileSize > 5_000_000) {
 			return;
 		}
 
-		const invoices = [];
+		const invoices: string[] = [];
 		if (files) {
-			const fileFormData = new FormData();
-			fileFormData.append("invoices", files[0], "test-file");
-			const response = await fetch("/api/s3", {
-				method: "PUT",
-				body: fileFormData,
+			const queries = files.map((file) => uploadFileApi(file));
+			const uploadedFiles = await Promise.allSettled(queries);
+
+			uploadedFiles.forEach((file) => {
+				if (file.status === "fulfilled") {
+					invoices.push(file.value.invoice);
+				}
+
+				//TODO: add taost for rest
 			});
-
-			if (response.status > 400) {
-				console.log("Failed to upload file");
-				return;
-			}
-
-			const data = await response.json();
-
-			if (data?.invoices) {
-				invoices.push(...data.invoices);
-			}
 		}
 
 		Object.assign(body, { invoices });
