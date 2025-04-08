@@ -29,6 +29,8 @@ export const FileUpload = ({ handleUpload }: FileUploadProps) => {
 		event.preventDefault();
 		event.stopPropagation();
 
+		if (active) setActive(false);
+
 		const dataTransfer = event.dataTransfer;
 
 		const files = dataTransfer?.files;
