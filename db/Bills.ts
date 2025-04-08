@@ -23,10 +23,11 @@ export async function QueryBills(
 		limit,
 	} satisfies FindOptions;
 
-	const filters = Object.create({ vendor_id });
+	const filters = {
+		...(vendor_id && { vendor_id })
+	} 
 
-	const resp = await (await bills()).find({ ...filters }, queryOptions).toArray();
-
+	const resp = await (await bills()).find(filters, queryOptions).toArray();
 	return resp;
 }
 
