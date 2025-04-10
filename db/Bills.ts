@@ -24,10 +24,20 @@ export async function QueryBills(
 	} satisfies FindOptions;
 
 	const filters = {
-		...(vendor_id && { vendor_id })
-	} 
+		...(vendor_id && { vendor_id }),
+	};
 
 	const resp = await (await bills()).find(filters, queryOptions).toArray();
+	return resp;
+}
+
+export async function SearchBills(
+	{ query }: { query: string },
+): Promise<BillDocument[]> {
+	const resp = await (await bills()).find({
+		$or: [{ vendor_name: { $regex: query, $options: "i" } }],
+	}).toArray();
+
 	return resp;
 }
 

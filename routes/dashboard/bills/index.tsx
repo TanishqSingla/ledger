@@ -1,6 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Button } from "ketu";
-import { BillDocument, QueryBills } from "../../../db/Bills.ts";
+import { BillDocument, QueryBills, SearchBills } from "../../../db/Bills.ts";
 import Input from "../../../components/Input.tsx";
 import Badge from "../../../components/atoms/badge.tsx";
 import { billStatusBadgeMap } from "../../../utils/constants.ts";
@@ -13,8 +13,13 @@ type Data = {
 
 export const handler: Handlers = {
 	GET: async function (_req, ctx) {
-		const limit = +ctx.params?.limit || 50;
+		const limit = +(ctx.url.searchParams.get("limit") || 50);
 
+		const searchTerm = ctx.url.searchParams.get("search_term");
+		if (searchTerm) {
+			const data = await SearchBills({ query: searchTerm });
+			return ctx.render({ bills: data });
+		}
 		const data = await QueryBills({ limit });
 
 		return ctx.render({ bills: data });
@@ -27,12 +32,17 @@ export default function Bills({ data }: PageProps<Data>) {
 			<h1 class="text-display-medium">Bills</h1>
 
 			<div class="flex my-8">
-				<div class="flex gap-4">
-					<Input type="search" placeholder={"search"} autofocus />
+				<form method={"GET"} class="flex gap-4">
+					<Input
+						type="search"
+						placeholder={"search"}
+						name="search_term"
+						autofocus
+					/>
 					<Button className={buttonVariants({ variant: "outline" })}>
 						Search
 					</Button>
-				</div>
+				</form>
 
 				<div class="ml-auto">
 					<Button
