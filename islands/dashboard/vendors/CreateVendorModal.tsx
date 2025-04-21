@@ -3,30 +3,13 @@ import { twMerge } from "tailwind-merge";
 
 import { buttonVariants } from "../../../components/Button.tsx";
 import { CrossIcon, Loader } from "../../../components/icons/index.tsx";
-import { useCallback, useEffect, useRef } from "preact/hooks";
+import { useRef } from "preact/hooks";
 import useVendor from "../../../hooks/vendor/useVendor.ts";
 
 export default function CreateVendorModal() {
 	const { createMutation } = useVendor();
 
 	const dialogRef = useRef<HTMLDialogElement>(null);
-
-	const handleOutsideClick = useCallback((event: MouseEvent) => {
-		const rect = dialogRef.current?.getBoundingClientRect()!;
-		const outsideDialog = event.clientY <= rect.top ||
-			event.clientX <= rect.left || event.clientX >= rect.right ||
-			event.clientY >= rect.bottom;
-
-		if (outsideDialog) dialogRef.current?.close();
-	}, []);
-
-	useEffect(() => {
-		dialogRef.current?.addEventListener("click", handleOutsideClick);
-
-		return () => {
-			dialogRef.current?.removeEventListener("click", handleOutsideClick);
-		};
-	}, []);
 
 	const handleSubmit = (e: SubmitEvent) => {
 		e.preventDefault();
@@ -53,7 +36,7 @@ export default function CreateVendorModal() {
 			>
 				Create
 			</button>
-			<dialog ref={dialogRef} className={"rounded-xl"}>
+			<dialog is={'modal-dialog'} ref={dialogRef} className={"rounded-xl"}>
 				<div class="z-20 bg-white max-w-screen-sm">
 					<div class="flex justify-between px-4 my-4">
 						<h1 class="text-title-large">Create vendor</h1>

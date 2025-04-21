@@ -5,15 +5,6 @@ export default function ProfileDropdown() {
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const triggerRef = useRef<HTMLButtonElement>(null);
 
-	const handleOutsideClick = (event: MouseEvent) => {
-		const rect = dialogRef.current?.getBoundingClientRect()!;
-		const outsideDialog = event.clientY <= rect.top ||
-			event.clientX <= rect.left || event.clientX >= rect.right ||
-			event.clientY >= rect.bottom;
-
-		if (outsideDialog) dialogRef.current?.close();
-	};
-
 	useEffect(() => {
 		const observer = new ResizeObserver((_entries) => {
 			if (!dialogRef.current || !triggerRef.current) return;
@@ -52,7 +43,7 @@ export default function ProfileDropdown() {
 			<dialog
 				ref={dialogRef}
 				className={`m-0 bg-surfaceContainerLow rounded-xl backdrop:bg-transparent shadow -translate-x-1/4`}
-				onClick={handleOutsideClick}
+				is="modal-dialog"
 			>
 				<div className={"flex flex-col"}>
 					<a

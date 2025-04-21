@@ -7,7 +7,7 @@ import {
 	Loader,
 	PlusIcon,
 } from "../../../components/icons/index.tsx";
-import { useCallback, useEffect, useRef } from "preact/hooks";
+import { useRef } from "preact/hooks";
 import { Vendor } from "../../../db/Vendors.ts";
 import { useMutation } from "../../../hooks/useMutation.ts";
 import { addVendorAccount } from "../../../services/vendor.ts";
@@ -20,23 +20,6 @@ export default function AddVendorAccountModal(
 	const mutation = useMutation({
 		mutationFn: addVendorAccount,
 	});
-
-	const handleOutsideClick = useCallback((event: MouseEvent) => {
-		const rect = dialogRef.current?.getBoundingClientRect()!;
-		const outsideDialog = event.clientY <= rect.top ||
-			event.clientX <= rect.left || event.clientX >= rect.right ||
-			event.clientY >= rect.bottom;
-
-		if (outsideDialog) dialogRef.current?.close();
-	}, []);
-
-	useEffect(() => {
-		dialogRef.current?.addEventListener("click", handleOutsideClick);
-
-		return () => {
-			dialogRef.current?.removeEventListener("click", handleOutsideClick);
-		};
-	}, []);
 
 	const handleSubmit = (e: SubmitEvent) => {
 		e.preventDefault();
@@ -62,7 +45,7 @@ export default function AddVendorAccountModal(
 			>
 				<PlusIcon /> Add Account
 			</button>
-			<dialog ref={dialogRef} className={"rounded-xl"}>
+			<dialog is="modal-dialog" ref={dialogRef} className={"rounded-xl"}>
 				<div class="z-20 bg-white max-w-screen-sm">
 					<div class="flex justify-between px-4 my-4">
 						<h1 class="text-title-large">Create vendor</h1>
