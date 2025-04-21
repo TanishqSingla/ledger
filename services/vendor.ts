@@ -1,4 +1,4 @@
-import { VendorDocument } from "../db/Vendors.ts";
+import { Vendor, VendorDocument } from "../db/Vendors.ts";
 
 export type PutVendorPayload = {
 	vendor_name: string;
@@ -8,7 +8,7 @@ export type PutVendorPayload = {
 
 export const putVendor = async (body: PutVendorPayload) => {
 	const response = await fetch("/api/vendor", {
-		method: "PUT",
+		method: "POST",
 		body: JSON.stringify(body),
 	});
 
@@ -25,6 +25,23 @@ export const deleteVendor = async (body: { vendor_id: string }) => {
 	const response = await fetch("/api/vendor", {
 		method: "DELETE",
 		body: JSON.stringify(body),
+	});
+
+	const data = await response.json();
+
+	if (response.status > 400) {
+		throw new Error(data);
+	}
+
+	return data;
+};
+
+export const addVendorAccount = async (
+	{ vendor_id, account }: { vendor_id: string; account: Vendor["accounts"][0] },
+) => {
+	const response = await fetch(`/api/vendor/${vendor_id}/accounts`, {
+		method: "PUT",
+		body: JSON.stringify(account),
 	});
 
 	const data = await response.json();

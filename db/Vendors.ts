@@ -7,6 +7,11 @@ export type Vendor = {
 	vendor_name: string;
 	email: string;
 	phone: string;
+	accounts: {
+		bank_name?: string;
+		account_number: string;
+		ifsc: string;
+	}[];
 };
 
 export type VendorDocument = Vendor & MongoDocument;
@@ -43,6 +48,17 @@ export async function PutVendor(
 
 export async function GetVendorFromId(id: string): Promise<VendorDocument> {
 	const resp = (await vendors()).findOne({ vendor_id: id });
+
+	return resp;
+}
+
+export async function AddAccountToVendor(
+	vendor_id: string,
+	accounts: Vendor["accounts"][0],
+) {
+	const resp = (await vendors()).updateOne({ vendor_id }, {
+		"$push": { accounts },
+	});
 
 	return resp;
 }

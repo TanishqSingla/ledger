@@ -8,7 +8,8 @@ import * as $_layout from "./routes/_layout.tsx";
 import * as $api_protected_middleware from "./routes/api/(protected)/_middleware.ts";
 import * as $api_protected_bill from "./routes/api/(protected)/bill.ts";
 import * as $api_protected_s3 from "./routes/api/(protected)/s3.ts";
-import * as $api_protected_vendor from "./routes/api/(protected)/vendor.ts";
+import * as $api_protected_vendor_vendor_id_accounts from "./routes/api/(protected)/vendor/[vendor_id]/accounts.ts";
+import * as $api_protected_vendor_index from "./routes/api/(protected)/vendor/index.ts";
 import * as $auth_verify from "./routes/auth/verify.tsx";
 import * as $dashboard_layout from "./routes/dashboard/_layout.tsx";
 import * as $dashboard_middleware from "./routes/dashboard/_middleware.ts";
@@ -29,6 +30,7 @@ import * as $Combobox from "./islands/Combobox.tsx";
 import * as $dashboard_bills_CreateBillForm from "./islands/dashboard/bills/CreateBillForm.tsx";
 import * as $dashboard_bills_file_input from "./islands/dashboard/bills/file-input.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
+import * as $dashboard_vendors_AddVendorAccountModal from "./islands/dashboard/vendors/AddVendorAccountModal.tsx";
 import * as $dashboard_vendors_CreateVendorModal from "./islands/dashboard/vendors/CreateVendorModal.tsx";
 import * as $dashboard_vendors_VendorSearchbox from "./islands/dashboard/vendors/VendorSearchbox.tsx";
 import * as $dashboard_vendors_VendorsTable from "./islands/dashboard/vendors/VendorsTable.tsx";
@@ -46,7 +48,9 @@ const manifest = {
 		"./routes/api/(protected)/_middleware.ts": $api_protected_middleware,
 		"./routes/api/(protected)/bill.ts": $api_protected_bill,
 		"./routes/api/(protected)/s3.ts": $api_protected_s3,
-		"./routes/api/(protected)/vendor.ts": $api_protected_vendor,
+		"./routes/api/(protected)/vendor/[vendor_id]/accounts.ts":
+			$api_protected_vendor_vendor_id_accounts,
+		"./routes/api/(protected)/vendor/index.ts": $api_protected_vendor_index,
 		"./routes/auth/verify.tsx": $auth_verify,
 		"./routes/dashboard/_layout.tsx": $dashboard_layout,
 		"./routes/dashboard/_middleware.ts": $dashboard_middleware,
@@ -71,6 +75,8 @@ const manifest = {
 		"./islands/dashboard/bills/file-input.tsx": $dashboard_bills_file_input,
 		"./islands/dashboard/create/AddAccountForm.tsx":
 			$dashboard_create_AddAccountForm,
+		"./islands/dashboard/vendors/AddVendorAccountModal.tsx":
+			$dashboard_vendors_AddVendorAccountModal,
 		"./islands/dashboard/vendors/CreateVendorModal.tsx":
 			$dashboard_vendors_CreateVendorModal,
 		"./islands/dashboard/vendors/VendorSearchbox.tsx":
