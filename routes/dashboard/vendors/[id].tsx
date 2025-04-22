@@ -5,6 +5,7 @@ import { BillDocument, QueryBills } from "../../../db/Bills.ts";
 import { GetVendorFromId, Vendor } from "../../../db/Vendors.ts";
 import { billStatusBadgeMap } from "../../../utils/constants.ts";
 import AddVendorAccountModal from "../../../islands/dashboard/vendors/AddVendorAccountModal.tsx";
+import { buttonVariants } from "../../../components/Button.tsx";
 
 type Data = {
 	vendor: Vendor;
@@ -103,7 +104,7 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 
 			<section>
 				<p className={"mt-8 text-title-large"}>Recent Payments</p>
-				<div className={"rounded-xl overflow-hidden relative border"}>
+				<div className={"rounded-xl overflow-hidden relative border my-4"}>
 					<table class="table-auto w-full border-collapse">
 						<thead>
 							<tr>
@@ -162,6 +163,13 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 						</tbody>
 					</table>
 				</div>
+
+				<a
+					href={`/dashboard/bills?vendor_id=${params.id}`}
+					className={buttonVariants({ variant: "outline" })}
+				>
+					View All
+				</a>
 			</section>
 		</main>
 	);
