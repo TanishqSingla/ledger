@@ -23,7 +23,7 @@ export default function AddVendorAccountModal(
 	});
 
 	const validateFormBody = (body: Vendor["accounts"][0]) => {
-		if (!/\w{4}0[a-zA-Z0-9]/.test(body.ifsc)) {
+		if (!/\w{4}0[a-zA-Z0-9]{6}/.test(body.ifsc)) {
 			return null;
 		}
 
