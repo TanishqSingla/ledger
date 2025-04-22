@@ -7,7 +7,7 @@ import {
 	Loader,
 	PlusIcon,
 } from "../../../components/icons/index.tsx";
-import { useRef } from "preact/hooks";
+import { useRef, useState } from "preact/hooks";
 import { Vendor } from "../../../db/Vendors.ts";
 import { useMutation } from "../../../hooks/useMutation.ts";
 import { addVendorAccount } from "../../../services/vendor.ts";
@@ -16,10 +16,20 @@ export default function AddVendorAccountModal(
 	{ vendorId }: { vendorId: string },
 ) {
 	const dialogRef = useRef<HTMLDialogElement>(null);
+	const [error, setError] = useState(false);
 
 	const mutation = useMutation({
 		mutationFn: addVendorAccount,
 	});
+
+	const validateFormBody = (body: Vendor["accounts"][0]) => {
+		if (!/\w{4}0[a-zA-Z0-9]/.test(body.ifsc)) {
+			return null;
+		}
+
+		body.ifsc.toUpperCase();
+		return body;
+	};
 
 	const handleSubmit = (e: SubmitEvent) => {
 		e.preventDefault();
@@ -27,10 +37,17 @@ export default function AddVendorAccountModal(
 
 		const body: Vendor["accounts"][0] = {
 			...(formData.get("bank_name") &&
-				{ bank_name: formData.get("bank_name")!.toString() }),
-			account_number: formData.get("account_number")!.toString(),
-			ifsc: formData.get("account_number")!.toString(),
+				{ bank_name: formData.get("bank_name")!.toString().trim() }),
+			account_number: formData.get("account_number")!.toString().trim(),
+			ifsc: formData.get("ifsc")!.toString().trim(),
 		};
+
+		const payload = validateFormBody(body);
+		if (!payload) {
+			setError(true);
+			return;
+		}
+		setError(false);
 
 		mutation.mutate({ vendor_id: vendorId, account: body });
 	};
@@ -73,8 +90,13 @@ export default function AddVendorAccountModal(
 
 								<label htmlFor="ifsc" class="text-label-large">
 									IFSC
-									<Input placeholder="IFSC" id="ifsc" name="ifsc" />
+									<Input
+										placeholder="IFSC"
+										id="ifsc"
+										name="ifsc"
+									/>
 								</label>
+								{error && <p className={"text-error"}>Invalid IFSC</p>}
 
 								<label htmlFor="bank_name" class="text-label-large">
 									Bank Name

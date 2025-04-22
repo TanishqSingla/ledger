@@ -36,7 +36,7 @@ export default function CreateVendorModal() {
 			>
 				Create
 			</button>
-			<dialog is={'modal-dialog'} ref={dialogRef} className={"rounded-xl"}>
+			<dialog is={"modal-dialog"} ref={dialogRef} className={"rounded-xl"}>
 				<div class="z-20 bg-white max-w-screen-sm">
 					<div class="flex justify-between px-4 my-4">
 						<h1 class="text-title-large">Create vendor</h1>
