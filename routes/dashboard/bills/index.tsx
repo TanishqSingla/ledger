@@ -14,13 +14,14 @@ type Data = {
 export const handler: Handlers = {
 	GET: async function (_req, ctx) {
 		const limit = +(ctx.url.searchParams.get("limit") || 50);
+		const vendor_id = ctx.url.searchParams.get("vendor_id") || "";
 
 		const searchTerm = ctx.url.searchParams.get("search_term");
 		if (searchTerm) {
 			const data = await SearchBills({ query: searchTerm });
 			return ctx.render({ bills: data });
 		}
-		const data = await QueryBills({ limit });
+		const data = await QueryBills({ limit, vendor_id });
 
 		return ctx.render({ bills: data });
 	},
