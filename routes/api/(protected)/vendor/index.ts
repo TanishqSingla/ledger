@@ -3,15 +3,6 @@ import { vendors } from "../../../../db/conn.ts";
 import { DeleteVendor, PutVendor } from "../../../../db/Vendors.ts";
 
 export const handler: Handlers = {
-	PATCH: async function (req, ctx) {
-		// For now this is used to add account
-
-		const payload = await req.json();
-
-		console.log(payload);
-		console.log(ctx.data);
-		return ctx.data;
-	},
 	POST: async function (req, _ctx) {
 		const query = await req.json();
 

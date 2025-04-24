@@ -8,7 +8,7 @@ export type PutVendorPayload = {
 
 export const putVendor = async (body: PutVendorPayload) => {
 	const response = await fetch("/api/vendor", {
-		method: "POST",
+		method: "PUT",
 		body: JSON.stringify(body),
 	});
 
