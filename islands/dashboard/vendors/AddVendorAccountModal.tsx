@@ -10,7 +10,7 @@ import {
 import { useRef, useState } from "preact/hooks";
 import { Vendor } from "../../../db/Vendors.ts";
 import { useMutation } from "../../../hooks/useMutation.ts";
-import { addVendorAccount } from "../../../services/vendor.ts";
+import { addVendorAccount } from "../../../queries/vendor.ts";
 
 export default function AddVendorAccountModal(
 	{ vendorId }: { vendorId: string },
@@ -35,11 +35,15 @@ export default function AddVendorAccountModal(
 		e.preventDefault();
 		const formData = new FormData(e.target as HTMLFormElement);
 
+		const account_number = formData.get("account_number")!.toString().trim();
+		const ifsc = formData.get("ifsc")!.toString().trim();
+
 		const body: Vendor["accounts"][0] = {
 			...(formData.get("bank_name") &&
 				{ bank_name: formData.get("bank_name")!.toString().trim() }),
-			account_number: formData.get("account_number")!.toString().trim(),
-			ifsc: formData.get("ifsc")!.toString().trim(),
+			account_number,
+			ifsc,
+			id: account_number.toLowerCase() + ifsc.toLowerCase(),
 		};
 
 		const payload = validateFormBody(body);

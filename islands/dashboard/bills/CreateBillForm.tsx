@@ -5,7 +5,7 @@ import { CrossIcon, Loader } from "../../../components/icons/index.tsx";
 import { selectedVendor, VendorComboBox } from "../../Combobox.tsx";
 import { buttonVariants } from "../../../components/Button.tsx";
 import { FileUpload } from "./file-input.tsx";
-import { uploadFileApi } from "../../../services/bill.ts";
+import { uploadFileApi } from "../../../queries/bill.ts";
 
 export default function CreateBillForm() {
 	const [files, setFiles] = useState<File[]>([]);

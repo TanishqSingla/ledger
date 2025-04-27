@@ -8,6 +8,7 @@ export type Vendor = {
 	email: string;
 	phone: string;
 	accounts: {
+		id: string;
 		bank_name?: string;
 		account_number: string;
 		ifsc: string;
@@ -47,8 +48,9 @@ export async function PutVendor(
 }
 
 export async function GetVendorFromId(id: string): Promise<VendorDocument> {
-	const resp = (await vendors()).findOne({ vendor_id: id });
+	const resp = await (await vendors()).findOne({ vendor_id: id });
 
+	//@ts-ignore: mongo
 	return resp;
 }
 
@@ -56,8 +58,21 @@ export async function AddAccountToVendor(
 	vendor_id: string,
 	accounts: Vendor["accounts"][0],
 ) {
-	const resp = (await vendors()).updateOne({ vendor_id }, {
+	const resp = await (await vendors()).updateOne({ vendor_id }, {
+		//@ts-ignore: mongo
 		"$push": { accounts },
+	});
+
+	return resp;
+}
+
+export async function DeleteVendorAccount(
+	vendor_id: string,
+	accountId: string,
+) {
+	const resp = await (await vendors()).updateOne({ vendor_id }, {
+		// @ts-ignore: mongo
+		"$pull": { accounts: { id: accountId } },
 	});
 
 	return resp;

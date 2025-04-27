@@ -1,6 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
-import { uploadFile } from "../../../services/s3.ts";
+import { uploadFile } from "../../../queries/s3.ts";
 
 export const handler: Handlers = {
 	PUT: async function (req, _ctx) {

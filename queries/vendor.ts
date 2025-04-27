@@ -52,3 +52,20 @@ export const addVendorAccount = async (
 
 	return data;
 };
+
+export const deleteVendorAccount = async (
+	{ vendor_id, accountId }: { vendor_id: string; accountId: string },
+) => {
+	const response = await fetch(`/api/vendor/${vendor_id}/accounts`, {
+		method: "DELETE",
+		body: JSON.stringify({ accountId }),
+	});
+
+	const data = await response.json();
+
+	if (response.status > 400) {
+		throw new Error(data);
+	}
+
+	return data;
+};

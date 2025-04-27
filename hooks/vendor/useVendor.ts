@@ -1,5 +1,5 @@
 import { VendorDocument } from "../../db/Vendors.ts";
-import { deleteVendor, putVendor } from "../../services/vendor.ts";
+import { deleteVendor, putVendor } from "../../queries/vendor.ts";
 import { useMutation } from "../useMutation.ts";
 import { computed, signal } from "@preact/signals";
 

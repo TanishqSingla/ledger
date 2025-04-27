@@ -1,7 +1,7 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Badge from "../../../components/atoms/badge.tsx";
 import { type Bill, GetBillFromId } from "../../../db/Bills.ts";
-import { getFile } from "../../../services/s3.ts";
+import { getFile } from "../../../queries/s3.ts";
 import { billStatusBadgeMap } from "../../../utils/constants.ts";
 
 type Data = {
