@@ -32,6 +32,7 @@ import * as $dashboard_bills_file_input from "./islands/dashboard/bills/file-inp
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
 import * as $dashboard_vendors_AddVendorAccountModal from "./islands/dashboard/vendors/AddVendorAccountModal.tsx";
 import * as $dashboard_vendors_CreateVendorModal from "./islands/dashboard/vendors/CreateVendorModal.tsx";
+import * as $dashboard_vendors_VendorAccountTable from "./islands/dashboard/vendors/VendorAccountTable.tsx";
 import * as $dashboard_vendors_VendorSearchbox from "./islands/dashboard/vendors/VendorSearchbox.tsx";
 import * as $dashboard_vendors_VendorsTable from "./islands/dashboard/vendors/VendorsTable.tsx";
 import * as $dashboard_vendors_vendors_data from "./islands/dashboard/vendors/vendors-data.tsx";
@@ -79,6 +80,8 @@ const manifest = {
 			$dashboard_vendors_AddVendorAccountModal,
 		"./islands/dashboard/vendors/CreateVendorModal.tsx":
 			$dashboard_vendors_CreateVendorModal,
+		"./islands/dashboard/vendors/VendorAccountTable.tsx":
+			$dashboard_vendors_VendorAccountTable,
 		"./islands/dashboard/vendors/VendorSearchbox.tsx":
 			$dashboard_vendors_VendorSearchbox,
 		"./islands/dashboard/vendors/VendorsTable.tsx":

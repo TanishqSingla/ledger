@@ -5,9 +5,12 @@ import { buttonVariants } from "../../../components/Button.tsx";
 import { CrossIcon, Loader } from "../../../components/icons/index.tsx";
 import { useRef } from "preact/hooks";
 import useVendor from "../../../hooks/vendor/useVendor.ts";
+import { VendorDocument } from "../../../db/Vendors.ts";
 
-export default function CreateVendorModal() {
-	const { createMutation } = useVendor();
+export default function CreateVendorModal(
+	{ vendors }: { vendors: VendorDocument[] },
+) {
+	const { createMutation } = useVendor(vendors);
 
 	const dialogRef = useRef<HTMLDialogElement>(null);
 

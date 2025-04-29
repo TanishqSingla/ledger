@@ -3,9 +3,10 @@ import { buttonVariants } from "../../../components/Button.tsx";
 import { NoData, TrashIcon } from "../../../components/icons/index.tsx";
 import useVendor from "../../../hooks/vendor/useVendor.ts";
 import { vendorSearch } from "./VendorSearchbox.tsx";
+import { VendorDocument } from "../../../db/Vendors.ts";
 
-export function VendorsGrid() {
-	const { data, deleteMutation, handleDelete } = useVendor();
+export function VendorsGrid({ vendors }: { vendors: VendorDocument[] }) {
+	const { data, deleteMutation, handleDelete } = useVendor(vendors);
 
 	return (
 		<div className={"flex flex-wrap gap-6"}>

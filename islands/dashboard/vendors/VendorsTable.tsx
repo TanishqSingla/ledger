@@ -8,9 +8,10 @@ import {
 	TrashIcon,
 } from "../../../components/icons/index.tsx";
 import useVendor from "../../../hooks/vendor/useVendor.ts";
+import { VendorDocument } from "../../../db/Vendors.ts";
 
-export function VendorsTable() {
-	const { data, deleteMutation, handleDelete } = useVendor();
+export function VendorsTable({vendors}: { vendors: VendorDocument[] }) {
+	const { data, deleteMutation, handleDelete } = useVendor(vendors);
 
 	return (
 		<table class="table-auto w-full border-collapse">

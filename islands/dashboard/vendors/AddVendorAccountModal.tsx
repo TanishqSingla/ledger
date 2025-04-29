@@ -8,19 +8,15 @@ import {
 	PlusIcon,
 } from "../../../components/icons/index.tsx";
 import { useRef, useState } from "preact/hooks";
-import { Vendor } from "../../../db/Vendors.ts";
-import { useMutation } from "../../../hooks/useMutation.ts";
-import { addVendorAccount } from "../../../queries/vendor.ts";
+import { Vendor, VendorDocument } from "../../../db/Vendors.ts";
+import { useVendorAccounts } from "../../../hooks/vendor/useVendorAccounts.tsx";
 
 export default function AddVendorAccountModal(
-	{ vendorId }: { vendorId: string },
+	{ vendor }: { vendor: VendorDocument },
 ) {
+	const { data: accountsData, createMutation } = useVendorAccounts(vendor.accounts);
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const [error, setError] = useState(false);
-
-	const mutation = useMutation({
-		mutationFn: addVendorAccount,
-	});
 
 	const validateFormBody = (body: Vendor["accounts"][0]) => {
 		if (!/\w{4}0[a-zA-Z0-9]{6}/.test(body.ifsc)) {
@@ -37,13 +33,18 @@ export default function AddVendorAccountModal(
 
 		const account_number = formData.get("account_number")!.toString().trim();
 		const ifsc = formData.get("ifsc")!.toString().trim();
+		const id = account_number.toLowerCase() + ifsc.toLowerCase();
+
+		if (accountsData.value.findIndex((account) => account.id === id) != -1) {
+			return;
+		}
 
 		const body: Vendor["accounts"][0] = {
 			...(formData.get("bank_name") &&
 				{ bank_name: formData.get("bank_name")!.toString().trim() }),
 			account_number,
 			ifsc,
-			id: account_number.toLowerCase() + ifsc.toLowerCase(),
+			id,
 		};
 
 		const payload = validateFormBody(body);
@@ -53,7 +54,7 @@ export default function AddVendorAccountModal(
 		}
 		setError(false);
 
-		mutation.mutate({ vendor_id: vendorId, account: body });
+		createMutation.mutate({ vendor_id: vendor.vendor_id, account: body });
 	};
 
 	const handleClose = () => dialogRef.current?.close();
@@ -124,20 +125,20 @@ export default function AddVendorAccountModal(
 								<button
 									class={twMerge(
 										buttonVariants({ variant: "filled" }),
-										(mutation.isSuccess ||
-											mutation.isError) &&
+										(createMutation.isSuccess ||
+											createMutation.isError) &&
 											buttonVariants({ variant: "outline" }),
 									)}
-									disabled={mutation.isLoading}
+									disabled={createMutation.isLoading}
 								>
-									{mutation.isLoading && (
+									{createMutation.isLoading && (
 										<span class="mr-1">
 											<Loader />
 										</span>
 									)}
-									{mutation.isError && "Retry?"}
-									{mutation.isSuccess && "Add another"}
-									{!mutation.isError && !mutation.isSuccess &&
+									{createMutation.isError && "Retry?"}
+									{createMutation.isSuccess && "Add another"}
+									{!createMutation.isError && !createMutation.isSuccess &&
 										"Create"}
 								</button>
 							</div>

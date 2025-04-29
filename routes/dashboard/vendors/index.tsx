@@ -29,7 +29,7 @@ export default function Vendors({ data }: PageProps<Data>) {
 				<div class={"ml-auto flex gap-4"}>
 					<DisplayPreference />
 
-					<CreateVendorModal />
+					<CreateVendorModal vendors={data.vendors} />
 				</div>
 			</section>
 

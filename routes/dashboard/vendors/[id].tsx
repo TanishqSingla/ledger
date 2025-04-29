@@ -2,13 +2,14 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import Badge from "../../../components/atoms/badge.tsx";
 import { NoData } from "../../../components/icons/index.tsx";
 import { BillDocument, QueryBills } from "../../../db/Bills.ts";
-import { GetVendorFromId, Vendor } from "../../../db/Vendors.ts";
+import { GetVendorFromId, VendorDocument } from "../../../db/Vendors.ts";
 import { billStatusBadgeMap } from "../../../utils/constants.ts";
 import AddVendorAccountModal from "../../../islands/dashboard/vendors/AddVendorAccountModal.tsx";
 import { buttonVariants } from "../../../components/Button.tsx";
+import VendorAccountTable from "../../../islands/dashboard/vendors/VendorAccountTable.tsx";
 
 type Data = {
-	vendor: Vendor;
+	vendor: VendorDocument;
 	recentBills: BillDocument[];
 };
 
@@ -49,7 +50,7 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 				{data.vendor.vendor_name}
 			</h1>
 
-			<section className={""}>
+			<section>
 				<p>Id: {data.vendor.vendor_id}</p>
 				<p>Email: {data.vendor.email || "-"}</p>
 				<p>Phone: {data.vendor.phone || "-"}</p>
@@ -66,6 +67,8 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 										{col.name}
 									</th>
 								))}
+
+								<th class="px-4 py-2 bg-surfaceContainer text-left">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -83,23 +86,17 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 									</td>
 								</tr>
 							)}
-							{data.vendor?.accounts?.map((account, index) => (
-								<tr className="even:bg-surfaceContainerLow/60 bg-surfaceContainerLowest hover:bg-tertiaryContainer/20">
-									<td class="px-4 py-2 text-label-large">{index + 1}</td>
-									<td class="px-4 py-2 text-label-large">
-										{account.bank_name}
-									</td>
-									<td class="px-4 py-2 text-label-large">
-										{account.account_number}
-									</td>
-									<td class="px-4 py-2 text-label-large">{account.ifsc}</td>
-								</tr>
-							))}
+							{data.vendor.accounts.length > 0 && (
+								<VendorAccountTable
+									accounts={data.vendor.accounts}
+									vendorId={data.vendor.vendor_id}
+								/>
+							)}
 						</tbody>
 					</table>
 				</div>
 
-				<AddVendorAccountModal vendorId={params.id} />
+				<AddVendorAccountModal vendor={data.vendor} />
 			</section>
 
 			<section>

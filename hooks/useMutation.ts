@@ -6,7 +6,7 @@ export function useMutation<T extends (...args: any) => any>({
 	onError = () => {},
 }: {
 	mutationFn: T;
-	onSuccess?: (data: Awaited<ReturnType<T>>) => void;
+	onSuccess?: (data: Awaited<ReturnType<T>>, params: Parameters<T>[0]) => void;
 	onError?: (err: any) => void;
 }) {
 	const [isSuccess, setIsSuccess] = useState(false);
@@ -19,7 +19,7 @@ export function useMutation<T extends (...args: any) => any>({
 
 		try {
 			const resp = await mutationFn(params);
-			onSuccess(resp);
+			onSuccess(resp, params);
 
 			setIsSuccess(true);
 		} catch (err) {
