@@ -5,6 +5,7 @@ export const SENDER_EMAIL = `mails.tanishqsingla.in`;
 export const KV_KEYS = {
 	USERS: "users",
 	ACCOUNTS: "accounts",
+	VENDORS: "vendors"
 };
 
 export const billStatusBadgeMap = {

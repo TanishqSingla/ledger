@@ -4,6 +4,8 @@ import CreateVendorModal from "../../../islands/dashboard/vendors/CreateVendorMo
 import VendorsData from "../../../islands/dashboard/vendors/vendors-data.tsx";
 import VendorSearchBox from "../../../islands/dashboard/vendors/VendorSearchbox.tsx";
 import DisplayPreference from "../../../islands/molecules/display-preference.tsx";
+import { KV_KEYS } from "../../../utils/constants.ts";
+import { kv } from "../../../utils/db.ts";
 
 type Data = {
 	vendors: VendorDocument[];
@@ -11,7 +13,16 @@ type Data = {
 
 export const handler: Handlers = {
 	GET: async function (_req, ctx) {
+		const cache = await kv.get<VendorDocument[]>([KV_KEYS.VENDORS]);
+
+		if (!!cache.value && cache.value?.length > 0) {
+			console.log("[Cache]: vendors hit");
+			return ctx.render({ vendors: cache.value });
+		}
+
+		console.log("[Cache]: vendors miss");
 		const data = await GetAllVendors();
+		kv.set([KV_KEYS.VENDORS], data);
 
 		return ctx.render({ vendors: data });
 	},

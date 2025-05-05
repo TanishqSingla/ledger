@@ -1,6 +1,8 @@
 import { Handlers } from "$fresh/server.ts";
 import { vendors } from "../../../../db/conn.ts";
 import { DeleteVendor, PutVendor } from "../../../../db/Vendors.ts";
+import { KV_KEYS } from "../../../../utils/constants.ts";
+import { kv } from "../../../../utils/db.ts";
 
 export const handler: Handlers = {
 	POST: async function (req, _ctx) {
@@ -22,6 +24,10 @@ export const handler: Handlers = {
 		});
 
 		if (resp.acknowledged) {
+			// Innvalidate cache
+			console.log('[Cache]: Invalidated', KV_KEYS.VENDORS)
+			kv.delete([KV_KEYS.VENDORS]);
+
 			return new Response(
 				JSON.stringify({
 					message: "Vendor added successfully",
