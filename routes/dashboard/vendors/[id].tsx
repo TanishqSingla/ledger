@@ -86,7 +86,7 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 									</td>
 								</tr>
 							)}
-							{data.vendor.accounts.length > 0 && (
+							{data.vendor?.accounts?.length > 0 && (
 								<VendorAccountTable
 									accounts={data.vendor.accounts}
 									vendorId={data.vendor.vendor_id}
