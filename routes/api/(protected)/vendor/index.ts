@@ -47,6 +47,10 @@ export const handler: Handlers = {
 		const resp = await DeleteVendor(values.vendor_id);
 
 		if (resp.acknowledged) {
+			// Innvalidate cache
+			console.log('[Cache]: Invalidated', KV_KEYS.VENDORS)
+			kv.delete([KV_KEYS.VENDORS]);
+
 			return new Response(
 				JSON.stringify({ message: "Vendor deleted successfully" }),
 				{ status: 200 },
