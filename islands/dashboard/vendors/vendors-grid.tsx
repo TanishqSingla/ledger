@@ -9,7 +9,7 @@ export function VendorsGrid({ vendors }: { vendors: VendorDocument[] }) {
 	const { data, deleteMutation, handleDelete } = useVendor(vendors);
 
 	return (
-		<div className={"flex flex-wrap gap-6"}>
+		<div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"}>
 			{(!data.value || !data.value?.length) && (
 				<div className={"flex flex-col items-center justify-center my-8"}>
 					<NoData width={128} height={128} />
@@ -20,7 +20,7 @@ export function VendorsGrid({ vendors }: { vendors: VendorDocument[] }) {
 				vendor.vendor_name.toLowerCase().startsWith(vendorSearch.value)
 					? (
 						<div
-							className={"bg-surfaceContainerLow border border-outlineVariant rounded-xl p-4 min-w-72"}
+							className={"bg-surfaceContainerLow border border-outlineVariant rounded-xl p-4"}
 						>
 							<p className={"text-title-large"}>{vendor.vendor_name}</p>
 
@@ -53,9 +53,6 @@ export function VendorsGrid({ vendors }: { vendors: VendorDocument[] }) {
 					)
 					: []
 			)}
-
-			<div className={"bg-surfaceContainerLow"}>
-			</div>
 		</div>
 	);
 }
