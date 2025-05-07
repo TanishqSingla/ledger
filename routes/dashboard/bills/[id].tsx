@@ -65,7 +65,10 @@ export default function Bill({ params, data }: PageProps<Data>) {
 							</embed>
 						</>
 					)
-					: <></>}
+					: <>Bill not found</>}
+			</section>
+
+			<section>
 			</section>
 		</main>
 	);

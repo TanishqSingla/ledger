@@ -18,7 +18,7 @@ export type BillDocument = Bill & MongoDocument;
 
 export async function QueryBills(
 	{ limit, vendor_id }: { limit?: number; vendor_id?: string },
-): Promise<BillDocument[]> {
+) {
 	const queryOptions = {
 		limit,
 	} satisfies FindOptions;
@@ -28,17 +28,17 @@ export async function QueryBills(
 	};
 
 	const resp = await (await bills()).find(filters, queryOptions).toArray();
-	return resp;
+	return resp as BillDocument[];
 }
 
 export async function SearchBills(
 	{ query }: { query: string },
-): Promise<BillDocument[]> {
+) {
 	const resp = await (await bills()).find({
 		$or: [{ vendor_name: { $regex: query, $options: "i" } }],
 	}).toArray();
 
-	return resp;
+	return resp as BillDocument[];
 }
 
 export async function PutBill(

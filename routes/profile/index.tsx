@@ -1,12 +1,12 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 
 type Data = {
-	email: string;
+	email_id: string;
 };
 
 export const handler: Handlers = {
 	GET: (_, ctx) => {
-		return ctx.render({ email: ctx.state.email });
+		return ctx.render({ email: ctx.state.email_id });
 	},
 };
 
@@ -19,7 +19,7 @@ export default function ProfilePage({ data }: PageProps<Data>) {
 				<p className={"text-white text-headline-medium"}>T</p>
 			</figure>
 			<div>
-				<p className={"text-headline-small"}>{data.email}</p>
+				<p className={"text-headline-small"}>{data.email_id}</p>
 			</div>
 		</main>
 	);
