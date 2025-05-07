@@ -12,6 +12,7 @@ env:
   SECRET_ACCESS_KEY: temp
 
   STORAGE_BUCKET_NAME: bucket_name
+  EMAIL_SENDER: temp
 jobs:
   deploy:
     name: Deploy

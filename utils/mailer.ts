@@ -12,7 +12,7 @@ export const sendEmail = (params: SendEmailParams) => {
 			"Authorization": `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
 		},
 		body: JSON.stringify({
-			from: `noreply <no-reply@mails.tanishqsingla.in>`,
+			from: Deno.env.get('EMAIL_SENDER'),
 			html: params.body,
 			subject: params.subject,
 			to: params.to,
