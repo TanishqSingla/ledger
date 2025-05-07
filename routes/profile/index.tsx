@@ -6,7 +6,7 @@ type Data = {
 
 export const handler: Handlers = {
 	GET: (_, ctx) => {
-		return ctx.render({ email: ctx.state.email_id });
+		return ctx.render({ email_id: ctx.state.email_id });
 	},
 };
 
