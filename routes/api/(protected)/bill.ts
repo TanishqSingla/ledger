@@ -2,10 +2,10 @@ import { Handlers } from "$fresh/server.ts";
 import { PutBill } from "../../../db/Bills.ts";
 
 export const handler: Handlers = {
-	PUT: async function (req, _ctx) {
+	PUT: async function (req, ctx) {
 		const values = await req.json();
 
-		const resp = await PutBill({ ...values });
+		const resp = await PutBill({ ...values }, ctx.state.email_id as string);
 
 		if (resp.acknowledged) {
 			return new Response(

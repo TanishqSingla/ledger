@@ -43,6 +43,7 @@ export async function SearchBills(
 
 export async function PutBill(
 	bill: Bill,
+	user: string
 ) {
 	const doc = {
 		bill_id: nanoid(12),
@@ -53,6 +54,10 @@ export async function PutBill(
 		status: bill.status || "PENDING",
 		created_at: new Date(Date.now()).toUTCString(),
 		updated_at: new Date(Date.now()).toUTCString(),
+		history: [{
+			action: "CREATE",
+			user
+		}]
 	};
 
 	const resp = await (await bills()).insertOne({ ...doc });

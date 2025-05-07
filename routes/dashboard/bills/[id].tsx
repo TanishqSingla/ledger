@@ -68,8 +68,16 @@ export default function Bill({ params, data }: PageProps<Data>) {
 					: <>Bill not found</>}
 			</section>
 
-			<section>
-			</section>
+			{data.bill?.history && (
+				<section>
+					<h2>History</h2>
+					<ul>
+						{data.bill.history.map((item, index) => {
+							return <li key={index}>{item.action} by {item.user}</li>;
+						})}
+					</ul>
+				</section>
+			)}
 		</main>
 	);
 }
