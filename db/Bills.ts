@@ -9,7 +9,7 @@ export type Bill = {
 	vendor_id: string;
 	vendor_name: string;
 	status: "PENDING" | "IN_PAYMENT" | "PAID";
-	history?: { action: string; user: string }[];
+	history?: { action: string; user: string, timestamp: number }[];
 	comments?: { comment: string; user: string }[];
 	invoices?: string[];
 };
@@ -56,7 +56,8 @@ export async function PutBill(
 		updated_at: new Date(Date.now()).toUTCString(),
 		history: [{
 			action: "CREATE",
-			user
+			user,
+			timesamp: Date.now()
 		}]
 	};
 
