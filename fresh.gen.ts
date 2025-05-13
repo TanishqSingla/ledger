@@ -6,6 +6,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
 import * as $api_protected_middleware from "./routes/api/(protected)/_middleware.ts";
+import * as $api_protected_bill_bill_id_archive from "./routes/api/(protected)/bill/[bill_id]/archive.ts";
 import * as $api_protected_bill_bill_id_payments_images from "./routes/api/(protected)/bill/[bill_id]/payments/images.ts";
 import * as $api_protected_bill_bill_id_payments_index from "./routes/api/(protected)/bill/[bill_id]/payments/index.ts";
 import * as $api_protected_bill_index from "./routes/api/(protected)/bill/index.ts";
@@ -51,6 +52,8 @@ const manifest = {
 		"./routes/_app.tsx": $_app,
 		"./routes/_layout.tsx": $_layout,
 		"./routes/api/(protected)/_middleware.ts": $api_protected_middleware,
+		"./routes/api/(protected)/bill/[bill_id]/archive.ts":
+			$api_protected_bill_bill_id_archive,
 		"./routes/api/(protected)/bill/[bill_id]/payments/images.ts":
 			$api_protected_bill_bill_id_payments_images,
 		"./routes/api/(protected)/bill/[bill_id]/payments/index.ts":

@@ -18,7 +18,7 @@ export const handler: Handlers = {
 			return new Response(JSON.stringify({ ...resp, payment: key }), {
 				status: resp.$metadata.httpStatusCode,
 			});
-		} catch (err) {
+		} catch (err: any) {
 			console.log(err);
 			return new Response(JSON.stringify({ error: err.message }), {
 				status: 500,

@@ -1,14 +1,10 @@
-import Input from "../../../components/Input.tsx";
+import Input from "@components/Input.tsx";
 import { twMerge } from "tailwind-merge";
 
-import { buttonVariants } from "../../../components/Button.tsx";
-import {
-	CrossIcon,
-	Loader,
-	PlusIcon,
-} from "../../../components/icons/index.tsx";
+import { buttonVariants } from "@components/Button.tsx";
+import { CrossIcon, Loader, PlusIcon } from "@components/icons/index.tsx";
 import { useRef, useState } from "preact/hooks";
-import { Vendor, VendorDocument } from "../../../db/Vendors.ts";
+import { Vendor, VendorDocument } from "@db/Vendors.ts";
 import { useVendorAccounts } from "../../../hooks/vendor/useVendorAccounts.tsx";
 
 export default function AddVendorAccountModal(

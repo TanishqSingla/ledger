@@ -3,17 +3,24 @@ import { bills } from "./conn.ts";
 import { MongoDocument } from "../types.ts";
 import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
 
+type BillHistoryTypes =
+	| {
+		action: "CREATE" | "ARCHIVE";
+	}
+	| {
+		action: "UPDATE";
+		type: "ADD_PAYMENT";
+	};
+
+type History = BillHistoryTypes & { user: string; timestamp: number };
+
 export type Bill = {
 	bill_id: string;
 	amount?: number | string;
 	vendor_id: string;
 	vendor_name: string;
 	status: "PENDING" | "IN_PAYMENT" | "PAID";
-	history?: {
-		action: "CREATE" | "ADD_PAYMENT";
-		user: string;
-		timestamp: number;
-	}[];
+	history: History[];
 	comments?: { comment: string; user: string }[];
 	payments?: {
 		reference_number?: string;
@@ -86,14 +93,14 @@ export async function PostBillPayment(
 	payment: Required<Bill>["payments"][0],
 ) {
 	const resp = await (await bills()).findOneAndUpdate({ bill_id }, {
-		// @ts-ignore: mongo
 		$push: {
 			payments: payment,
 			history: {
-				action: "ADD_PAYMENT",
+				action: "UPDATE",
+				type: "ADD_PAYMENT",
 				user,
 				timestamp: Date.now(),
-			} satisfies Required<Bill>["history"][0],
+			},
 		},
 	});
 

@@ -32,7 +32,7 @@ export const handler: Handlers = {
 			paymentFiles.map((file) => getFile(file)),
 		);
 
-		const payments: Data["payments"] = [];
+		const payments: Data["payments"] = {};
 		paymentQueries.forEach((query, index) => {
 			if (query.status === "fulfilled" && !!query.value) {
 				payments[paymentFiles[index]] = query.value;
@@ -55,7 +55,7 @@ export default function Bill({ params, data }: PageProps<Data>) {
 			</section>
 
 			<section className={"mt-6"}>
-				{data.bill?._id
+				{data.bill.bill_id
 					? (
 						<>
 							<Badge

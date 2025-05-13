@@ -33,13 +33,14 @@ export async function DeleteVendor(vendor_id: string) {
 }
 
 export async function PutVendor(
-	body: Partial<Pick<Vendor, "vendor_name" | "email" | "phone">>,
+	body: Pick<Vendor, "vendor_name" | "email" | "phone">,
 ) {
 	const doc = {
 		...body,
 		vendor_id: nanoid(12),
 		created_at: new Date(Date.now()).toUTCString(),
 		updated_at: new Date(Date.now()).toUTCString(),
+		accounts: [],
 	};
 
 	const resp = await (await vendors()).insertOne(doc);
@@ -47,16 +48,15 @@ export async function PutVendor(
 	return { ...resp, data: doc };
 }
 
-export async function GetVendorFromId(id: string): Promise<VendorDocument> {
+export async function GetVendorFromId(id: string) {
 	const resp = await (await vendors()).findOne({ vendor_id: id });
 
-	//@ts-ignore: mongo
 	return resp;
 }
 
 export async function AddAccountToVendor(
 	vendor_id: string,
-	accounts: Vendor["accounts"][0],
+	accounts: Required<Vendor>["accounts"][0],
 ) {
 	const resp = await (await vendors()).updateOne({ vendor_id }, {
 		//@ts-ignore: mongo
@@ -71,7 +71,6 @@ export async function DeleteVendorAccount(
 	accountId: string,
 ) {
 	const resp = await (await vendors()).updateOne({ vendor_id }, {
-		// @ts-ignore: mongo
 		"$pull": { accounts: { id: accountId } },
 	});
 
