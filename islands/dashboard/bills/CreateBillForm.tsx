@@ -3,9 +3,9 @@ import Input from "../../../components/Input.tsx";
 import { Bill } from "../../../db/Bills.ts";
 import { CrossIcon, Loader } from "../../../components/icons/index.tsx";
 import { selectedVendor, VendorComboBox } from "../../Combobox.tsx";
-import { buttonVariants } from "../../../components/Button.tsx";
+import { buttonVariants } from "@components/Button.tsx";
 import { FileUpload } from "./file-input.tsx";
-import { uploadFileApi } from "../../../queries/bill.ts";
+import { uploadBillInvoice } from "@queries/bill.ts";
 
 export default function CreateBillForm() {
 	const [files, setFiles] = useState<File[]>([]);
@@ -38,7 +38,7 @@ export default function CreateBillForm() {
 
 		const invoices: string[] = [];
 		if (files) {
-			const queries = files.map((file) => uploadFileApi(file));
+			const queries = files.map((file) => uploadBillInvoice(file));
 			const uploadedFiles = await Promise.allSettled(queries);
 
 			uploadedFiles.forEach((file) => {
@@ -115,7 +115,11 @@ export default function CreateBillForm() {
 				</select>
 			</label>
 
-			<FileUpload handleUpload={handleUpload} />
+			<FileUpload
+				handleUpload={handleUpload}
+				label="Attach invoices"
+				multiple
+			/>
 			<div className={"flex flex-wrap gap-4"}>
 				{files && files.map((file, index) => {
 					return (
