@@ -27,7 +27,11 @@
 		"tailwind-merge": "npm:tailwind-merge@^2.5.5",
 		"tailwindcss": "npm:tailwindcss@3.4.1",
 		"tailwindcss/": "npm:/tailwindcss@3.4.1/",
-		"tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js"
+		"tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
+		"@utils/": "./utils/",
+		"@queries/": "./queries/",
+		"@db/": "./db/",
+		"@components/": "./components/"
 	},
 	"compilerOptions": {
 		"jsx": "react-jsx",
