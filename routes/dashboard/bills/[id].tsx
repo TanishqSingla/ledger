@@ -1,12 +1,14 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import Badge from "../../../components/atoms/badge.tsx";
-import { type Bill, GetBillFromId } from "../../../db/Bills.ts";
-import { getFile } from "../../../queries/s3.ts";
-import { billStatusBadgeMap } from "../../../utils/constants.ts";
+import Badge from "@components/atoms/badge.tsx";
+import { type Bill, GetBillFromId } from "@db/Bills.ts";
+import AddBillPayment from "../../../islands/dashboard/bills/AddBillPayment.tsx";
+import { getFile } from "@queries/s3.ts";
+import { billStatusBadgeMap } from "@utils/constants.ts";
 
 type Data = {
 	bill: Awaited<ReturnType<typeof GetBillFromId>>;
 	file?: string;
+	payments: Record<string, string>;
 };
 
 export const handler: Handlers = {
@@ -22,7 +24,22 @@ export const handler: Handlers = {
 			const downloadedFile = await getFile(fileId);
 			file = downloadedFile;
 		}
-		return ctx.render({ bill, file });
+
+		const paymentFiles =
+			bill?.payments?.flatMap((payment) => payment.file || []) || [];
+
+		const paymentQueries = await Promise.allSettled(
+			paymentFiles.map((file) => getFile(file)),
+		);
+
+		const payments: Data["payments"] = [];
+		paymentQueries.forEach((query, index) => {
+			if (query.status === "fulfilled" && !!query.value) {
+				payments[paymentFiles[index]] = query.value;
+			}
+		});
+
+		return ctx.render({ bill, file, payments });
 	},
 };
 
@@ -68,6 +85,25 @@ export default function Bill({ params, data }: PageProps<Data>) {
 					: <>Bill not found</>}
 			</section>
 
+			<section>
+				<h2 className="text-title-medium">Payments</h2>
+
+				{data.bill?.payments?.map((payment) => {
+					return (
+						<>
+							{payment.file && (
+								<embed src={data.payments[payment.file]} type="text/plain">
+								</embed>
+							)}
+							{payment.reference_number && <p>{payment.reference_number}</p>}
+						</>
+					);
+				})}
+
+				<AddBillPayment billId={params.id} />
+			</section>
+
+			<hr />
 			{data.bill?.history && (
 				<section>
 					<h2>History</h2>

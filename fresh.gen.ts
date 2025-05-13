@@ -6,10 +6,13 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
 import * as $api_protected_middleware from "./routes/api/(protected)/_middleware.ts";
-import * as $api_protected_bill from "./routes/api/(protected)/bill.ts";
-import * as $api_protected_s3 from "./routes/api/(protected)/s3.ts";
+import * as $api_protected_bill_bill_id_payments_images from "./routes/api/(protected)/bill/[bill_id]/payments/images.ts";
+import * as $api_protected_bill_bill_id_payments_index from "./routes/api/(protected)/bill/[bill_id]/payments/index.ts";
+import * as $api_protected_bill_index from "./routes/api/(protected)/bill/index.ts";
+import * as $api_protected_bill_invoices from "./routes/api/(protected)/bill/invoices.ts";
+import * as $api_protected_vendor_cached_middleware from "./routes/api/(protected)/vendor/(cached)/_middleware.ts";
+import * as $api_protected_vendor_cached_index from "./routes/api/(protected)/vendor/(cached)/index.ts";
 import * as $api_protected_vendor_vendor_id_accounts from "./routes/api/(protected)/vendor/[vendor_id]/accounts.ts";
-import * as $api_protected_vendor_index from "./routes/api/(protected)/vendor/index.ts";
 import * as $auth_verify from "./routes/auth/verify.tsx";
 import * as $dashboard_layout from "./routes/dashboard/_layout.tsx";
 import * as $dashboard_middleware from "./routes/dashboard/_middleware.ts";
@@ -27,6 +30,7 @@ import * as $profile_layout from "./routes/profile/_layout.tsx";
 import * as $profile_middleware from "./routes/profile/_middleware.tsx";
 import * as $profile_index from "./routes/profile/index.tsx";
 import * as $Combobox from "./islands/Combobox.tsx";
+import * as $dashboard_bills_AddBillPayment from "./islands/dashboard/bills/AddBillPayment.tsx";
 import * as $dashboard_bills_CreateBillForm from "./islands/dashboard/bills/CreateBillForm.tsx";
 import * as $dashboard_bills_file_input from "./islands/dashboard/bills/file-input.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
@@ -47,11 +51,18 @@ const manifest = {
 		"./routes/_app.tsx": $_app,
 		"./routes/_layout.tsx": $_layout,
 		"./routes/api/(protected)/_middleware.ts": $api_protected_middleware,
-		"./routes/api/(protected)/bill.ts": $api_protected_bill,
-		"./routes/api/(protected)/s3.ts": $api_protected_s3,
+		"./routes/api/(protected)/bill/[bill_id]/payments/images.ts":
+			$api_protected_bill_bill_id_payments_images,
+		"./routes/api/(protected)/bill/[bill_id]/payments/index.ts":
+			$api_protected_bill_bill_id_payments_index,
+		"./routes/api/(protected)/bill/index.ts": $api_protected_bill_index,
+		"./routes/api/(protected)/bill/invoices.ts": $api_protected_bill_invoices,
+		"./routes/api/(protected)/vendor/(cached)/_middleware.ts":
+			$api_protected_vendor_cached_middleware,
+		"./routes/api/(protected)/vendor/(cached)/index.ts":
+			$api_protected_vendor_cached_index,
 		"./routes/api/(protected)/vendor/[vendor_id]/accounts.ts":
 			$api_protected_vendor_vendor_id_accounts,
-		"./routes/api/(protected)/vendor/index.ts": $api_protected_vendor_index,
 		"./routes/auth/verify.tsx": $auth_verify,
 		"./routes/dashboard/_layout.tsx": $dashboard_layout,
 		"./routes/dashboard/_middleware.ts": $dashboard_middleware,
@@ -71,6 +82,8 @@ const manifest = {
 	},
 	islands: {
 		"./islands/Combobox.tsx": $Combobox,
+		"./islands/dashboard/bills/AddBillPayment.tsx":
+			$dashboard_bills_AddBillPayment,
 		"./islands/dashboard/bills/CreateBillForm.tsx":
 			$dashboard_bills_CreateBillForm,
 		"./islands/dashboard/bills/file-input.tsx": $dashboard_bills_file_input,

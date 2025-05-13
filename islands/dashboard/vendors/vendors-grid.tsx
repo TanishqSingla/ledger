@@ -43,7 +43,8 @@ export function VendorsGrid({ vendors }: { vendors: VendorDocument[] }) {
 								<button
 									title={"Delete"}
 									aria-label={"delete vendor button"}
-									onClick={() => handleDelete(vendor)}
+									onClick={() =>
+										handleDelete(vendor)}
 									disabled={deleteMutation.isLoading}
 								>
 									<TrashIcon />

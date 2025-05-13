@@ -10,7 +10,7 @@ import {
 import useVendor from "../../../hooks/vendor/useVendor.ts";
 import { VendorDocument } from "../../../db/Vendors.ts";
 
-export function VendorsTable({vendors}: { vendors: VendorDocument[] }) {
+export function VendorsTable({ vendors }: { vendors: VendorDocument[] }) {
 	const { data, deleteMutation, handleDelete } = useVendor(vendors);
 
 	return (

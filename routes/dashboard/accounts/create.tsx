@@ -6,7 +6,6 @@ import { PutAccount } from "../../../db/Accounts.ts";
 export const handler: Handlers = {
 	POST: async function (req, ctx) {
 		const formData = await req.formData();
-		console.log(formData);
 
 		const resp = await PutAccount({
 			account_name: formData.get("account_name")!.toString(),

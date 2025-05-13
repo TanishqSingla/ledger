@@ -3,9 +3,13 @@ import { AddFiles } from "../../../components/icons/index.tsx";
 
 type FileUploadProps = {
 	handleUpload: (files: File[]) => void;
+	label: string;
+	multiple: boolean;
 };
 
-export const FileUpload = ({ handleUpload }: FileUploadProps) => {
+export const FileUpload = (
+	{ handleUpload, label, multiple }: FileUploadProps,
+) => {
 	const [active, setActive] = useState(false);
 
 	const dropAreaRef = useRef<HTMLLabelElement>(null);
@@ -64,17 +68,17 @@ export const FileUpload = ({ handleUpload }: FileUploadProps) => {
 			>
 				<AddFiles height={"72"} width={"72"} />
 				<p>
-					Attach invoices
+					{label}
 				</p>
 			</label>
 			<input
 				type="file"
-				multiple
+				multiple={multiple}
 				id="invoices"
 				name="invoices"
 				class={"hidden"}
 				onChange={handleFileChange}
-				accept={"images/*,.pdf"}
+				accept={"image/*,.pdf"}
 			/>
 		</>
 	);

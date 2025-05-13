@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { PutBill } from "../../../db/Bills.ts";
+import { PutBill } from "../../../../db/Bills.ts";
 
 export const handler: Handlers = {
 	PUT: async function (req, ctx) {

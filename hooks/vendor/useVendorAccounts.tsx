@@ -41,6 +41,6 @@ export const useVendorAccounts = (initialData: VendorDocument["accounts"]) => {
 	return {
 		data,
 		handleDelete,
-		createMutation
+		createMutation,
 	};
 };
