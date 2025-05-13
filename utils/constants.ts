@@ -3,7 +3,12 @@ export const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 export const KV_KEYS = {
 	USERS: "users",
 	ACCOUNTS: "accounts",
-	VENDORS: "vendors"
+	VENDORS: "vendors",
+};
+
+export const S3_FOLDERS = {
+	INVOICES: "invoices/",
+	PAYMENTS: "payments/",
 };
 
 export const billStatusBadgeMap = {
