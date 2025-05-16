@@ -11,9 +11,14 @@ export default function VendorsData(
 ) {
 	if (displayTypeSignal.value === DISPLAY_TYPE.LIST) {
 		return (
-			<section class="rounded-xl overflow-hidden relative mt-8 border">
-				<VendorsTable vendors={vendors} />
-			</section>
+			<>
+				<p className={"text-body-small my-4"}>
+					Showing {vendors.length} items
+				</p>
+				<section class="rounded-xl overflow-hidden relative border">
+					<VendorsTable vendors={vendors} />
+				</section>
+			</>
 		);
 	}
 
