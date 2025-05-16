@@ -1,14 +1,14 @@
 import { vendorSearch } from "./VendorSearchbox.tsx";
 import { Button } from "ketu";
 import { twMerge } from "tailwind-merge";
-import { buttonVariants } from "../../../components/Button.tsx";
+import { buttonVariants } from "@components/Button.tsx";
 import {
 	NoData,
 	OpenInNewWindow,
 	TrashIcon,
-} from "../../../components/icons/index.tsx";
+} from "@components/icons/index.tsx";
 import useVendor from "../../../hooks/vendor/useVendor.ts";
-import { VendorDocument } from "../../../db/Vendors.ts";
+import { VendorDocument } from "@db/Vendors.ts";
 
 export function VendorsTable({ vendors }: { vendors: VendorDocument[] }) {
 	const { data, deleteMutation, handleDelete } = useVendor(vendors);

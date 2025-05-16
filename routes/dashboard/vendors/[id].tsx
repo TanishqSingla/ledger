@@ -38,6 +38,8 @@ const colConfig = [
 ];
 
 const accountColConfig = [{ name: "S.No." }, { name: "Bank name" }, {
+	name: "Branch name",
+}, {
 	name: "Account number",
 }, {
 	name: "IFSC",

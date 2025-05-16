@@ -1,11 +1,8 @@
 import { Handlers } from "$fresh/server.ts";
-import {
-	AddAccountToVendor,
-	DeleteVendorAccount,
-} from "../../../../../db/Vendors.ts";
+import { AddAccountToVendor, DeleteVendorAccount } from "@db/Vendors.ts";
 
 export const handler: Handlers = {
-	PUT: async function (req, ctx) {
+	POST: async function (req, ctx) {
 		const payload = await req.json();
 		const vendor_id = ctx.params.vendor_id;
 

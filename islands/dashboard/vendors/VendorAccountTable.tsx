@@ -21,6 +21,9 @@ export default function VendorAccountTable(
 						{account.bank_name}
 					</td>
 					<td class="px-4 py-2 text-label-large">
+						{account.branch_name}
+					</td>
+					<td class="px-4 py-2 text-label-large">
 						{account.account_number}
 					</td>
 					<td class="px-4 py-2 text-label-large">{account.ifsc}</td>

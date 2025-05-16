@@ -40,7 +40,7 @@ export const addVendorAccount = async (
 	{ vendor_id, account }: { vendor_id: string; account: Vendor["accounts"][0] },
 ) => {
 	const response = await fetch(`/api/vendor/${vendor_id}/accounts`, {
-		method: "PUT",
+		method: "POST",
 		body: JSON.stringify(account),
 	});
 
@@ -69,3 +69,28 @@ export const deleteVendorAccount = async (
 
 	return data;
 };
+
+export async function getBankInfo(ifsc: string) {
+	const res = await fetch(`https://ifsc.razorpay.com/${ifsc}`);
+	const data = await res.json();
+
+	return data as {
+		"MICR": string;
+		"BRANCH": string;
+		"ADDRESS": string;
+		"STATE": string;
+		"CONTACT": string;
+		"UPI": boolean;
+		"RTGS": boolean;
+		"CITY": string;
+		"CENTRE": string;
+		"DISTRICT": string;
+		"NEFT": boolean;
+		"IMPS": boolean;
+		"SWIFT": string;
+		"ISO3166": string;
+		"BANK": string;
+		"BANKCODE": string;
+		"IFSC": string;
+	};
+}
