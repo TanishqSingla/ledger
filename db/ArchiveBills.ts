@@ -29,7 +29,7 @@ export async function MoveToArchive(bill_id: string, user: string) {
 		await session.commitTransaction();
 
 		return bill;
-	} catch (err: any) {
+	} catch (err: unknown) {
 		console.error(err);
 		await session.abortTransaction();
 	} finally {
@@ -39,6 +39,14 @@ export async function MoveToArchive(bill_id: string, user: string) {
 
 export async function GetArchiveBills() {
 	const resp = await (await archiveBills()).find().toArray();
+
+	return resp;
+}
+
+export async function GetArchiveBillById(bill_id: string) {
+	const resp = await (await archiveBills()).findOne({
+		bill_id,
+	});
 
 	return resp;
 }
