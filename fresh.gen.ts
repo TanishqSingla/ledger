@@ -19,6 +19,8 @@ import * as $dashboard_layout from "./routes/dashboard/_layout.tsx";
 import * as $dashboard_middleware from "./routes/dashboard/_middleware.ts";
 import * as $dashboard_accounts_create from "./routes/dashboard/accounts/create.tsx";
 import * as $dashboard_accounts_index from "./routes/dashboard/accounts/index.tsx";
+import * as $dashboard_archive_bills_archive_id_ from "./routes/dashboard/archive-bills/[archive_id].tsx";
+import * as $dashboard_archive_bills_index from "./routes/dashboard/archive-bills/index.tsx";
 import * as $dashboard_bills_id_ from "./routes/dashboard/bills/[id].tsx";
 import * as $dashboard_bills_create from "./routes/dashboard/bills/create.tsx";
 import * as $dashboard_bills_index from "./routes/dashboard/bills/index.tsx";
@@ -71,6 +73,10 @@ const manifest = {
 		"./routes/dashboard/_middleware.ts": $dashboard_middleware,
 		"./routes/dashboard/accounts/create.tsx": $dashboard_accounts_create,
 		"./routes/dashboard/accounts/index.tsx": $dashboard_accounts_index,
+		"./routes/dashboard/archive-bills/[archive_id].tsx":
+			$dashboard_archive_bills_archive_id_,
+		"./routes/dashboard/archive-bills/index.tsx":
+			$dashboard_archive_bills_index,
 		"./routes/dashboard/bills/[id].tsx": $dashboard_bills_id_,
 		"./routes/dashboard/bills/create.tsx": $dashboard_bills_create,
 		"./routes/dashboard/bills/index.tsx": $dashboard_bills_index,

@@ -1,11 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Button } from "ketu";
-import { BillDocument, QueryBills, SearchBills } from "../../../db/Bills.ts";
-import Input from "../../../components/Input.tsx";
-import Badge from "../../../components/atoms/badge.tsx";
-import { billStatusBadgeMap } from "../../../utils/constants.ts";
-import { NoData } from "../../../components/icons/index.tsx";
-import { buttonVariants } from "../../../components/Button.tsx";
+import { BillDocument, QueryBills, SearchBills } from "@db/Bills.ts";
+import Input from "@components/Input.tsx";
+import Badge from "@components/atoms/badge.tsx";
+import { billStatusBadgeMap } from "@utils/constants.ts";
+import { NoData } from "@components/icons/index.tsx";
+import { buttonVariants } from "@components/Button.tsx";
 
 type Data = {
 	bills: BillDocument[];
@@ -33,10 +33,10 @@ export default function Bills({ data }: PageProps<Data>) {
 			<h1 class="text-display-medium">Bills</h1>
 
 			<div class="flex my-8">
-				<form method={"GET"} class="flex gap-4">
+				<form method="GET" class="flex gap-4">
 					<Input
 						type="search"
-						placeholder={"search"}
+						placeholder="search"
 						name="search_term"
 						autofocus
 					/>
@@ -75,14 +75,14 @@ export default function Bills({ data }: PageProps<Data>) {
 					<tbody>
 						{!data.bills.length && (
 							<tr
-								className={"min-h-60"}
+								className="min-h-60"
 							>
 								<td colspan={7}>
 									<div
-										className={"flex flex-col items-center justify-center my-8"}
+										className="flex flex-col items-center justify-center my-8"
 									>
 										<NoData width={128} height={128} />
-										<p className={"text-center"}>No Data</p>
+										<p className="text-center">No Data</p>
 									</div>
 								</td>
 							</tr>

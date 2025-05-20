@@ -48,13 +48,13 @@ export default function Bill({ params, data }: PageProps<Data>) {
 		<main className="p-6 h-full w-full overflow-y-auto">
 			<section>
 				<h1 class="text-headline-medium">
-					Bill<span className={"text-surfaceTint text-title-medium ml-2"}>
+					Bill<span className="text-surfaceTint text-title-medium ml-2">
 						#{params.id}
 					</span>
 				</h1>
 			</section>
 
-			<section className={"mt-6"}>
+			<section className="mt-6">
 				{data.bill.bill_id
 					? (
 						<>
@@ -67,7 +67,7 @@ export default function Bill({ params, data }: PageProps<Data>) {
 								Vendor:{" "}
 								<a
 									href={`/dashboard/vendors/${data.bill.vendor_id}`}
-									className={"text-primary hover:underline active:text-tertiary"}
+									className="text-primary hover:underline active:text-tertiary"
 								>
 									{data.bill.vendor_name}
 								</a>
@@ -78,8 +78,7 @@ export default function Bill({ params, data }: PageProps<Data>) {
 								width="100%"
 								height={600}
 								type="text/plain"
-							>
-							</embed>
+							/>
 						</>
 					)
 					: <>Bill not found</>}
@@ -92,8 +91,7 @@ export default function Bill({ params, data }: PageProps<Data>) {
 					return (
 						<>
 							{payment.file && (
-								<embed src={data.payments[payment.file]} type="text/plain">
-								</embed>
+								<embed src={data.payments[payment.file]} type="text/plain" />
 							)}
 							{payment.reference_number && <p>{payment.reference_number}</p>}
 						</>

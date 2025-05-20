@@ -1,12 +1,12 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { getCookies } from "@std/http/cookie";
 import { verify } from "@zaubrik/djwt";
-import { cryptoKey } from "../utils/secrets.ts";
-import { findUser } from "../db/Users.ts";
-import { EMAIL_REGEX } from "../utils/constants.ts";
-import { sendEmail } from "../utils/mailer.ts";
-import { kv } from "../utils/db.ts";
-import Input from "../components/Input.tsx";
+import { cryptoKey } from "@utils/secrets.ts";
+import { findUser } from "@db/Users.ts";
+import { EMAIL_REGEX } from "@utils/constants.ts";
+import { sendEmail } from "@utils/mailer.ts";
+import { kv } from "@utils/db.ts";
+import Input from "@components/Input.tsx";
 
 type Data = {
 	status: "error";
