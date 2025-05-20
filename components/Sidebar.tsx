@@ -23,11 +23,15 @@ const SidebarConfig = [
 		slug: "/dashboard/accounts",
 		label: "Accounts",
 	},
+	{
+		slug: "/dashboard/archive-bills",
+		label: "Archive Bills",
+	},
 ];
 
 function SidebarItem({ item, active }: { item: SidebarItem; active: string }) {
 	return (
-		<div class={"space-y-2"}>
+		<div class="space-y-2">
 			<a
 				class={twMerge(
 					"px-4 py-2 text-onSurface hover:bg-surfaceContainerHighest transition rounded-3xl text-body-large cursor-pointer block",
@@ -50,7 +54,9 @@ function SidebarItem({ item, active }: { item: SidebarItem; active: string }) {
 export default function Sidebar({ active }: { active: string }) {
 	return (
 		<div class="w-[280px] h-full rounded-2xl bg-surfaceContainer p-3">
-			{SidebarConfig.map((item) => <SidebarItem item={item} active={active} />)}
+			{SidebarConfig.map((item) => (
+				<SidebarItem key={item.slug} item={item} active={active} />
+			))}
 		</div>
 	);
 }
