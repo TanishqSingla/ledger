@@ -1,8 +1,9 @@
-import { Handlers } from "$fresh/server.ts";
 import { PutBill } from "../../../../db/Bills.ts";
+import { Handlers } from "fresh/compat";
 
 export const handler: Handlers = {
-	PUT: async function (req, ctx) {
+	PUT: async function (ctx) {
+		const req = ctx.req;
 		const values = await req.json();
 
 		const resp = await PutBill({ ...values }, ctx.state.email_id as string);

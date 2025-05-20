@@ -1,12 +1,12 @@
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { HandlerByMethod, PageProps } from "fresh";
 import { getCookies } from "@std/http/cookie";
 import { verify } from "@zaubrik/djwt";
-import { cryptoKey } from "../utils/secrets.ts";
-import { findUser } from "../db/Users.ts";
-import { EMAIL_REGEX } from "../utils/constants.ts";
-import { sendEmail } from "../utils/mailer.ts";
-import { kv } from "../utils/db.ts";
-import Input from "../components/Input.tsx";
+import { cryptoKey } from "@utils/secrets.ts";
+import { findUser } from "@db/Users.ts";
+import { EMAIL_REGEX } from "@utils/constants.ts";
+import { sendEmail } from "@utils/mailer.ts";
+import { kv } from "@utils/db.ts";
+import Input from "@components/Input.tsx";
 
 type Data = {
 	status: "error";
@@ -21,12 +21,13 @@ type Data = {
 	};
 };
 
-export const handler: Handlers = {
-	async GET(req, ctx) {
+export const handler: HandlerByMethod<Data, unknown> = {
+	async GET(ctx) {
+		const req = ctx.req;
 		const cookies = getCookies(req.headers);
 
 		if (!cookies.token) {
-			return ctx.render();
+			return { data: { status: "success", success: { message: "" } } };
 		}
 
 		try {
@@ -35,40 +36,35 @@ export const handler: Handlers = {
 			return Response.redirect(ctx.url.origin + "/dashboard");
 		} catch (err: any) {
 			console.log(err);
-			return ctx.render(
-				{
+			return {
+				data: {
 					status: "error",
 					error: { message: err.message },
-				} satisfies Data,
-			);
+				},
+			};
 		}
 	},
-	async POST(req, ctx) {
+	async POST(ctx) {
+		const req = ctx.req;
+
 		try {
 			const formData = await req.formData();
 			const email = formData.get("email");
 
 			if (!email || !EMAIL_REGEX.test(email.toString())) {
-				return ctx.render(
-					{
-						status: "error",
-						error: {
-							email: "Invalid email",
-						},
-					} satisfies Data,
-				);
+				return { data: { status: "error", error: { email: "Invalid email" } } };
 			}
 
 			const user = await findUser(email.toString());
 			if (!user) {
-				return ctx.render(
-					{
+				return {
+					data: {
 						status: "error",
 						error: {
 							email: "User does not exist",
 						},
 					} satisfies Data,
-				);
+				};
 			}
 
 			const verificationCode = Math.floor(Math.random() * 1000000);
@@ -88,12 +84,12 @@ export const handler: Handlers = {
 				console.log("Email sent", emailResult);
 			} catch (err) {
 				console.log(err);
-				return ctx.render(
-					{
+				return {
+					data: {
 						status: "error",
 						error: { message: "Error with email client contact admin" },
 					} satisfies Data,
-				);
+				};
 			}
 
 			return Response.redirect(
@@ -102,14 +98,14 @@ export const handler: Handlers = {
 		} catch (err: any) {
 			console.log(err);
 
-			return ctx.render(
-				{
+			return {
+				data: {
 					status: "error",
 					error: {
 						message: err.message as string,
 					},
 				} satisfies Data,
-			);
+			};
 		}
 	},
 };

@@ -1,9 +1,10 @@
 import { getCookies } from "@std/http/cookie";
-import { FreshContext } from "$fresh/server.ts";
+import { FreshContext } from "fresh";
 import { verify } from "@zaubrik/djwt";
-import { cryptoKey } from "../../../utils/secrets.ts";
+import { cryptoKey } from "@utils/secrets.ts";
 
-export async function handler(req: Request, ctx: FreshContext) {
+export async function handler(ctx: FreshContext<Record<string, unknown>>) {
+	const req = ctx.req;
 	const cookies = getCookies(req.headers);
 
 	if (!cookies.token) {
@@ -13,7 +14,7 @@ export async function handler(req: Request, ctx: FreshContext) {
 	try {
 		const payload = await verify(cookies.token, cryptoKey);
 
-		ctx.state = { ...payload };
+		Object.assign(ctx.state, { ...payload });
 		return ctx.next();
 	} catch (err) {
 		console.log(err);

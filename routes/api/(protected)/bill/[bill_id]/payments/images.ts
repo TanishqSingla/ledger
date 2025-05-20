@@ -1,10 +1,11 @@
-import { Handlers } from "$fresh/server.ts";
 import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
 import { uploadFile } from "@queries/s3.ts";
 import { S3_FOLDERS } from "@utils/constants.ts";
+import { HandlerByMethod } from "fresh";
 
-export const handler: Handlers = {
-	POST: async function (req, _ctx) {
+export const handler: HandlerByMethod<{ id: string }, unknown> = {
+	POST: async function (ctx) {
+		const req = ctx.req;
 		const payload = await req.formData();
 
 		const payment = payload.get("payment") as File;

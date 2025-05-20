@@ -1,17 +1,18 @@
 import Input from "../../../components/Input.tsx";
 import { buttonVariants } from "../../../components/Button.tsx";
-import { Handlers } from "$fresh/server.ts";
 import { PutAccount } from "../../../db/Accounts.ts";
+import { HandlerByMethod } from "fresh";
 
-export const handler: Handlers = {
-	POST: async function (req, ctx) {
+export const handler: HandlerByMethod<unknown, unknown> = {
+	POST: async function (ctx) {
+		const req = ctx.req;
 		const formData = await req.formData();
 
 		const resp = await PutAccount({
 			account_name: formData.get("account_name")!.toString(),
 		});
 
-		return ctx.render();
+		return { data: {} };
 	},
 };
 

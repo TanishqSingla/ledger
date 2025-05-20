@@ -1,8 +1,9 @@
-import { Handlers } from "$fresh/server.ts";
 import { AddAccountToVendor, DeleteVendorAccount } from "@db/Vendors.ts";
+import { Handlers } from "fresh/compat";
 
 export const handler: Handlers = {
-	POST: async function (req, ctx) {
+	POST: async function (ctx) {
+		const req = ctx.req;
 		const payload = await req.json();
 		const vendor_id = ctx.params.vendor_id;
 
@@ -17,7 +18,8 @@ export const handler: Handlers = {
 		}
 	},
 
-	DELETE: async function (req, ctx) {
+	DELETE: async function (ctx) {
+		const req = ctx.req;
 		const payload = await req.json();
 		const vendor_id = ctx.params.vendor_id;
 

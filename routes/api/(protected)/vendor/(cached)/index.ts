@@ -1,9 +1,10 @@
-import { Handlers } from "$fresh/server.ts";
 import { vendors } from "@db/conn.ts";
 import { DeleteVendor, PutVendor } from "@db/Vendors.ts";
+import { HandlerByMethod } from "fresh";
 
-export const handler: Handlers = {
-	POST: async function (req, _ctx) {
+export const handler: HandlerByMethod<unknown, unknown> = {
+	POST: async function (ctx) {
+		const req = ctx.req;
 		const query = await req.json();
 
 		const result = await (await vendors()).find({
@@ -12,7 +13,8 @@ export const handler: Handlers = {
 
 		return new Response(JSON.stringify({ data: result }));
 	},
-	PUT: async function (req, _ctx) {
+	PUT: async function (ctx) {
+		const req = ctx.req;
 		const values = await req.json();
 
 		const resp = await PutVendor({
@@ -35,7 +37,8 @@ export const handler: Handlers = {
 			status: 400,
 		});
 	},
-	DELETE: async function (req, _ctx) {
+	DELETE: async function (ctx) {
+		const req = ctx.req;
 		const values = await req.json();
 
 		const resp = await DeleteVendor(values.vendor_id);

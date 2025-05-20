@@ -109,9 +109,9 @@ export default function CreateBillForm() {
 					class="px-4 py-2 block rounded-xl bg-surfaceBright w-full"
 					name="status"
 				>
-					<option value={"PENDING"}>Pending</option>
-					<option value={"IN_PAYMENT"}>In Payment</option>
-					<option value={"PAID"}>Paid</option>
+					<option value="PENDING">Pending</option>
+					<option value="IN_PAYMENT">In Payment</option>
+					<option value="PAID">Paid</option>
 				</select>
 			</label>
 
@@ -120,18 +120,16 @@ export default function CreateBillForm() {
 				label="Attach invoices"
 				multiple
 			/>
-			<div className={"flex flex-wrap gap-4"}>
+			<div className="flex flex-wrap gap-4">
 				{files && files.map((file, index) => {
 					return (
-						<div
-							className={"inline-flex items-center border border-outlineVariant h-8 rounded-lg px-2"}
-						>
+						<div className="inline-flex items-center border border-outlineVariant h-8 rounded-lg px-2">
 							<span>{file.name}</span>
 							<button
-								type={"button"}
-								className={"ml-2"}
+								type="button"
+								className="ml-2"
 								onClick={() => removeFile(index)}
-								aria-label={"remove file"}
+								aria-label="remove file"
 							>
 								<CrossIcon height={14} width={14} />
 							</button>
@@ -139,7 +137,7 @@ export default function CreateBillForm() {
 					);
 				})}
 			</div>
-			{uploadFileError && <p className={"text-error"}>{uploadFileError}</p>}
+			{uploadFileError && <p className="text-error">{uploadFileError}</p>}
 
 			<div>
 				<button

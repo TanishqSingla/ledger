@@ -1,8 +1,8 @@
-import { LayoutConfig, PageProps } from "$fresh/server.ts";
-import Sidebar from "../../components/Sidebar.tsx";
+import { PageProps, RouteConfig } from "fresh";
+import Sidebar from "@components/Sidebar.tsx";
 import ProfileDropdown from "../../islands/molecules/profile-dropdown.tsx";
 
-export const config: LayoutConfig = {
+export const config: RouteConfig = {
 	skipInheritedLayouts: true,
 };
 

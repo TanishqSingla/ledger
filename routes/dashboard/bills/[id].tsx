@@ -1,6 +1,6 @@
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { HttpError, PageProps } from "fresh";
 import Badge from "@components/atoms/badge.tsx";
-import { type Bill, GetBillFromId } from "@db/Bills.ts";
+import { GetBillFromId } from "@db/Bills.ts";
 import AddBillPayment from "../../../islands/dashboard/bills/AddBillPayment.tsx";
 import { getFile } from "@queries/s3.ts";
 import { billStatusBadgeMap } from "@utils/constants.ts";
@@ -11,75 +11,71 @@ type Data = {
 	payments: Record<string, string>;
 };
 
-export const handler: Handlers = {
-	async GET(_req, ctx) {
-		const { id } = ctx.params;
+export default async function Bill(props: PageProps) {
+	const { id } = props.params;
 
-		const bill = await GetBillFromId(id) as Bill;
+	const bill = await GetBillFromId(id);
+	if (!bill) {
+		throw new HttpError(404);
+	}
 
-		let file;
-		if (bill?.invoices?.length) {
-			const fileId = bill.invoices[0];
+	let file;
+	if (bill?.invoices?.length) {
+		const fileId = bill.invoices[0];
 
-			const downloadedFile = await getFile(fileId);
-			file = downloadedFile;
+		const downloadedFile = await getFile(fileId);
+		file = downloadedFile;
+	}
+
+	const paymentFiles =
+		bill?.payments?.flatMap((payment) => payment.file || []) || [];
+
+	const paymentQueries = await Promise.allSettled(
+		paymentFiles.map((file) => getFile(file)),
+	);
+
+	const payments: Data["payments"] = {};
+	paymentQueries.forEach((query, index) => {
+		if (query.status === "fulfilled" && !!query.value) {
+			payments[paymentFiles[index]] = query.value;
 		}
+	});
 
-		const paymentFiles =
-			bill?.payments?.flatMap((payment) => payment.file || []) || [];
-
-		const paymentQueries = await Promise.allSettled(
-			paymentFiles.map((file) => getFile(file)),
-		);
-
-		const payments: Data["payments"] = {};
-		paymentQueries.forEach((query, index) => {
-			if (query.status === "fulfilled" && !!query.value) {
-				payments[paymentFiles[index]] = query.value;
-			}
-		});
-
-		return ctx.render({ bill, file, payments });
-	},
-};
-
-export default function Bill({ params, data }: PageProps<Data>) {
 	return (
 		<main className="p-6 h-full w-full overflow-y-auto">
 			<section>
 				<h1 class="text-headline-medium">
-					Bill<span className={"text-surfaceTint text-title-medium ml-2"}>
-						#{params.id}
+					Bill<span className="text-surfaceTint text-title-medium ml-2">
+						#{id}
 					</span>
 				</h1>
 			</section>
 
-			<section className={"mt-6"}>
-				{data.bill.bill_id
+			<section className="mt-6">
+				{bill.bill_id
 					? (
 						<>
 							<Badge
-								variant={billStatusBadgeMap[data.bill.status].variant}
-								text={billStatusBadgeMap[data.bill.status].text}
+								variant={billStatusBadgeMap[bill.status].variant}
+								text={billStatusBadgeMap[bill.status].text}
 								className="w-24 text-center"
 							/>
 							<p>
 								Vendor:{" "}
 								<a
-									href={`/dashboard/vendors/${data.bill.vendor_id}`}
-									className={"text-primary hover:underline active:text-tertiary"}
+									href={`/dashboard/vendors/${bill.vendor_id}`}
+									className="text-primary hover:underline active:text-tertiary"
 								>
-									{data.bill.vendor_name}
+									{bill.vendor_name}
 								</a>
 							</p>{" "}
-							<p>Date: {new Date(data.bill.created_at).toLocaleString()}</p>
+							<p>Date: {new Date(bill.created_at).toLocaleString()}</p>
 							<embed
-								src={data.file}
+								src={file}
 								width="100%"
 								height={600}
 								type="text/plain"
-							>
-							</embed>
+							/>
 						</>
 					)
 					: <>Bill not found</>}
@@ -88,27 +84,26 @@ export default function Bill({ params, data }: PageProps<Data>) {
 			<section>
 				<h2 className="text-title-medium">Payments</h2>
 
-				{data.bill?.payments?.map((payment) => {
+				{bill?.payments?.map((payment) => {
 					return (
 						<>
 							{payment.file && (
-								<embed src={data.payments[payment.file]} type="text/plain">
-								</embed>
+								<embed src={payments[payment.file]} type="text/plain" />
 							)}
 							{payment.reference_number && <p>{payment.reference_number}</p>}
 						</>
 					);
 				})}
 
-				<AddBillPayment billId={params.id} />
+				<AddBillPayment billId={id} />
 			</section>
 
 			<hr />
-			{data.bill?.history && (
+			{bill?.history && (
 				<section>
 					<h2>History</h2>
 					<ul>
-						{data.bill.history.map((item, index) => {
+						{bill.history.map((item, index) => {
 							return <li key={index}>{item.action} by {item.user}</li>;
 						})}
 					</ul>

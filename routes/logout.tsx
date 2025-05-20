@@ -1,8 +1,8 @@
-import { Handlers } from "$fresh/server.ts";
 import { deleteCookie } from "@std/http/cookie";
+import { HandlerByMethod } from "fresh";
 
-export const handler: Handlers = {
-	GET(_, ctx) {
+export const handler: HandlerByMethod<unknown, unknown> = {
+	GET(_ctx) {
 		const headers = new Headers();
 
 		deleteCookie(headers, "token");

@@ -1,4 +1,4 @@
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { PageProps } from "fresh";
 import { Button } from "ketu";
 import { NoData } from "../../../components/icons/index.tsx";
 import { AccountDocument, GetAllAccounts } from "../../../db/Accounts.ts";
@@ -8,15 +8,9 @@ type Data = {
 	accounts: AccountDocument[];
 };
 
-export const handler: Handlers = {
-	GET: async function (_req, ctx) {
-		const accounts = await GetAllAccounts();
+export default async function Accounts() {
+	const accounts = await GetAllAccounts();
 
-		return ctx.render({ accounts });
-	},
-};
-
-export default function Accounts({ data }: PageProps<Data>) {
 	return (
 		<div class="p-4">
 			<h1 class="text-display-medium">Accounts</h1>
@@ -32,18 +26,18 @@ export default function Accounts({ data }: PageProps<Data>) {
 				</Button>
 			</div>
 
-			{data.accounts.length
+			{accounts && accounts.length
 				? (
 					<div class="rounded-xl overflow-hidden relative mt-8 border">
-						{data.accounts.map((account) => <p>{account.account_name}</p>)}
+						{accounts.map((account) => (
+							<p key={account._id}>{account.account_name}</p>
+						))}
 					</div>
 				)
 				: (
-					<div
-						className={"flex gap-4 flex-col items-center justify-center rounded-xl overflow-hidden relative mt-8 border min-h-60"}
-					>
+					<div className="flex gap-4 flex-col items-center justify-center rounded-xl overflow-hidden relative mt-8 border min-h-60">
 						<NoData width={128} height={128} />
-						<p className={"text-center"}>No Data</p>
+						<p className="text-center">No Data</p>
 					</div>
 				)}
 		</div>

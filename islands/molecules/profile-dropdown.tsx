@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "preact/hooks";
-import { CircleUserRound } from "../../components/icons/index.tsx";
+import { CircleUserRound } from "@components/icons/index.tsx";
 
 export default function ProfileDropdown() {
 	const dialogRef = useRef<HTMLDialogElement>(null);
@@ -15,7 +15,9 @@ export default function ProfileDropdown() {
 			dialogRef.current.style.left =
 				triggerRef.current.getBoundingClientRect().left + "px";
 
-			if (dialogRef.current.getBoundingClientRect().right > window.screenX) {
+			if (
+				dialogRef.current.getBoundingClientRect().right > globalThis.screenX
+			) {
 				dialogRef.current.style.left =
 					triggerRef.current.getBoundingClientRect().left -
 					(dialogRef.current.getBoundingClientRect().width / 2) + "px";

@@ -1,8 +1,8 @@
-import { Handlers } from "$fresh/server.ts";
 import { MoveToArchive } from "@db/ArchiveBills.ts";
+import { Handlers } from "fresh/compat";
 
 export const handler: Handlers<any, { email_id: string }> = {
-	async POST(_, ctx) {
+	async POST(ctx) {
 		const billId = ctx.params.bill_id;
 		const user = ctx.state.email_id;
 

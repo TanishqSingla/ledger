@@ -6,22 +6,20 @@
 		"manifest": "deno task cli manifest $(pwd)",
 		"start": "deno run -A --watch=static/,routes/ --unstable-kv dev.ts",
 		"build": "deno run -A --unstable-kv dev.ts build",
-		"preview": "deno run -A main.ts",
+		"preview": "deno run -A --unstable-kv main.ts",
 		"update": "deno run -A -r https://fresh.deno.dev/update ."
 	},
 	"lint": { "rules": { "tags": ["fresh", "recommended"] } },
 	"fmt": { "useTabs": true },
 	"exclude": ["**/_fresh/*"],
 	"imports": {
-		"$fresh/": "https://deno.land/x/fresh@1.7.3/",
 		"$std/": "https://deno.land/std@0.216.0/",
+		"@fresh/plugin-tailwind": "jsr:@fresh/plugin-tailwind@^0.0.1-alpha.7",
 		"class-variance-authority": "npm:class-variance-authority@^0.7.1",
 		"ketu": "jsr:@pantheon/ketu",
 		"mongodb": "npm:mongodb@6.13.0",
-		"preact": "https://esm.sh/preact@10.25.0",
-		"preact/": "https://esm.sh/preact@10.25.0/",
-		"@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
-		"@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+		"preact": "npm:preact@^10.26.6",
+		"@preact/signals": "npm:@preact/signals@^2.0.4",
 		"@std/http": "jsr:@std/http@^1.0.3",
 		"@zaubrik/djwt": "jsr:@zaubrik/djwt@^3.0.2",
 		"tailwind-merge": "npm:tailwind-merge@^2.5.5",
@@ -31,7 +29,8 @@
 		"@utils/": "./utils/",
 		"@queries/": "./queries/",
 		"@db/": "./db/",
-		"@components/": "./components/"
+		"@components/": "./components/",
+		"fresh": "jsr:@fresh/core@^2.0.0-alpha.34"
 	},
 	"compilerOptions": {
 		"jsx": "react-jsx",

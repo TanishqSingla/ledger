@@ -1,26 +1,28 @@
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { HandlerByMethod, PageProps } from "fresh";
 import { create } from "@zaubrik/djwt";
-import { kv } from "../../utils/db.ts";
-import { cryptoKey } from "../../utils/secrets.ts";
+import { kv } from "@utils/db.ts";
+import { cryptoKey } from "@utils/secrets.ts";
 import { Cookie, setCookie } from "jsr:@std/http@^1.0.3/cookie";
-import Input from "../../components/Input.tsx";
+import Input from "@components/Input.tsx";
 
 type Data = {
 	email?: string;
 	error?: string;
 };
 
-export const handler: Handlers = {
-	GET(req, ctx) {
+export const handler: HandlerByMethod<Data, unknown> = {
+	GET(ctx) {
+		const req = ctx.req;
 		const queryParams = new URL(req.url).searchParams.get("email");
 		if (!queryParams) {
 			return Response.redirect(ctx.url.origin);
 		}
 
-		return ctx.render({ email: queryParams } satisfies Data);
+		return { data: { email: queryParams } };
 	},
 
-	async POST(req, ctx) {
+	async POST(ctx) {
+		const req = ctx.req;
 		const formData = await req.formData();
 
 		const email = formData.get("email")!.toString();
@@ -29,7 +31,7 @@ export const handler: Handlers = {
 		const key = await kv.get<{ verification_code: number }>(["verify", email!]);
 
 		if (!key.value || key.value.verification_code !== +verificationCode) {
-			return ctx.render({ error: "Invalid verification code" } satisfies Data);
+			return { data: { error: "Invalid verification code" } };
 		}
 
 		await kv.delete(["verify", email]);

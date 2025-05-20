@@ -18,7 +18,7 @@ export default function AddVendorAccountModal(
 	const [error, setError] = useState(false);
 	const [bankInfo, setBankInfo] = useState<
 		{ bank_name: string; branch_name: string; ifsc: string }
-	>({});
+	>();
 
 	const validateFormBody = (body: Vendor["accounts"][0]) => {
 		if (!/\w{4}0[a-zA-Z0-9]{6}/.test(body.ifsc)) {

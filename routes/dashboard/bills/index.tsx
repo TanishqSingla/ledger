@@ -1,43 +1,37 @@
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { PageProps } from "fresh";
 import { Button } from "ketu";
-import { BillDocument, QueryBills, SearchBills } from "../../../db/Bills.ts";
-import Input from "../../../components/Input.tsx";
-import Badge from "../../../components/atoms/badge.tsx";
-import { billStatusBadgeMap } from "../../../utils/constants.ts";
-import { NoData } from "../../../components/icons/index.tsx";
-import { buttonVariants } from "../../../components/Button.tsx";
+import { BillDocument, QueryBills, SearchBills } from "@db/Bills.ts";
+import Input from "@components/Input.tsx";
+import Badge from "@components/atoms/badge.tsx";
+import { billStatusBadgeMap } from "@utils/constants.ts";
+import { NoData } from "@components/icons/index.tsx";
+import { buttonVariants } from "@components/Button.tsx";
 
-type Data = {
-	bills: BillDocument[];
-};
+export default async function Bills(props: PageProps) {
+	const limit = +(props.url.searchParams.get("limit") || 50);
+	const vendor_id = props.url.searchParams.get("vendor_id") || "";
+	const searchTerm = props.url.searchParams.get("search_term");
 
-export const handler: Handlers = {
-	GET: async function (_req, ctx) {
-		const limit = +(ctx.url.searchParams.get("limit") || 50);
-		const vendor_id = ctx.url.searchParams.get("vendor_id") || "";
-
-		const searchTerm = ctx.url.searchParams.get("search_term");
-		if (searchTerm) {
-			const data = await SearchBills({ query: searchTerm });
-			return ctx.render({ bills: data });
-		}
+	const bills: BillDocument[] = [];
+	if (searchTerm) {
+		const data = await SearchBills({ query: searchTerm });
+		Object.assign(bills, data);
+	} else {
 		const data = await QueryBills({ limit, vendor_id });
+		Object.assign(bills, data);
+	}
 
-		return ctx.render({ bills: data });
-	},
-};
-
-export default function Bills({ data }: PageProps<Data>) {
 	return (
 		<div class="p-4">
 			<h1 class="text-display-medium">Bills</h1>
 
 			<div class="flex my-8">
-				<form method={"GET"} class="flex gap-4">
+				<form method="GET" class="flex gap-4">
 					<Input
 						type="search"
-						placeholder={"search"}
+						placeholder="search"
 						name="search_term"
+						defaultValue={searchTerm || ""}
 						autofocus
 					/>
 					<Button className={buttonVariants({ variant: "outline" })}>
@@ -73,21 +67,17 @@ export default function Bills({ data }: PageProps<Data>) {
 						</tr>
 					</thead>
 					<tbody>
-						{!data.bills.length && (
-							<tr
-								className={"min-h-60"}
-							>
+						{!bills.length && (
+							<tr className="min-h-60">
 								<td colspan={7}>
-									<div
-										className={"flex flex-col items-center justify-center my-8"}
-									>
+									<div className="flex flex-col items-center justify-center my-8">
 										<NoData width={128} height={128} />
-										<p className={"text-center"}>No Data</p>
+										<p className="text-center">No Data</p>
 									</div>
 								</td>
 							</tr>
 						)}
-						{data.bills.length > 0 && data.bills.map((bill) => {
+						{bills.length > 0 && bills.map((bill) => {
 							return (
 								<tr
 									class="even:bg-surfaceContainerLow/60 bg-surfaceContainerLowest hover:bg-tertiaryContainer/20"
