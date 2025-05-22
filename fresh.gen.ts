@@ -6,6 +6,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
 import * as $api_protected_middleware from "./routes/api/(protected)/_middleware.ts";
+import * as $api_protected_archive_archive_id_ from "./routes/api/(protected)/archive/[archive_id].tsx";
 import * as $api_protected_bill_bill_id_archive from "./routes/api/(protected)/bill/[bill_id]/archive.ts";
 import * as $api_protected_bill_bill_id_payments_images from "./routes/api/(protected)/bill/[bill_id]/payments/images.ts";
 import * as $api_protected_bill_bill_id_payments_index from "./routes/api/(protected)/bill/[bill_id]/payments/index.ts";
@@ -33,6 +34,8 @@ import * as $profile_layout from "./routes/profile/_layout.tsx";
 import * as $profile_middleware from "./routes/profile/_middleware.tsx";
 import * as $profile_index from "./routes/profile/index.tsx";
 import * as $Combobox from "./islands/Combobox.tsx";
+import * as $dashboard_archive_bills_ArchiveBillActions from "./islands/dashboard/archive-bills/ArchiveBillActions.tsx";
+import * as $dashboard_archive_bills_ArchiveBillsTableActions from "./islands/dashboard/archive-bills/ArchiveBillsTableActions.tsx";
 import * as $dashboard_bills_AddBillPayment from "./islands/dashboard/bills/AddBillPayment.tsx";
 import * as $dashboard_bills_CreateBillForm from "./islands/dashboard/bills/CreateBillForm.tsx";
 import * as $dashboard_bills_file_input from "./islands/dashboard/bills/file-input.tsx";
@@ -54,6 +57,8 @@ const manifest = {
 		"./routes/_app.tsx": $_app,
 		"./routes/_layout.tsx": $_layout,
 		"./routes/api/(protected)/_middleware.ts": $api_protected_middleware,
+		"./routes/api/(protected)/archive/[archive_id].tsx":
+			$api_protected_archive_archive_id_,
 		"./routes/api/(protected)/bill/[bill_id]/archive.ts":
 			$api_protected_bill_bill_id_archive,
 		"./routes/api/(protected)/bill/[bill_id]/payments/images.ts":
@@ -91,6 +96,10 @@ const manifest = {
 	},
 	islands: {
 		"./islands/Combobox.tsx": $Combobox,
+		"./islands/dashboard/archive-bills/ArchiveBillActions.tsx":
+			$dashboard_archive_bills_ArchiveBillActions,
+		"./islands/dashboard/archive-bills/ArchiveBillsTableActions.tsx":
+			$dashboard_archive_bills_ArchiveBillsTableActions,
 		"./islands/dashboard/bills/AddBillPayment.tsx":
 			$dashboard_bills_AddBillPayment,
 		"./islands/dashboard/bills/CreateBillForm.tsx":

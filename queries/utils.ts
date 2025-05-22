@@ -7,7 +7,9 @@ class Fetcher {
 	baseURL: URL;
 
 	constructor(base?: string) {
-		this.baseURL = base ? new URL(base) : new URL(globalThis.location.origin);
+		this.baseURL = base
+			? new URL(base)
+			: new URL(globalThis.location?.origin || "https://myledger.deno.dev");
 	}
 
 	async get<T>(url: string, params?: Record<string, string | number>) {
@@ -36,20 +38,25 @@ class Fetcher {
 
 	async delete<T>(
 		url: string,
-		{ params, body }: FetcherOptions,
+		options?: FetcherOptions,
 	) {
+		console.log(this.baseURL);
 		const _url = new URL(url, this.baseURL);
 
-		if (params) {
-			Object.entries(params).map(([key, value]) =>
+		if (options?.params) {
+			Object.entries(options.params).map(([key, value]) =>
 				_url.searchParams.set(key, String(value))
 			);
 		}
 
-		const response = await fetch(_url, { body: JSON.stringify(body) });
+		const response = await fetch(_url, {
+			body: JSON.stringify(options?.body || ""),
+			method: "DELETE",
+		});
 		const data = await response.json();
 
-		return data as T;
+		Object.assign(response, { data });
+		return response;
 	}
 }
 

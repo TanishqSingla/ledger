@@ -1,6 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { ArchiveDocument, GetArchiveBillById } from "@db/ArchiveBills.ts";
-import { buttonVariants } from "@components/Button.tsx";
+import ArchiveBillActions from "../../../islands/dashboard/archive-bills/ArchiveBillActions.tsx";
 
 export const handler: Handlers = {
 	async GET(_req, ctx) {
@@ -19,7 +19,7 @@ export default function ArchiveBill(
 			<section>
 				<h1 class="text-headline-medium">
 					Archive Bill<span className="text-surfaceTint text-title-medium ml-2">
-						#{archive.archived_at}
+						#{archive.bill_id}
 					</span>
 				</h1>
 			</section>
@@ -43,13 +43,7 @@ export default function ArchiveBill(
 					: <>Bill not found</>}
 			</section>
 
-			<section>
-				<h2 className="text-title-medium">Payments</h2>
-
-				<button className={buttonVariants({ variant: "filled" })}>
-					Restore
-				</button>
-			</section>
+			<ArchiveBillActions archiveId={archive.bill_id} />
 
 			<hr />
 			{archive?.history && (
