@@ -1,9 +1,9 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { create } from "@zaubrik/djwt";
-import { kv } from "../../utils/db.ts";
-import { cryptoKey } from "../../utils/secrets.ts";
+import { kv } from "@utils/db.ts";
+import { cryptoKey } from "@utils/secrets.ts";
 import { Cookie, setCookie } from "jsr:@std/http@^1.0.3/cookie";
-import Input from "../../components/Input.tsx";
+import Input from "@components/Input.tsx";
 
 type Data = {
 	email?: string;

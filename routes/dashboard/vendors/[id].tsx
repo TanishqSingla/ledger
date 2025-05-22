@@ -1,11 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import Badge from "../../../components/atoms/badge.tsx";
-import { NoData } from "../../../components/icons/index.tsx";
-import { BillDocument, QueryBills } from "../../../db/Bills.ts";
-import { GetVendorFromId, VendorDocument } from "../../../db/Vendors.ts";
-import { billStatusBadgeMap } from "../../../utils/constants.ts";
+import Badge from "@components/atoms/badge.tsx";
+import { NoData } from "@components/icons/index.tsx";
+import { BillDocument, QueryBills } from "@db/Bills.ts";
+import { GetVendorFromId, VendorDocument } from "@db/Vendors.ts";
+import { billStatusBadgeMap } from "@utils/constants.ts";
 import AddVendorAccountModal from "../../../islands/dashboard/vendors/AddVendorAccountModal.tsx";
-import { buttonVariants } from "../../../components/Button.tsx";
+import { buttonVariants } from "@components/Button.tsx";
 import VendorAccountTable from "../../../islands/dashboard/vendors/VendorAccountTable.tsx";
 
 type Data = {
@@ -59,8 +59,8 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 			</section>
 
 			<section>
-				<p className={"text-title-medium"}>Accounts</p>
-				<div className={"rounded-xl overflow-hidden relative border my-4"}>
+				<p className="text-title-medium">Accounts</p>
+				<div className="rounded-xl overflow-hidden relative border my-4">
 					<table class="table-auto w-full border-collapse">
 						<thead>
 							<tr>
@@ -75,15 +75,11 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 						</thead>
 						<tbody>
 							{!data.vendor?.accounts?.length && (
-								<tr
-									className={"min-h-60"}
-								>
+								<tr className="min-h-60">
 									<td colspan={7}>
-										<div
-											className={"flex flex-col items-center justify-center my-8"}
-										>
+										<div className="flex flex-col items-center justify-center my-8">
 											<NoData width={128} height={128} />
-											<p className={"text-center"}>No Accounts added</p>
+											<p className="text-center">No Accounts added</p>
 										</div>
 									</td>
 								</tr>
@@ -102,8 +98,8 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 			</section>
 
 			<section>
-				<p className={"mt-8 text-title-large"}>Recent Payments</p>
-				<div className={"rounded-xl overflow-hidden relative border my-4"}>
+				<p className="mt-8 text-title-large">Recent Payments</p>
+				<div className="rounded-xl overflow-hidden relative border my-4">
 					<table class="table-auto w-full border-collapse">
 						<thead>
 							<tr>
@@ -116,15 +112,11 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 						</thead>
 						<tbody>
 							{!data.recentBills.length && (
-								<tr
-									className={"min-h-60"}
-								>
+								<tr className="min-h-60">
 									<td colspan={7}>
-										<div
-											className={"flex flex-col items-center justify-center my-8"}
-										>
+										<div className="flex flex-col items-center justify-center my-8">
 											<NoData width={128} height={128} />
-											<p className={"text-center"}>No Data</p>
+											<p className="text-center">No Data</p>
 										</div>
 									</td>
 								</tr>

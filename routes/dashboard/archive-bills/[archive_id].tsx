@@ -1,18 +1,25 @@
-import { PageProps } from "$fresh/server.ts";
-import { GetArchiveBillById } from "@db/ArchiveBills.ts";
-import AddBillPayment from "../../../islands/dashboard/bills/AddBillPayment.tsx";
+import { Handlers, PageProps } from "$fresh/server.ts";
+import { ArchiveDocument, GetArchiveBillById } from "@db/ArchiveBills.ts";
+import { buttonVariants } from "@components/Button.tsx";
 
-export default async function ArchiveBill({ params }: PageProps) {
-	const { archive_id } = params;
+export const handler: Handlers = {
+	async GET(_req, ctx) {
+		const { archive_id } = ctx.params;
+		const archive = await GetArchiveBillById(archive_id);
 
-	const archive = await GetArchiveBillById(archive_id);
+		return ctx.render({ ...archive });
+	},
+};
 
+export default function ArchiveBill(
+	{ data: archive }: PageProps<ArchiveDocument>,
+) {
 	return (
 		<main className="p-6 h-full w-full overflow-y-auto">
 			<section>
 				<h1 class="text-headline-medium">
 					Archive Bill<span className="text-surfaceTint text-title-medium ml-2">
-						#{archive_id}
+						#{archive.archived_at}
 					</span>
 				</h1>
 			</section>
@@ -39,7 +46,9 @@ export default async function ArchiveBill({ params }: PageProps) {
 			<section>
 				<h2 className="text-title-medium">Payments</h2>
 
-				<AddBillPayment billId={params.id} />
+				<button className={buttonVariants({ variant: "filled" })}>
+					Restore
+				</button>
 			</section>
 
 			<hr />

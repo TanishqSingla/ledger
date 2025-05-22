@@ -44,7 +44,11 @@ export default async function ArchiveBills() {
 						)}
 						{archives.map((archive) => (
 							<tr key={archive.bill_id}>
-								<td class="px-4 py-2 text-label-large">{archive.bill_id}</td>
+								<td class="px-4 py-2 text-label-large">
+									<a href={`/dashboard/archive-bills/${archive.bill_id}`}>
+										{archive.bill_id}
+									</a>
+								</td>
 								<td class="px-4 py-2 text-label-large">{archive.created_at}</td>
 								<td class="px-4 py-2 text-label-large">{archive.created_at}</td>
 								<td class="px-4 py-2 text-label-large">{archive.amount}</td>

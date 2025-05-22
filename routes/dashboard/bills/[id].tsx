@@ -4,6 +4,8 @@ import { type Bill, GetBillFromId } from "@db/Bills.ts";
 import AddBillPayment from "../../../islands/dashboard/bills/AddBillPayment.tsx";
 import { getFile } from "@queries/s3.ts";
 import { billStatusBadgeMap } from "@utils/constants.ts";
+import { MoveToArchive } from "@db/ArchiveBills.ts";
+import { buttonVariants } from "@components/Button.tsx";
 
 type Data = {
 	bill: Awaited<ReturnType<typeof GetBillFromId>>;
@@ -11,7 +13,7 @@ type Data = {
 	payments: Record<string, string>;
 };
 
-export const handler: Handlers = {
+export const handler: Handlers<unknown, { email_id: string }> = {
 	async GET(_req, ctx) {
 		const { id } = ctx.params;
 
@@ -40,6 +42,18 @@ export const handler: Handlers = {
 		});
 
 		return ctx.render({ bill, file, payments });
+	},
+	async POST(_req, ctx) {
+		const { id } = ctx.params;
+
+		try {
+			await MoveToArchive(id, ctx.state.email_id);
+
+			return Response.redirect(`/dashboard/archive-bills/${id}`, 303);
+		} catch (err: unknown) {
+			console.log(err)
+			return ctx.render();
+		}
 	},
 };
 
@@ -99,6 +113,14 @@ export default function Bill({ params, data }: PageProps<Data>) {
 				})}
 
 				<AddBillPayment billId={params.id} />
+			</section>
+
+			<section>
+				<form method="post">
+					<button className={buttonVariants({ variant: "destructive" })}>
+						Move to archive
+					</button>
+				</form>
 			</section>
 
 			<hr />

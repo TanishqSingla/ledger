@@ -10,7 +10,9 @@ export async function MoveToArchive(bill_id: string, user: string) {
 	const session = client.startSession();
 
 	try {
-		const bill = await (await bills()).findOne({ bill_id });
+		session.startTransaction();
+
+		const bill = await (await bills()).findOneAndDelete({ bill_id });
 
 		if (!bill) {
 			throw new Error("Bill not found");
