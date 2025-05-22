@@ -30,17 +30,32 @@ class Fetcher {
 	async put<T>() {
 	}
 
-	async post<T>() {
+	async post<T = unknown>(url: string, options?: FetcherOptions) {
+		const _url = new URL(url, this.baseURL);
+
+		if (options?.params) {
+			Object.entries(options.params).map(([key, value]) =>
+				_url.searchParams.set(key, String(value))
+			);
+		}
+
+		const response = await fetch(_url, {
+			body: JSON.stringify(options?.body || ""),
+			method: "POST",
+		});
+		const data = await response.json();
+
+		Object.assign(response, { data } as { data: T });
+		return response;
 	}
 
 	async patch<T>() {
 	}
 
-	async delete<T>(
+	async delete<T = unknown>(
 		url: string,
 		options?: FetcherOptions,
 	) {
-		console.log(this.baseURL);
 		const _url = new URL(url, this.baseURL);
 
 		if (options?.params) {
@@ -55,7 +70,7 @@ class Fetcher {
 		});
 		const data = await response.json();
 
-		Object.assign(response, { data });
+		Object.assign(response, { data } as { data: T });
 		return response;
 	}
 }

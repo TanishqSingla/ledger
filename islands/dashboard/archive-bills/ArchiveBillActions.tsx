@@ -5,8 +5,17 @@ import { fetcher } from "@queries/utils.ts";
 export default function ArchiveBillActions(
 	{ archiveId }: { archiveId: string },
 ) {
+	const handleRestore = async () => {
+		const resp = await fetcher.post(`/api/archive/${archiveId}/bill`);
+
+		if (resp.status > 400) {
+			return;
+		}
+
+		globalThis.location.replace(`/dashboard/bills/${archiveId}`);
+	};
+
 	const handleDelete = async () => {
-		console.log(globalThis)
 		const resp = await fetcher.delete(`/api/archive/${archiveId}`);
 
 		if (resp.status > 400) {
@@ -28,7 +37,7 @@ export default function ArchiveBillActions(
 						className: "disabled:bg-gray-400",
 					}),
 				)}
-				disabled
+				onClick={handleRestore}
 			>
 				Restore
 			</button>

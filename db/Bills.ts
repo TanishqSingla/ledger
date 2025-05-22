@@ -1,11 +1,11 @@
 import { FindOptions } from "mongodb";
-import { bills } from "./conn.ts";
+import { archiveBills, bills, getClient } from "./conn.ts";
 import { MongoDocument } from "../types.ts";
 import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
 
 type BillHistoryTypes =
 	| {
-		action: "CREATE" | "ARCHIVE";
+		action: "CREATE" | "ARCHIVE" | "RESTORE";
 	}
 	| {
 		action: "UPDATE";
@@ -105,4 +105,37 @@ export async function PostBillPayment(
 	});
 
 	return resp;
+}
+
+export async function MoveToBill(bill_id: string, user: string) {
+	const client = await getClient();
+	const session = client.startSession();
+
+	try {
+		session.startTransaction();
+
+		const bill = await (await archiveBills()).findOneAndDelete({ bill_id });
+
+		if (!bill) {
+			throw new Error("Archive bill not found");
+		}
+
+		await (await bills()).insertOne({
+			...bill,
+			history: [...bill.history, {
+				action: "RESTORE",
+				timestamp: Date.now(),
+				user,
+			}],
+		});
+
+		await session.commitTransaction();
+
+		return bill;
+	} catch (err: unknown) {
+		console.error(err);
+		await session.abortTransaction();
+	} finally {
+		await session.endSession();
+	}
 }

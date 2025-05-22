@@ -1,18 +1,21 @@
 import { Handlers } from "$fresh/server.ts";
-import { MoveToArchive } from "@db/ArchiveBills.ts";
+import { MoveToBill } from "@db/Bills.ts";
 
-export const handler: Handlers<any, { email_id: string }> = {
+export const handler: Handlers<unknown, { email_id: string }> = {
 	async POST(_, ctx) {
-		const billId = ctx.params.bill_id;
+		const billId = ctx.params.archive_id;
 		const user = ctx.state.email_id;
 
 		try {
-			const resp = await MoveToArchive(billId, user);
+			const resp = await MoveToBill(billId, user);
 
 			if (resp?.bill_id) {
-				return Response.redirect(
-					ctx.url.origin + `/dashbard/archive-bills/${resp.bill_id}`,
-					303,
+				return new Response(
+					JSON.stringify({
+						status: "success",
+						message: "Bill restored successfully",
+					}),
+					{ status: 200 },
 				);
 			}
 

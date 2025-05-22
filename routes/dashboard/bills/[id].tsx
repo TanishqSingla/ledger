@@ -49,9 +49,12 @@ export const handler: Handlers<unknown, { email_id: string }> = {
 		try {
 			await MoveToArchive(id, ctx.state.email_id);
 
-			return Response.redirect(`/dashboard/archive-bills/${id}`, 303);
+			return Response.redirect(
+				ctx.url.origin + `/dashboard/archive-bills/${id}`,
+				303,
+			);
 		} catch (err: unknown) {
-			console.log(err)
+			console.log(err);
 			return ctx.render();
 		}
 	},
