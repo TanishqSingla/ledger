@@ -139,3 +139,9 @@ export async function MoveToBill(bill_id: string, user: string) {
 		await session.endSession();
 	}
 }
+
+export async function GetPaginationInfo() {
+	const resp = await (await bills()).estimatedDocumentCount()
+
+	return resp;
+}
