@@ -32,13 +32,11 @@ export default function DisplayPreference() {
 	}, []);
 
 	return (
-		<div
-			className={"flex border border-outline rounded-3xl divide-x divide-outline overflow-hidden h-10"}
-		>
+		<div className="flex border border-outline rounded-3xl divide-x divide-outline overflow-hidden h-10">
 			<button
 				title="list"
 				value={DISPLAY_TYPE.LIST}
-				className={"px-4 py-2 text-onSurface hover:bg-onSurface data-[selected=true]:bg-secondaryContainer hover:bg-opacity-[0.08]"}
+				className="px-4 py-2 text-onSurface hover:bg-onSurface data-[selected=true]:bg-secondaryContainer hover:bg-opacity-[0.08]"
 				aria-selected={false}
 				data-selected={displayTypeSignal.value === DISPLAY_TYPE.LIST}
 				onClick={handleClick}
@@ -48,7 +46,7 @@ export default function DisplayPreference() {
 			<button
 				title="grid"
 				value={DISPLAY_TYPE.GRID}
-				className={"py-2 px-4 text-onSurface hover:bg-onSurface data-[selected=true]:bg-secondaryContainer hover:bg-opacity-[0.08]"}
+				className="py-2 px-4 text-onSurface hover:bg-onSurface data-[selected=true]:bg-secondaryContainer hover:bg-opacity-[0.08]"
 				aria-selected={false}
 				data-selected={displayTypeSignal.value === DISPLAY_TYPE.GRID}
 				onClick={handleClick}

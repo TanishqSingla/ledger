@@ -1,11 +1,11 @@
-import Input from "../../../components/Input.tsx";
+import Input from "@components/Input.tsx";
 import { twMerge } from "tailwind-merge";
 
-import { buttonVariants } from "../../../components/Button.tsx";
-import { CrossIcon, Loader } from "../../../components/icons/index.tsx";
+import { buttonVariants } from "@components/Button.tsx";
+import { CrossIcon, Loader } from "@components/icons/index.tsx";
 import { useRef } from "preact/hooks";
-import useVendor from "../../../hooks/vendor/useVendor.ts";
-import { VendorDocument } from "../../../db/Vendors.ts";
+import useVendor from "@hooks/vendor/useVendor.ts";
+import { VendorDocument } from "@db/Vendors.ts";
 
 export default function CreateVendorModal(
 	{ vendors }: { vendors: VendorDocument[] },
@@ -44,7 +44,7 @@ export default function CreateVendorModal(
 					<div class="flex justify-between px-4 my-4">
 						<h1 class="text-title-large">Create vendor</h1>
 						<button
-							aria-label={"Close"}
+							aria-label="Close"
 							onClick={handleClose}
 						>
 							<CrossIcon />
@@ -54,7 +54,7 @@ export default function CreateVendorModal(
 						<form
 							onSubmit={handleSubmit}
 						>
-							<div className={"my-4"}>
+							<div className="my-4">
 								<label htmlFor="vendor_name" class="text-label-large">
 									Vendor Name
 									<Input

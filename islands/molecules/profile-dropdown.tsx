@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "preact/hooks";
-import { CircleUserRound } from "../../components/icons/index.tsx";
+import { CircleUserRound } from "@components/icons/index.tsx";
 
 export default function ProfileDropdown() {
 	const dialogRef = useRef<HTMLDialogElement>(null);
@@ -15,7 +15,9 @@ export default function ProfileDropdown() {
 			dialogRef.current.style.left =
 				triggerRef.current.getBoundingClientRect().left + "px";
 
-			if (dialogRef.current.getBoundingClientRect().right > window.screenX) {
+			if (
+				dialogRef.current.getBoundingClientRect().right > globalThis.screenX
+			) {
 				dialogRef.current.style.left =
 					triggerRef.current.getBoundingClientRect().left -
 					(dialogRef.current.getBoundingClientRect().width / 2) + "px";
@@ -32,29 +34,30 @@ export default function ProfileDropdown() {
 	}, []);
 
 	return (
-		<div className={"relative"}>
+		<div className="relative">
 			<button
+				type="button"
 				ref={triggerRef}
 				onClick={() => dialogRef.current?.showModal()}
-				aria-label={"profile button"}
+				aria-label="profile button"
 			>
 				<CircleUserRound />
 			</button>
 			<dialog
 				ref={dialogRef}
-				className={`m-0 bg-surfaceContainerLow rounded-xl backdrop:bg-transparent shadow -translate-x-1/4`}
+				className="m-0 bg-surfaceContainerLow rounded-xl backdrop:bg-transparent shadow -translate-x-1/4"
 				is="modal-dialog"
 			>
-				<div className={"flex flex-col"}>
+				<div className="flex flex-col">
 					<a
-						href={"/profile"}
-						className={"cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"}
+						href="/profile"
+						className="cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"
 					>
 						Profile
 					</a>
 					<a
-						className={"cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"}
-						href={"/logout"}
+						className="cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"
+						href="/logout"
 					>
 						Logout
 					</a>

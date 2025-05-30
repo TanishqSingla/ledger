@@ -31,7 +31,8 @@
 		"@utils/": "./utils/",
 		"@queries/": "./queries/",
 		"@db/": "./db/",
-		"@components/": "./components/"
+		"@components/": "./components/",
+		"@hooks/": "./hooks/"
 	},
 	"compilerOptions": {
 		"jsx": "react-jsx",

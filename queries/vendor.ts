@@ -6,6 +6,26 @@ export type PutVendorPayload = {
 	phone?: string;
 };
 
+export type BankInfo = {
+	"MICR": string;
+	"BRANCH": string;
+	"ADDRESS": string;
+	"STATE": string;
+	"CONTACT": string;
+	"UPI": boolean;
+	"RTGS": boolean;
+	"CITY": string;
+	"CENTRE": string;
+	"DISTRICT": string;
+	"NEFT": boolean;
+	"IMPS": boolean;
+	"SWIFT": string;
+	"ISO3166": string;
+	"BANK": string;
+	"BANKCODE": string;
+	"IFSC": string;
+};
+
 export const putVendor = async (body: PutVendorPayload) => {
 	const response = await fetch("/api/vendor", {
 		method: "PUT",
@@ -74,23 +94,5 @@ export async function getBankInfo(ifsc: string) {
 	const res = await fetch(`https://ifsc.razorpay.com/${ifsc}`);
 	const data = await res.json();
 
-	return data as {
-		"MICR": string;
-		"BRANCH": string;
-		"ADDRESS": string;
-		"STATE": string;
-		"CONTACT": string;
-		"UPI": boolean;
-		"RTGS": boolean;
-		"CITY": string;
-		"CENTRE": string;
-		"DISTRICT": string;
-		"NEFT": boolean;
-		"IMPS": boolean;
-		"SWIFT": string;
-		"ISO3166": string;
-		"BANK": string;
-		"BANKCODE": string;
-		"IFSC": string;
-	};
+	return data as BankInfo | "Not Found";
 }

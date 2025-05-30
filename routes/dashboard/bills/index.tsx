@@ -1,6 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Button } from "ketu";
-import { BillDocument, GetPaginationInfo, QueryBills, SearchBills } from "@db/Bills.ts";
+import {
+	BillDocument,
+	GetPaginationInfo,
+	QueryBills,
+	SearchBills,
+} from "@db/Bills.ts";
 import Input from "@components/Input.tsx";
 import Badge from "@components/atoms/badge.tsx";
 import { billStatusBadgeMap } from "@utils/constants.ts";
@@ -9,7 +14,7 @@ import { buttonVariants } from "@components/Button.tsx";
 
 type Data = {
 	bills: BillDocument[];
-	total_count: number
+	total_count: number;
 };
 
 export const handler: Handlers = {
@@ -61,7 +66,9 @@ export default function Bills({ data }: PageProps<Data>) {
 				</div>
 			</div>
 
-			<p className='my-4'>Found {data.total_count || data.bills.length} results</p>
+			<p className="my-4">
+				Found {data.total_count || data.bills.length} results
+			</p>
 			<div class="rounded-xl overflow-hidden relative border">
 				<table class="table-auto w-full border-collapse">
 					<thead>

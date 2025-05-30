@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import Input from "../../../components/Input.tsx";
+import Input from "@components/Input.tsx";
 
 export default function AddAccountForm() {
 	const [loading, setLoading] = useState(false);

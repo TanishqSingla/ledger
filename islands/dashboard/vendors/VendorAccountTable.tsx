@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
-import { buttonVariants } from "../../../components/Button.tsx";
-import { TrashIcon } from "../../../components/icons/index.tsx";
-import { VendorDocument } from "../../../db/Vendors.ts";
+import { buttonVariants } from "@components/Button.tsx";
+import { TrashIcon } from "@components/icons/index.tsx";
+import { VendorDocument } from "@db/Vendors.ts";
 import { useVendorAccounts } from "../../../hooks/vendor/useVendorAccounts.tsx";
 
 export default function VendorAccountTable(
@@ -29,6 +29,7 @@ export default function VendorAccountTable(
 					<td class="px-4 py-2 text-label-large">{account.ifsc}</td>
 					<td class="px-4 py-2 text-label-large">
 						<button
+							type="button"
 							className={twMerge(buttonVariants({
 								variant: "link",
 								className: "text-error",

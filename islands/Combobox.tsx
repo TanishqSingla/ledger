@@ -1,9 +1,9 @@
 import { useEffect, useState } from "preact/hooks";
-import Input from "../components/Input.tsx";
-import { Vendor } from "../db/Vendors.ts";
+import Input from "@components/Input.tsx";
+import { Vendor } from "@db/Vendors.ts";
 import { signal } from "@preact/signals";
 import { useMutation } from "../hooks/useMutation.ts";
-import { putVendor } from "../queries/vendor.ts";
+import { putVendor } from "@queries/vendor.ts";
 
 export const selectedVendor = signal<Vendor>();
 
@@ -77,9 +77,9 @@ export const VendorComboBox = () => {
 				value={value}
 				onInput={handleInput}
 				disabled={createMutation.isLoading}
-				autocomplete={"off"}
-				placeholder={"Select Vendor"}
-				name={"vendor"}
+				autocomplete="off"
+				placeholder="Select Vendor"
+				name="vendor"
 			/>
 			{!!value && !valueSelected && (
 				<div class="shadow-lg rounded-xl border border-secondary absolute top-full w-full bg-surfaceContainerHigh mt-1 overflow-hidden">

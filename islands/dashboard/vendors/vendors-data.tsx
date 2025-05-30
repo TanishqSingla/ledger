@@ -1,4 +1,4 @@
-import { VendorDocument } from "../../../db/Vendors.ts";
+import { VendorDocument } from "@db/Vendors.ts";
 import {
 	DISPLAY_TYPE,
 	displayTypeSignal,
@@ -12,7 +12,7 @@ export default function VendorsData(
 	if (displayTypeSignal.value === DISPLAY_TYPE.LIST) {
 		return (
 			<>
-				<p className={"text-body-small my-4"}>
+				<p className="text-body-small my-4">
 					Showing {vendors.length} items
 				</p>
 				<section class="rounded-xl overflow-hidden relative border">

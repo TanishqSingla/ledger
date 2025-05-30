@@ -10,7 +10,7 @@ export default function AddBillPayment({ billId }: { billId: string }) {
 	const [editMode, setEditMode] = useState(false);
 	const [uploadFileError, setUploadFileError] = useState("");
 
-	const handleSubmit = async (event: any) => {
+	const handleSubmit = async (event: SubmitEvent) => {
 		event.preventDefault();
 		const formData = new FormData(event.target as HTMLFormElement);
 
@@ -86,24 +86,22 @@ export default function AddBillPayment({ billId }: { billId: string }) {
 			{editMode && (
 				<form
 					onSubmit={handleSubmit}
-					className={"max-w-screen-sm border p-4 rounded-xl border-primary space-y-4"}
+					className="max-w-screen-sm border p-4 rounded-xl border-primary space-y-4"
 				>
-					<Input name={"reference_number"} placeholder={"Reference number"} />
+					<Input name="reference_number" placeholder="Reference number" />
 					<FileUpload
 						handleUpload={handleUpload}
 						label="Attach payment"
 						multiple={false}
 					/>
-					<div className={"flex flex-wrap gap-4"}>
+					<div className="flex flex-wrap gap-4">
 						{files && files.map((file, index) => {
 							return (
-								<div
-									className={"inline-flex items-center border border-outlineVariant h-8 rounded-lg px-2"}
-								>
+								<div className="inline-flex items-center border border-outlineVariant h-8 rounded-lg px-2">
 									<span>{file.name}</span>
 									<button
-										type={"button"}
-										className={"ml-2"}
+										type="button"
+										className="ml-2"
 										onClick={() => removeFile(index)}
 										aria-label="remove file"
 									>

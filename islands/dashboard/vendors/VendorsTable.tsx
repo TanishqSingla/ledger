@@ -30,13 +30,11 @@ export function VendorsTable({ vendors }: { vendors: VendorDocument[] }) {
 			</thead>
 			<tbody>
 				{(!data.value || !data.value.length) && (
-					<tr
-						className={"min-h-60"}
-					>
+					<tr className="min-h-60">
 						<td colspan={7}>
-							<div className={"flex flex-col items-center justify-center my-8"}>
+							<div className="flex flex-col items-center justify-center my-8">
 								<NoData width={128} height={128} />
-								<p className={"text-center"}>No Data</p>
+								<p className="text-center">No Data</p>
 							</div>
 						</td>
 					</tr>
@@ -65,8 +63,8 @@ export function VendorsTable({ vendors }: { vendors: VendorDocument[] }) {
 									<a
 										href={`/dashboard/vendors/${vendor.vendor_id}`}
 										class="hover:underline text-blue-500"
-										target={"_blank"}
-										title={"Open in new window"}
+										target="_blank"
+										title="Open in new window"
 									>
 										<OpenInNewWindow />
 									</a>

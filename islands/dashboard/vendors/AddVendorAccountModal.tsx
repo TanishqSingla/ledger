@@ -3,10 +3,32 @@ import { twMerge } from "tailwind-merge";
 
 import { buttonVariants } from "@components/Button.tsx";
 import { CrossIcon, Loader, PlusIcon } from "@components/icons/index.tsx";
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useRef, useState } from "preact/hooks";
 import { Vendor, VendorDocument } from "@db/Vendors.ts";
-import { useVendorAccounts } from "../../../hooks/vendor/useVendorAccounts.tsx";
-import { getBankInfo } from "@queries/vendor.ts";
+import { useVendorAccounts } from "@hooks/vendor/useVendorAccounts.tsx";
+import { BankInfo, getBankInfo } from "@queries/vendor.ts";
+import { effect, signal } from "@preact/signals";
+
+const ifscInputSignal = signal("");
+const bankInfoSignal = signal<BankInfo | null>(null);
+
+effect(() => {
+	if (!/\w{4}0[a-zA-Z0-9]{6}/.test(ifscInputSignal.value)) {
+		bankInfoSignal.value = null;
+		return;
+	}
+
+	(async () => {
+		const resp = await getBankInfo(ifscInputSignal.value);
+
+		if (resp == "Not Found") {
+			bankInfoSignal.value = null;
+			return;
+		}
+
+		bankInfoSignal.value = resp;
+	})();
+});
 
 export default function AddVendorAccountModal(
 	{ vendor }: { vendor: VendorDocument },
@@ -16,9 +38,6 @@ export default function AddVendorAccountModal(
 	);
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const [error, setError] = useState(false);
-	const [bankInfo, setBankInfo] = useState<
-		{ bank_name: string; branch_name: string; ifsc: string }
-	>({});
 
 	const validateFormBody = (body: Vendor["accounts"][0]) => {
 		if (!/\w{4}0[a-zA-Z0-9]{6}/.test(body.ifsc)) {
@@ -38,7 +57,6 @@ export default function AddVendorAccountModal(
 
 		if (accountsData.value.findIndex((account) => account.id === id) != -1) {
 			return;
-			c;
 		}
 
 		const body: Vendor["accounts"][0] = {
@@ -63,18 +81,6 @@ export default function AddVendorAccountModal(
 
 	const handleClose = () => dialogRef.current?.close();
 
-	useEffect(() => {
-		if (/\w{4}0[a-zA-Z0-9]{6}/.test(bankInfo.ifsc)) {
-			getBankInfo(bankInfo.ifsc).then((data) =>
-				setBankInfo({
-					bank_name: data.BANK,
-					branch_name: data.BRANCH,
-					ifsc: data.IFSC,
-				})
-			);
-		}
-	}, [bankInfo.ifsc]);
-
 	return (
 		<>
 			<button
@@ -83,12 +89,12 @@ export default function AddVendorAccountModal(
 			>
 				<PlusIcon /> Add Account
 			</button>
-			<dialog is="modal-dialog" ref={dialogRef} className={"rounded-xl"}>
+			<dialog is="modal-dialog" ref={dialogRef} className="rounded-xl">
 				<div class="z-20 bg-white max-w-screen-sm">
 					<div class="flex justify-between px-4 my-4">
 						<h1 class="text-title-large">Create vendor</h1>
 						<button
-							aria-label={"Close"}
+							aria-label="Close"
 							onClick={handleClose}
 						>
 							<CrossIcon />
@@ -98,7 +104,7 @@ export default function AddVendorAccountModal(
 						<form
 							onSubmit={handleSubmit}
 						>
-							<div className={"my-4"}>
+							<div className="my-4">
 								<label htmlFor="account_number" class="text-label-large">
 									Account number
 									<Input
@@ -115,28 +121,22 @@ export default function AddVendorAccountModal(
 										placeholder="IFSC"
 										id="ifsc"
 										name="ifsc"
-										value={bankInfo.ifsc}
+										value={ifscInputSignal.value}
 										onInput={(e) =>
-											setBankInfo((prev) => ({
-												...prev,
-												ifsc: e.target.value.toUpperCase(),
-											}))}
+											ifscInputSignal.value = e.currentTarget.value}
 									/>
 								</label>
-								{error && <p className={"text-error"}>Invalid IFSC</p>}
+								{error && <p className="text-error">Invalid IFSC</p>}
 
 								<label htmlFor="bank_name" class="text-label-large">
 									Bank name
 									<Input
 										placeholder="Bank name"
+										className={`read-only:bg-surfaceVariant read-only:border-gray-50 read-only:text-gray-400`}
 										id="bank_name"
 										name="bank_name"
-										onInput={(e) =>
-											setBankInfo((prev) => ({
-												...prev,
-												bank_name: e.target.value,
-											}))}
-										value={bankInfo.bank_name}
+										readonly={!!bankInfoSignal.value}
+										value={bankInfoSignal.value?.BANK}
 									/>
 								</label>
 
@@ -144,14 +144,11 @@ export default function AddVendorAccountModal(
 									Branch name
 									<Input
 										placeholder="Branch name"
+										className={`read-only:bg-surfaceVariant read-only:border-gray-50 read-only:text-gray-400`}
 										id="branch_name"
 										name="branch_name"
-										onInput={(e) =>
-											setBankInfo((prev) => ({
-												...prev,
-												branch_name: e.target.value,
-											}))}
-										value={bankInfo.branch_name}
+										readonly={!!bankInfoSignal.value}
+										value={bankInfoSignal.value?.BRANCH}
 									/>
 								</label>
 							</div>
