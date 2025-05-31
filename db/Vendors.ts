@@ -39,8 +39,8 @@ export async function PutVendor(
 	const doc = {
 		...body,
 		vendor_id: nanoid(12),
-		created_at: new Date(Date.now()).toUTCString(),
-		updated_at: new Date(Date.now()).toUTCString(),
+		created_at: new Date(Date.now()),
+		updated_at: new Date(Date.now()),
 		accounts: [],
 	};
 

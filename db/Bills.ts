@@ -42,7 +42,9 @@ export async function QueryBills(
 		...(vendor_id && { vendor_id }),
 	};
 
-	const resp = await (await bills()).find(filters, queryOptions).toArray();
+	const resp = await (await bills()).find(filters, queryOptions).sort({
+		created_at: 1,
+	}).toArray();
 	return resp as BillDocument[];
 }
 
