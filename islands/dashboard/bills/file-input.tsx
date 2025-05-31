@@ -1,5 +1,5 @@
 import { useRef, useState } from "preact/hooks";
-import { AddFiles } from "../../../components/icons/index.tsx";
+import { AddFiles } from "@components/icons/index.tsx";
 
 type FileUploadProps = {
 	handleUpload: (files: File[]) => void;
@@ -58,7 +58,7 @@ export const FileUpload = (
 		<>
 			<label
 				className={`h-40 rounded-xl w-full grid place-items-center bg-surfaceBright cursor-pointer border border-surfaceVariant border-dashed data-[active=true]:border-surfaceTint`}
-				for={"invoices"}
+				for="invoices"
 				ref={dropAreaRef}
 				onDragEnter={highlight}
 				onDragOver={highlight}
@@ -66,7 +66,7 @@ export const FileUpload = (
 				onDrop={handleDrop}
 				data-active={active}
 			>
-				<AddFiles height={"72"} width={"72"} />
+				<AddFiles height="72" width="72" />
 				<p>
 					{label}
 				</p>
@@ -76,9 +76,9 @@ export const FileUpload = (
 				multiple={multiple}
 				id="invoices"
 				name="invoices"
-				class={"hidden"}
+				class="hidden"
 				onChange={handleFileChange}
-				accept={"image/*,.pdf"}
+				accept="image/*,.pdf"
 			/>
 		</>
 	);

@@ -2,7 +2,7 @@ import { twMerge } from "tailwind-merge";
 import { buttonVariants } from "@components/Button.tsx";
 import { TrashIcon } from "@components/icons/index.tsx";
 import { VendorDocument } from "@db/Vendors.ts";
-import { useVendorAccounts } from "../../../hooks/vendor/useVendorAccounts.tsx";
+import { useVendorAccounts } from "@hooks/vendor/useVendorAccounts.tsx";
 
 export default function VendorAccountTable(
 	{ accounts, vendorId }: {

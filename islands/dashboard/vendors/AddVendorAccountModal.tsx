@@ -84,6 +84,7 @@ export default function AddVendorAccountModal(
 	return (
 		<>
 			<button
+				type="button"
 				class={buttonVariants({ variant: "filled" })}
 				onClick={() => dialogRef.current?.showModal()}
 			>
@@ -94,6 +95,7 @@ export default function AddVendorAccountModal(
 					<div class="flex justify-between px-4 my-4">
 						<h1 class="text-title-large">Create vendor</h1>
 						<button
+							type="button"
 							aria-label="Close"
 							onClick={handleClose}
 						>
@@ -163,6 +165,7 @@ export default function AddVendorAccountModal(
 								</button>
 
 								<button
+									type="submit"
 									class={twMerge(
 										buttonVariants({ variant: "filled" }),
 										(createMutation.isSuccess ||

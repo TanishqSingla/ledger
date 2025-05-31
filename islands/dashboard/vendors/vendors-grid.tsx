@@ -1,7 +1,7 @@
 import { Button } from "ketu";
 import { buttonVariants } from "@components/Button.tsx";
 import { NoData, TrashIcon } from "@components/icons/index.tsx";
-import useVendor from "../../../hooks/vendor/useVendor.ts";
+import useVendor from "@hooks/vendor/useVendor.ts";
 import { vendorSearch } from "./VendorSearchbox.tsx";
 import { VendorDocument } from "@db/Vendors.ts";
 

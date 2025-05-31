@@ -11,26 +11,46 @@ import Badge from "@components/atoms/badge.tsx";
 import { billStatusBadgeMap } from "@utils/constants.ts";
 import { NoData } from "@components/icons/index.tsx";
 import { buttonVariants } from "@components/Button.tsx";
+import Pagination from "../../../islands/dashboard/bills/Pagination.tsx";
 
 type Data = {
 	bills: BillDocument[];
-	total_count: number;
+	paginationInfo: {
+		total_count: number;
+		page: number;
+		limit: number;
+	};
 };
 
 export const handler: Handlers = {
 	GET: async function (_req, ctx) {
-		const limit = +(ctx.url.searchParams.get("limit") || 50);
+		const limit = +(ctx.url.searchParams.get("limit") || 10);
 		const vendor_id = ctx.url.searchParams.get("vendor_id") || "";
+		const page = +(ctx.url.searchParams.get("page") || 1);
 
 		const searchTerm = ctx.url.searchParams.get("search_term");
 		if (searchTerm) {
 			const data = await SearchBills({ query: searchTerm });
-			return ctx.render({ bills: data });
+			return ctx.render(
+				{
+					bills: data,
+					paginationInfo: {
+						limit: data.length,
+						page,
+						total_count: data.length,
+					},
+				} satisfies Data,
+			);
 		}
-		const data = await QueryBills({ limit, vendor_id });
+		const data = await QueryBills({ limit, vendor_id, page });
 		const total_count = await GetPaginationInfo();
 
-		return ctx.render({ bills: data, total_count });
+		return ctx.render(
+			{
+				bills: data,
+				paginationInfo: { limit, page, total_count },
+			} satisfies Data,
+		);
 	},
 };
 
@@ -66,71 +86,89 @@ export default function Bills({ data }: PageProps<Data>) {
 				</div>
 			</div>
 
-			<p className="my-4">
-				Found {data.total_count || data.bills.length} results
-			</p>
-			<div class="rounded-xl overflow-hidden relative border">
-				<table class="table-auto w-full border-collapse">
-					<thead>
-						<tr>
-							<th class="px-4 py-2 bg-surfaceContainer text-left">
-								Bill Number
-							</th>
-							<th class="px-4 py-2 bg-surfaceContainer text-left">Vendor</th>
-							<th class="px-4 py-2 bg-surfaceContainer text-left">Bill Date</th>
-							<th class="px-4 py-2 bg-surfaceContainer text-left">Due Date</th>
-							<th class="px-4 py-2 bg-surfaceContainer text-left">Amount</th>
-							<th class="px-4 py-2 bg-surfaceContainer text-left">Status</th>
-						</tr>
-					</thead>
-					<tbody>
-						{!data.bills.length && (
-							<tr className="min-h-60">
-								<td colspan={7}>
-									<div className="flex flex-col items-center justify-center my-8">
-										<NoData width={128} height={128} />
-										<p className="text-center">No Data</p>
-									</div>
-								</td>
+			<section>
+				<p className="my-4">
+					Found {data.paginationInfo.total_count} results
+				</p>
+				<div class="rounded-xl overflow-hidden relative border">
+					<table class="table-auto w-full border-collapse">
+						<thead>
+							<tr>
+								<th class="px-4 py-2 bg-surfaceContainer text-left">
+									Bill Number
+								</th>
+								<th class="px-4 py-2 bg-surfaceContainer text-left">Vendor</th>
+								<th class="px-4 py-2 bg-surfaceContainer text-left">
+									Bill Date
+								</th>
+								<th class="px-4 py-2 bg-surfaceContainer text-left">
+									Due Date
+								</th>
+								<th class="px-4 py-2 bg-surfaceContainer text-left">Amount</th>
+								<th class="px-4 py-2 bg-surfaceContainer text-left">Status</th>
 							</tr>
-						)}
-						{data.bills.length > 0 && data.bills.map((bill) => {
-							return (
-								<tr
-									class="even:bg-surfaceContainerLow/60 bg-surfaceContainerLowest hover:bg-tertiaryContainer/20"
-									key={bill.bill_id}
-								>
-									<td class="px-4 py-2 text-label-large">
-										<a href={`/dashboard/bills/${bill.bill_id}`}>
-											{bill.bill_id}
-										</a>
-									</td>
-									<td class="px-4 py-2 text-label-large">
-										<a
-											href={`/dashboard/vendors/${bill.vendor_id}`}
-											class="hover:underline"
-										>
-											{bill.vendor_name}
-										</a>
-									</td>
-									<td class="px-4 py-2 text-label-large">{bill.created_at}</td>
-									<td class="px-4 py-2 text-label-large">{bill.created_at}</td>
-									<td class="px-4 py-2 text-label-large">
-										{Number(bill.amount).toLocaleString("en-IN")}
-									</td>
-									<td class="px-4 py-2 text-label-large">
-										<Badge
-											variant={billStatusBadgeMap[bill.status].variant}
-											text={billStatusBadgeMap[bill.status].text}
-											className="w-24 text-center"
-										/>
+						</thead>
+						<tbody>
+							{!data.bills.length && (
+								<tr className="min-h-60">
+									<td colspan={7}>
+										<div className="flex flex-col items-center justify-center my-8">
+											<NoData width={128} height={128} />
+											<p className="text-center">No Data</p>
+										</div>
 									</td>
 								</tr>
-							);
-						})}
-					</tbody>
-				</table>
-			</div>
+							)}
+							{data.bills.length > 0 && data.bills.map((bill) => {
+								return (
+									<tr
+										class="even:bg-surfaceContainerLow/60 bg-surfaceContainerLowest hover:bg-tertiaryContainer/20"
+										key={bill.bill_id}
+									>
+										<td class="px-4 py-2 text-label-large">
+											<a href={`/dashboard/bills/${bill.bill_id}`}>
+												{bill.bill_id}
+											</a>
+										</td>
+										<td class="px-4 py-2 text-label-large">
+											<a
+												href={`/dashboard/vendors/${bill.vendor_id}`}
+												class="hover:underline"
+											>
+												{bill.vendor_name}
+											</a>
+										</td>
+										<td class="px-4 py-2 text-label-large">
+											{bill.created_at}
+										</td>
+										<td class="px-4 py-2 text-label-large">
+											{bill.created_at}
+										</td>
+										<td class="px-4 py-2 text-label-large">
+											{Number(bill.amount).toLocaleString("en-IN")}
+										</td>
+										<td class="px-4 py-2 text-label-large">
+											<Badge
+												variant={billStatusBadgeMap[bill.status].variant}
+												text={billStatusBadgeMap[bill.status].text}
+												className="w-24 text-center"
+											/>
+										</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				</div>
+			</section>
+
+			<section>
+				<Pagination
+					currentPage={data.paginationInfo.page}
+					total={data.paginationInfo.total_count}
+					limit={data.paginationInfo.limit}
+				/>
+			</section>
 		</div>
 	);
 }

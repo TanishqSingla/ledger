@@ -7,7 +7,7 @@ import {
 	OpenInNewWindow,
 	TrashIcon,
 } from "@components/icons/index.tsx";
-import useVendor from "../../../hooks/vendor/useVendor.ts";
+import useVendor from "@hooks/vendor/useVendor.ts";
 import { VendorDocument } from "@db/Vendors.ts";
 
 export function VendorsTable({ vendors }: { vendors: VendorDocument[] }) {

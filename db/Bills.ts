@@ -32,8 +32,13 @@ export type Bill = {
 export type BillDocument = Bill & MongoDocument;
 
 export async function QueryBills(
-	{ limit, vendor_id }: { limit?: number; vendor_id?: string },
+	{ limit, vendor_id, page = 1 }: {
+		limit?: number;
+		vendor_id?: string;
+		page: number;
+	},
 ) {
+	const skip = (limit || 10) * (page - 1);
 	const queryOptions = {
 		limit,
 	} satisfies FindOptions;
@@ -44,7 +49,7 @@ export async function QueryBills(
 
 	const resp = await (await bills()).find(filters, queryOptions).sort({
 		created_at: 1,
-	}).toArray();
+	}).skip(skip).toArray();
 	return resp as BillDocument[];
 }
 
@@ -69,14 +74,14 @@ export async function PutBill(
 		amount: bill.amount,
 		invoices: bill?.invoices,
 		status: bill.status || "PENDING",
-		created_at: new Date(Date.now()).toUTCString(),
-		updated_at: new Date(Date.now()).toUTCString(),
+		created_at: new Date(Date.now()),
+		updated_at: new Date(Date.now()),
 		history: [{
 			action: "CREATE",
 			user,
 			timestamp: Date.now(),
 		}],
-	} satisfies Bill & { created_at: string; updated_at: string };
+	} satisfies Bill & { created_at: Date; updated_at: Date };
 
 	const resp = await (await bills()).insertOne({ ...doc });
 

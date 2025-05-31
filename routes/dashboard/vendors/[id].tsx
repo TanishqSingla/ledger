@@ -22,6 +22,7 @@ export const handler: Handlers = {
 			QueryBills({
 				limit: 5,
 				vendor_id: id,
+				page: 1
 			}),
 		]);
 
