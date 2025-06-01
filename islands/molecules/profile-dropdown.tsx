@@ -51,12 +51,12 @@ export default function ProfileDropdown() {
 				<div className="flex flex-col">
 					<a
 						href="/profile"
-						className="cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"
+						className="cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2 focus-within:bg-surfaceDim focus-within:outline-none"
 					>
 						Profile
 					</a>
 					<a
-						className="cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2"
+						className="cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2 focus-within:bg-surfaceDim focus-within:outline-none"
 						href="/logout"
 					>
 						Logout
