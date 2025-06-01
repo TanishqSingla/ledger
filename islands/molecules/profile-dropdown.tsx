@@ -33,6 +33,23 @@ export default function ProfileDropdown() {
 		};
 	}, []);
 
+	const handleNavigation = (event: KeyboardEvent) => {
+		if (event.key == "ArrowUp") {
+			if (document.activeElement?.previousSibling) {
+				(document.activeElement.previousSibling as HTMLElement).focus();
+			} else {
+				((event.currentTarget as HTMLElement).lastChild as HTMLElement).focus();
+			}
+		}
+		if (event.key == "ArrowDown") {
+			if (document.activeElement?.nextSibling) {
+				(document.activeElement.nextSibling as HTMLElement).focus();
+			} else {
+				((event.currentTarget as HTMLDivElement).firstChild as HTMLElement).focus();
+			}
+		}
+	};
+
 	return (
 		<div className="relative">
 			<button
@@ -48,7 +65,7 @@ export default function ProfileDropdown() {
 				className="m-0 bg-surfaceContainerLow rounded-xl backdrop:bg-transparent shadow -translate-x-1/4"
 				is="modal-dialog"
 			>
-				<div className="flex flex-col">
+				<div className="flex flex-col" onKeyDown={handleNavigation}>
 					<a
 						href="/profile"
 						className="cursor-pointer hover:bg-surfaceContainerHigh px-4 py-2 focus-within:bg-surfaceDim focus-within:outline-none"
