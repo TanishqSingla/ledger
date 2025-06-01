@@ -3,7 +3,7 @@ import { Bill } from "./Bills.ts";
 import { archiveBills, bills, getClient } from "./conn.ts";
 
 export type Archive = Bill;
-export type ArchiveDocument = Archive & MongoDocument & { archived_at: string };
+export type ArchiveDocument = Archive & MongoDocument & { archived_at: Date };
 
 export async function MoveToArchive(bill_id: string, user: string) {
 	const client = await getClient();
@@ -20,7 +20,7 @@ export async function MoveToArchive(bill_id: string, user: string) {
 
 		await (await archiveBills()).insertOne({
 			...bill,
-			archived_at: new Date(Date.now()).toUTCString(),
+			archived_at: new Date(Date.now()),
 			history: [...bill.history, {
 				action: "ARCHIVE",
 				timestamp: Date.now(),

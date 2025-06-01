@@ -115,12 +115,12 @@ export default function Bill({ params, data }: PageProps<Data>) {
 					);
 				})}
 
-				<AddBillPayment billId={params.id} />
+				<AddBillPayment bill={data.bill} />
 			</section>
 
 			<section>
 				<form method="post">
-					<button className={buttonVariants({ variant: "destructive" })}>
+					<button type='submit' className={buttonVariants({ variant: "destructive" })}>
 						Move to archive
 					</button>
 				</form>

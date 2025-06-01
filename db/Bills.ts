@@ -24,6 +24,7 @@ export type Bill = {
 	comments?: { comment: string; user: string }[];
 	payments?: {
 		reference_number?: string;
+		vendor_account?: string;
 		file?: string;
 	}[];
 	invoices?: string[];

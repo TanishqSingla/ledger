@@ -1,7 +1,25 @@
 import { Handlers } from "$fresh/server.ts";
-import { AddAccountToVendor, DeleteVendorAccount } from "@db/Vendors.ts";
+import {
+	AddAccountToVendor,
+	DeleteVendorAccount,
+	GetVendorAccounts,
+} from "@db/Vendors.ts";
 
 export const handler: Handlers = {
+	GET: async function (_req, ctx) {
+		const vendor_id = ctx.params.vendor_id;
+
+		try {
+			const resp = await GetVendorAccounts(vendor_id);
+
+			return Response.json(resp);
+		} catch (err: any) {
+			console.log(err);
+			return Response.json({ status: "error", message: err.message }, {
+				status: 500,
+			});
+		}
+	},
 	POST: async function (req, ctx) {
 		const payload = await req.json();
 		const vendor_id = ctx.params.vendor_id;

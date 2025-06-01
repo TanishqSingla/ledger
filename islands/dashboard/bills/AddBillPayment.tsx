@@ -1,14 +1,28 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import Input from "@components/Input.tsx";
 import { FileUpload } from "./file-input.tsx";
 import { buttonVariants } from "@components/Button.tsx";
 import { uploadBillPayment } from "@queries/bill.ts";
 import { CrossIcon } from "@components/icons/index.tsx";
+import { BillDocument } from "@db/Bills.ts";
+import { VendorDocument } from "@db/Vendors.ts";
+import { getVendorAccounts } from "@queries/vendor.ts";
 
-export default function AddBillPayment({ billId }: { billId: string }) {
+export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 	const [files, setFiles] = useState<File[]>([]);
 	const [editMode, setEditMode] = useState(false);
 	const [uploadFileError, setUploadFileError] = useState("");
+	const [vendorAccounts, setVendorAccounts] = useState<
+		VendorDocument["accounts"]
+	>();
+
+	useEffect(() => {
+		getVendorAccounts(bill.vendor_id).then((data) => {
+			if (data.accounts) {
+				setVendorAccounts(data.accounts);
+			}
+		});
+	}, []);
 
 	const handleSubmit = async (event: SubmitEvent) => {
 		event.preventDefault();
@@ -23,6 +37,8 @@ export default function AddBillPayment({ billId }: { billId: string }) {
 		const body = {
 			...(formData.get("reference_number") &&
 				{ reference_number: formData.get("reference_number") }),
+			...(formData.get("vendor_account") &&
+				{ vendor_account: formData.get("vendor_account") }),
 		};
 
 		const fileSize = [...files].reduce((acc, file) => file.size + acc, 0);
@@ -35,14 +51,14 @@ export default function AddBillPayment({ billId }: { billId: string }) {
 
 		// Upload files to s3
 		if (files.length) {
-			const uploadedFile = await uploadBillPayment(billId, files[0]);
+			const uploadedFile = await uploadBillPayment(bill.bill_id, files[0]);
 
 			Object.assign(body, { file: uploadedFile.payment });
 		}
 
 		// Push payment to bill
 		try {
-			fetch(`/api/bill/${billId}/payments`, {
+			fetch(`/api/bill/${bill.bill_id}/payments`, {
 				method: "POST",
 				body: JSON.stringify(body),
 			});
@@ -89,11 +105,29 @@ export default function AddBillPayment({ billId }: { billId: string }) {
 					className="max-w-screen-sm border p-4 rounded-xl border-primary space-y-4"
 				>
 					<Input name="reference_number" placeholder="Reference number" />
+
+					{vendorAccounts && (
+						<>
+							<label for="vendor_account">Vendor's Account:</label>
+							<select
+								name="vendor_account"
+								className="border rounded-xl px-4 py-2 ml-4"
+							>
+								{vendorAccounts.map((account) => (
+									<option key={account.id} value={account.id}>
+										{account.account_number} ({account.bank_name})
+									</option>
+								))}
+							</select>
+						</>
+					)}
+
 					<FileUpload
 						handleUpload={handleUpload}
 						label="Attach payment"
 						multiple={false}
 					/>
+
 					<div className="flex flex-wrap gap-4">
 						{files && files.map((file, index) => {
 							return (
