@@ -9,7 +9,7 @@ type BillHistoryTypes =
 	}
 	| {
 		action: "UPDATE";
-		type: "ADD_PAYMENT";
+		type: "ADD_PAYMENT" | "REMOVE_PAYMENT";
 	};
 
 type History = BillHistoryTypes & { user: string; timestamp: number };
@@ -150,6 +150,29 @@ export async function MoveToBill(bill_id: string, user: string) {
 
 export async function GetPaginationInfo() {
 	const resp = await (await bills()).estimatedDocumentCount();
+
+	return resp;
+}
+
+export async function DeletePayment(
+	{ bill_id, user, reference_number, file }: {
+		bill_id: string;
+		user: string;
+		reference_number?: string;
+		file?: string;
+	},
+) {
+	const resp = await (await bills()).updateOne({ bill_id }, {
+		$pull: { payments: { reference_number, file } },
+		$push: {
+			history: {
+				action: "UPDATE",
+				type: "REMOVE_PAYMENT",
+				user,
+				timestamp: Date.now(),
+			},
+		},
+	});
 
 	return resp;
 }
