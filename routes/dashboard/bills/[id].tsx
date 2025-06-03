@@ -106,7 +106,10 @@ export default function Bill({ params, data }: PageProps<Data>) {
 				<h2 className="text-title-large">Payments</h2>
 
 				<div className="my-4">
-					<PaymentsTable payments={data.bill.payments} />
+					<PaymentsTable
+						billId={data.bill.bill_id}
+						payments={data.bill.payments}
+					/>
 				</div>
 
 				<div className="my-4">

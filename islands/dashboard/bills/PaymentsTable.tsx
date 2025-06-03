@@ -1,17 +1,23 @@
 import usePayment from "@hooks/bills/usePayment.ts";
 import { Bill } from "@db/Bills.ts";
-import { NoData } from "@components/icons/index.tsx";
+import { NoData, TrashIcon } from "@components/icons/index.tsx";
+import { buttonVariants } from "@components/Button.tsx";
 
 const columnConfig = [
 	{ name: "Reference number" },
 	{ name: "To Account" },
 	{ name: "Attachments" },
+	{ name: "Actions" },
 ];
 
 export default function PaymentsTable(
-	{ payments }: { payments: Bill["payments"] },
+	{ billId, payments }: { billId: string; payments: Bill["payments"] },
 ) {
-	const { data } = usePayment(payments);
+	const { data, deletePayment } = usePayment(payments);
+
+	const handleDelete = (payment: Required<Bill>["payments"][0]) => {
+		deletePayment.mutate({ billId, payment });
+	};
 
 	return (
 		<div class="rounded-xl overflow-hidden relative mt-8 border">
@@ -50,6 +56,17 @@ export default function PaymentsTable(
 									{payment.file
 										? <a href={payment.file}>View file</a>
 										: "No file attached"}
+								</td>
+								<td>
+									<button
+										type="button"
+										className={buttonVariants({
+											variant: "destructiveOutline",
+										})}
+										onClick={() => handleDelete(payment)}
+									>
+										<TrashIcon />
+									</button>
 								</td>
 							</tr>
 						))}
