@@ -7,6 +7,7 @@ import { CrossIcon } from "@components/icons/index.tsx";
 import { BillDocument } from "@db/Bills.ts";
 import { VendorDocument } from "@db/Vendors.ts";
 import { getVendorAccounts } from "@queries/vendor.ts";
+import usePayment from "@hooks/bills/usePayment.ts";
 
 export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 	const [files, setFiles] = useState<File[]>([]);
@@ -15,6 +16,8 @@ export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 	const [vendorAccounts, setVendorAccounts] = useState<
 		VendorDocument["accounts"]
 	>();
+
+	const { createPayment } = usePayment(bill.payments);
 
 	useEffect(() => {
 		getVendorAccounts(bill.vendor_id).then((data) => {
@@ -36,9 +39,9 @@ export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 
 		const body = {
 			...(formData.get("reference_number") &&
-				{ reference_number: formData.get("reference_number") }),
+				{ reference_number: formData.get("reference_number")!.toString() }),
 			...(formData.get("vendor_account") &&
-				{ vendor_account: formData.get("vendor_account") }),
+				{ vendor_account: formData.get("vendor_account")!.toString() }),
 		};
 
 		const fileSize = [...files].reduce((acc, file) => file.size + acc, 0);
@@ -58,10 +61,11 @@ export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 
 		// Push payment to bill
 		try {
-			fetch(`/api/bill/${bill.bill_id}/payments`, {
-				method: "POST",
-				body: JSON.stringify(body),
-			});
+			await createPayment.mutate({ billId: bill.bill_id, payment: body });
+
+			setEditMode(false);
+			setUploadFileError("");
+			setFiles([]);
 		} catch (err) {
 			console.log(err);
 		}
@@ -106,7 +110,7 @@ export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 				>
 					<Input name="reference_number" placeholder="Reference number" />
 
-					{vendorAccounts && (
+					{vendorAccounts && vendorAccounts.length > 0 && (
 						<>
 							<label for="vendor_account">Vendor's Account:</label>
 							<select

@@ -10,7 +10,7 @@ export const handler: Handlers = {
 		try {
 			const resp = await PostBillPayment(billId, user, payload);
 
-			return new Response(JSON.stringify({ ...resp }), { status: 201 });
+			return Response.json(resp, { status: 201 });
 		} catch (err: any) {
 			console.error(err);
 

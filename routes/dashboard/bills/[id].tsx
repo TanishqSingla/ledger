@@ -6,6 +6,7 @@ import { getFile } from "@queries/s3.ts";
 import { billStatusBadgeMap } from "@utils/constants.ts";
 import { MoveToArchive } from "@db/ArchiveBills.ts";
 import { buttonVariants } from "@components/Button.tsx";
+import PaymentsTable from "../../../islands/dashboard/bills/PaymentsTable.tsx";
 
 type Data = {
 	bill: Awaited<ReturnType<typeof GetBillFromId>>;
@@ -102,25 +103,23 @@ export default function Bill({ params, data }: PageProps<Data>) {
 			</section>
 
 			<section>
-				<h2 className="text-title-medium">Payments</h2>
+				<h2 className="text-title-large">Payments</h2>
 
-				{data.bill?.payments?.map((payment) => {
-					return (
-						<>
-							{payment.file && (
-								<embed src={data.payments[payment.file]} type="text/plain" />
-							)}
-							{payment.reference_number && <p>{payment.reference_number}</p>}
-						</>
-					);
-				})}
+				<div className="my-4">
+					<PaymentsTable payments={data.bill.payments} />
+				</div>
 
-				<AddBillPayment bill={data.bill} />
+				<div className="my-4">
+					<AddBillPayment bill={data.bill} />
+				</div>
 			</section>
 
 			<section>
 				<form method="post">
-					<button type='submit' className={buttonVariants({ variant: "destructive" })}>
+					<button
+						type="submit"
+						className={buttonVariants({ variant: "destructive" })}
+					>
 						Move to archive
 					</button>
 				</form>
