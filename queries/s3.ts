@@ -1,4 +1,5 @@
 import {
+	DeleteObjectCommand,
 	GetObjectCommand,
 	PutObjectCommand,
 	S3Client,
@@ -45,3 +46,18 @@ export const getFile = async (key: string) => {
 		console.error("Error downloading file", error);
 	}
 };
+
+export async function delete_file(id: string) {
+	const bucketName = Deno.env.get("STORAGE_BUCKET_NAME");
+	if (!bucketName) throw new Error("bucket not found");
+
+	const command = new DeleteObjectCommand({ Bucket: bucketName, Key: id });
+	
+	try {
+		const resp = await s3Client.send(command);
+
+		return resp;
+	} catch (err) {
+		console.error("Error deleting file", err);
+	}
+}
