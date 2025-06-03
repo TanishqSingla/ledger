@@ -56,7 +56,9 @@ export async function GetVendorFromId(id: string) {
 }
 
 export async function GetVendorAccounts(vendor_id: string) {
-	const resp = await (await vendors()).findOne({ vendor_id }, { projection: { accounts: 1 } });
+	const resp = await (await vendors()).findOne({ vendor_id }, {
+		projection: { accounts: 1 },
+	});
 
 	return resp;
 }

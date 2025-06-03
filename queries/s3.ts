@@ -52,7 +52,7 @@ export async function delete_file(id: string) {
 	if (!bucketName) throw new Error("bucket not found");
 
 	const command = new DeleteObjectCommand({ Bucket: bucketName, Key: id });
-	
+
 	try {
 		const resp = await s3Client.send(command);
 

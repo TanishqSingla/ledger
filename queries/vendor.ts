@@ -101,5 +101,5 @@ export async function getVendorAccounts(vendorId: string) {
 	const resp = await fetch(`/api/vendor/${vendorId}/accounts`);
 	const data = await resp.json();
 
-	return data as { accounts?: VendorDocument['accounts'] }
+	return data as { accounts?: VendorDocument["accounts"] };
 }

@@ -45,7 +45,8 @@ export default function ProfileDropdown() {
 			if (document.activeElement?.nextSibling) {
 				(document.activeElement.nextSibling as HTMLElement).focus();
 			} else {
-				((event.currentTarget as HTMLDivElement).firstChild as HTMLElement).focus();
+				((event.currentTarget as HTMLDivElement).firstChild as HTMLElement)
+					.focus();
 			}
 		}
 	};
