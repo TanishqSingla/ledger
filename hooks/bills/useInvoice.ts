@@ -16,7 +16,9 @@ const deleteQuery = async (
 	return data;
 };
 
-export default function useInvoice(initialData: BillDocument["invoices"]) {
+export default function useInvoice(
+	initialData: Required<BillDocument>["invoices"] | null,
+) {
 	const data = computed(() => {
 		if (invoiceSignal.value) {
 			return invoiceSignal.value;

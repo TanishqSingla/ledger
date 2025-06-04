@@ -1,16 +1,17 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Badge from "@components/atoms/badge.tsx";
-import { type Bill, GetBillFromId } from "@db/Bills.ts";
+import { GetBillFromId } from "@db/Bills.ts";
 import AddBillPayment from "../../../islands/dashboard/bills/AddBillPayment.tsx";
 import { getFile } from "@queries/s3.ts";
 import { billStatusBadgeMap } from "@utils/constants.ts";
 import { MoveToArchive } from "@db/ArchiveBills.ts";
 import { buttonVariants } from "@components/Button.tsx";
 import PaymentsTable from "../../../islands/dashboard/bills/PaymentsTable.tsx";
+import Invoices from "../../../islands/dashboard/bills/Invoices.tsx";
 
 type Data = {
 	bill: Awaited<ReturnType<typeof GetBillFromId>>;
-	file?: string;
+	invoices: Record<string, string>;
 	payments: Record<string, string>;
 };
 
@@ -18,14 +19,21 @@ export const handler: Handlers<unknown, { email_id: string }> = {
 	async GET(_req, ctx) {
 		const { id } = ctx.params;
 
-		const bill = await GetBillFromId(id) as Bill;
+		const bill = await GetBillFromId(id);
 
-		let file;
+		const invoices: Record<string, string> = {};
 		if (bill?.invoices?.length) {
-			const fileId = bill.invoices[0];
+			const invoiceQueries = await Promise.allSettled(
+				bill.invoices.map((invoice) => getFile(invoice)),
+			);
 
-			const downloadedFile = await getFile(fileId);
-			file = downloadedFile;
+			const invoiceFiles = invoiceQueries.filter((query) =>
+				query.status === "fulfilled"
+			).flatMap((query) => query.value || []);
+
+			bill.invoices.forEach((id, index) => {
+				invoices[id] = invoiceFiles[index];
+			});
 		}
 
 		const paymentFiles =
@@ -42,7 +50,7 @@ export const handler: Handlers<unknown, { email_id: string }> = {
 			}
 		});
 
-		return ctx.render({ bill, file, payments });
+		return ctx.render({ bill, invoices, payments } satisfies Data);
 	},
 	async POST(_req, ctx) {
 		const { id } = ctx.params;
@@ -91,15 +99,14 @@ export default function Bill({ params, data }: PageProps<Data>) {
 								</a>
 							</p>{" "}
 							<p>Date: {new Date(data.bill.created_at).toLocaleString()}</p>
-							<embed
-								src={data.file}
-								width="100%"
-								height={600}
-								type="text/plain"
-							/>
 						</>
 					)
 					: <>Bill not found</>}
+			</section>
+
+			<section className="my-4">
+				<h2 className="text-title-large">Invoices</h2>
+				<Invoices bill={data.bill} invoices={data.invoices} />
 			</section>
 
 			<section>
@@ -109,6 +116,7 @@ export default function Bill({ params, data }: PageProps<Data>) {
 					<PaymentsTable
 						billId={data.bill.bill_id}
 						payments={data.bill.payments}
+						paymentFiles={data.payments}
 					/>
 				</div>
 

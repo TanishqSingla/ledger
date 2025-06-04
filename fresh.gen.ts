@@ -9,6 +9,7 @@ import * as $api_protected_middleware from "./routes/api/(protected)/_middleware
 import * as $api_protected_archive_archive_id_bill from "./routes/api/(protected)/archive/[archive_id]/bill.tsx";
 import * as $api_protected_archive_archive_id_index from "./routes/api/(protected)/archive/[archive_id]/index.tsx";
 import * as $api_protected_bill_bill_id_archive from "./routes/api/(protected)/bill/[bill_id]/archive.ts";
+import * as $api_protected_bill_bill_id_invoice from "./routes/api/(protected)/bill/[bill_id]/invoice.ts";
 import * as $api_protected_bill_bill_id_payments_images from "./routes/api/(protected)/bill/[bill_id]/payments/images.ts";
 import * as $api_protected_bill_bill_id_payments_index from "./routes/api/(protected)/bill/[bill_id]/payments/index.ts";
 import * as $api_protected_bill_index from "./routes/api/(protected)/bill/index.ts";
@@ -39,6 +40,7 @@ import * as $dashboard_archive_bills_ArchiveBillActions from "./islands/dashboar
 import * as $dashboard_archive_bills_ArchiveBillsTableActions from "./islands/dashboard/archive-bills/ArchiveBillsTableActions.tsx";
 import * as $dashboard_bills_AddBillPayment from "./islands/dashboard/bills/AddBillPayment.tsx";
 import * as $dashboard_bills_CreateBillForm from "./islands/dashboard/bills/CreateBillForm.tsx";
+import * as $dashboard_bills_Invoices from "./islands/dashboard/bills/Invoices.tsx";
 import * as $dashboard_bills_Pagination from "./islands/dashboard/bills/Pagination.tsx";
 import * as $dashboard_bills_PaymentsTable from "./islands/dashboard/bills/PaymentsTable.tsx";
 import * as $dashboard_bills_file_input from "./islands/dashboard/bills/file-input.tsx";
@@ -66,6 +68,8 @@ const manifest = {
 			$api_protected_archive_archive_id_index,
 		"./routes/api/(protected)/bill/[bill_id]/archive.ts":
 			$api_protected_bill_bill_id_archive,
+		"./routes/api/(protected)/bill/[bill_id]/invoice.ts":
+			$api_protected_bill_bill_id_invoice,
 		"./routes/api/(protected)/bill/[bill_id]/payments/images.ts":
 			$api_protected_bill_bill_id_payments_images,
 		"./routes/api/(protected)/bill/[bill_id]/payments/index.ts":
@@ -109,6 +113,7 @@ const manifest = {
 			$dashboard_bills_AddBillPayment,
 		"./islands/dashboard/bills/CreateBillForm.tsx":
 			$dashboard_bills_CreateBillForm,
+		"./islands/dashboard/bills/Invoices.tsx": $dashboard_bills_Invoices,
 		"./islands/dashboard/bills/Pagination.tsx": $dashboard_bills_Pagination,
 		"./islands/dashboard/bills/PaymentsTable.tsx":
 			$dashboard_bills_PaymentsTable,

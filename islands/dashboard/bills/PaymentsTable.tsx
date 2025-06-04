@@ -11,7 +11,11 @@ const columnConfig = [
 ];
 
 export default function PaymentsTable(
-	{ billId, payments }: { billId: string; payments: Bill["payments"] },
+	{ billId, payments, paymentFiles }: {
+		billId: string;
+		payments: Bill["payments"];
+		paymentFiles: Record<string, string>;
+	},
 ) {
 	const { data, deletePayment } = usePayment(payments);
 
@@ -53,8 +57,8 @@ export default function PaymentsTable(
 								</td>
 								<td>{payment.vendor_account}</td>
 								<td>
-									{payment.file
-										? <a href={payment.file}>View file</a>
+									{paymentFiles && payment.file
+										? <a href={paymentFiles[payment.file]}>View file</a>
 										: "No file attached"}
 								</td>
 								<td>
