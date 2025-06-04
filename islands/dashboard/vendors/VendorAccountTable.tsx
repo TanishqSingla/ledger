@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { buttonVariants } from "@components/Button.tsx";
-import { TrashIcon } from "@components/icons/index.tsx";
+import { NoData, TrashIcon } from "@components/icons/index.tsx";
 import { VendorDocument } from "@db/Vendors.ts";
 import { useVendorAccounts } from "@hooks/vendor/useVendorAccounts.tsx";
 
@@ -14,6 +14,16 @@ export default function VendorAccountTable(
 
 	return (
 		<>
+			{!accounts?.length && (
+				<tr className="min-h-60">
+					<td colspan={7}>
+						<div className="flex flex-col items-center justify-center my-8">
+							<NoData width={128} height={128} />
+							<p className="text-center">No Accounts added</p>
+						</div>
+					</td>
+				</tr>
+			)}
 			{data.value.map((account, index) => (
 				<tr className="even:bg-surfaceContainerLow/60 bg-surfaceContainerLowest hover:bg-tertiaryContainer/20">
 					<td class="px-4 py-2 text-label-large">{index + 1}</td>

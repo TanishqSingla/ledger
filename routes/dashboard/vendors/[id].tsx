@@ -75,22 +75,10 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 							</tr>
 						</thead>
 						<tbody>
-							{!data.vendor?.accounts?.length && (
-								<tr className="min-h-60">
-									<td colspan={7}>
-										<div className="flex flex-col items-center justify-center my-8">
-											<NoData width={128} height={128} />
-											<p className="text-center">No Accounts added</p>
-										</div>
-									</td>
-								</tr>
-							)}
-							{data.vendor?.accounts?.length > 0 && (
-								<VendorAccountTable
-									accounts={data.vendor.accounts}
-									vendorId={data.vendor.vendor_id}
-								/>
-							)}
+							<VendorAccountTable
+								accounts={data.vendor.accounts}
+								vendorId={data.vendor.vendor_id}
+							/>
 						</tbody>
 					</table>
 				</div>
