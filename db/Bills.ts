@@ -9,7 +9,7 @@ type BillHistoryTypes =
 	}
 	| {
 		action: "UPDATE";
-		type: "ADD_PAYMENT" | "REMOVE_PAYMENT";
+		type: "ADD_PAYMENT" | "REMOVE_PAYMENT" | "REMOVE_INVOICE";
 	};
 
 type History = BillHistoryTypes & { user: string; timestamp: number };
@@ -170,6 +170,28 @@ export async function DeletePayment(
 				type: "REMOVE_PAYMENT",
 				user,
 				timestamp: Date.now(),
+			},
+		},
+	});
+
+	return resp;
+}
+
+export async function DeleteInvoice(
+	{ bill_id, user, invoice }: {
+		bill_id: string;
+		user: string;
+		invoice: string;
+	},
+) {
+	const resp = await (await bills()).updateOne({ bill_id }, {
+		$pull: { invoices: { $eq: invoice } },
+		$push: {
+			history: {
+				action: "UPDATE",
+				type: "REMOVE_INVOICE",
+				timestamp: Date.now(),
+				user,
 			},
 		},
 	});
