@@ -14,7 +14,7 @@ export default function VendorAccountTable(
 
 	return (
 		<>
-			{!accounts?.length && (
+			{!data.value.length && (
 				<tr className="min-h-60">
 					<td colspan={7}>
 						<div className="flex flex-col items-center justify-center my-8">
