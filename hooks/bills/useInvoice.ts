@@ -8,6 +8,7 @@ const deleteQuery = async (
 	{ billId, invoice }: { billId: string; invoice: string },
 ) => {
 	const res = await fetch(`/api/bill/${billId}/invoice`, {
+		method: "DELETE",
 		body: JSON.stringify({ invoice }),
 	});
 
