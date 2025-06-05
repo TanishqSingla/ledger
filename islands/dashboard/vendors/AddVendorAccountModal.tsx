@@ -33,7 +33,9 @@ effect(() => {
 export default function AddVendorAccountModal(
 	{ vendor }: { vendor: VendorDocument },
 ) {
-	const { data: accountsData, createMutation } = useVendorAccounts(vendor.accounts || null);
+	const { data: accountsData, createMutation } = useVendorAccounts(
+		vendor.accounts || null,
+	);
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const [error, setError] = useState(false);
 

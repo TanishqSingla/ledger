@@ -76,7 +76,7 @@ export default function VendorPage({ data, params }: PageProps<Data>) {
 						</thead>
 						<tbody>
 							<VendorAccountTable
-								accounts={data.vendor.accounts}
+								accounts={data.vendor.accounts || []}
 								vendorId={data.vendor.vendor_id}
 							/>
 						</tbody>
