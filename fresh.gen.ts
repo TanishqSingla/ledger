@@ -29,6 +29,7 @@ import * as $dashboard_bills_create from "./routes/dashboard/bills/create.tsx";
 import * as $dashboard_bills_index from "./routes/dashboard/bills/index.tsx";
 import * as $dashboard_index from "./routes/dashboard/index.tsx";
 import * as $dashboard_vendors_id_ from "./routes/dashboard/vendors/[id].tsx";
+import * as $dashboard_vendors_create from "./routes/dashboard/vendors/create.tsx";
 import * as $dashboard_vendors_index from "./routes/dashboard/vendors/index.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $logout from "./routes/logout.tsx";
@@ -45,6 +46,7 @@ import * as $dashboard_bills_Pagination from "./islands/dashboard/bills/Paginati
 import * as $dashboard_bills_PaymentsTable from "./islands/dashboard/bills/PaymentsTable.tsx";
 import * as $dashboard_bills_file_input from "./islands/dashboard/bills/file-input.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
+import * as $dashboard_vendors_AddVendorAccount from "./islands/dashboard/vendors/AddVendorAccount.tsx";
 import * as $dashboard_vendors_AddVendorAccountModal from "./islands/dashboard/vendors/AddVendorAccountModal.tsx";
 import * as $dashboard_vendors_CreateVendorModal from "./islands/dashboard/vendors/CreateVendorModal.tsx";
 import * as $dashboard_vendors_VendorAccountTable from "./islands/dashboard/vendors/VendorAccountTable.tsx";
@@ -96,6 +98,7 @@ const manifest = {
 		"./routes/dashboard/bills/index.tsx": $dashboard_bills_index,
 		"./routes/dashboard/index.tsx": $dashboard_index,
 		"./routes/dashboard/vendors/[id].tsx": $dashboard_vendors_id_,
+		"./routes/dashboard/vendors/create.tsx": $dashboard_vendors_create,
 		"./routes/dashboard/vendors/index.tsx": $dashboard_vendors_index,
 		"./routes/index.tsx": $index,
 		"./routes/logout.tsx": $logout,
@@ -120,6 +123,8 @@ const manifest = {
 		"./islands/dashboard/bills/file-input.tsx": $dashboard_bills_file_input,
 		"./islands/dashboard/create/AddAccountForm.tsx":
 			$dashboard_create_AddAccountForm,
+		"./islands/dashboard/vendors/AddVendorAccount.tsx":
+			$dashboard_vendors_AddVendorAccount,
 		"./islands/dashboard/vendors/AddVendorAccountModal.tsx":
 			$dashboard_vendors_AddVendorAccountModal,
 		"./islands/dashboard/vendors/CreateVendorModal.tsx":

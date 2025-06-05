@@ -5,8 +5,8 @@ import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
 export type Vendor = {
 	vendor_id: string;
 	vendor_name: string;
-	email: string;
-	phone: string;
+	email?: string;
+	phone?: string;
 	accounts: {
 		id: string;
 		bank_name?: string;
@@ -34,14 +34,13 @@ export async function DeleteVendor(vendor_id: string) {
 }
 
 export async function PutVendor(
-	body: Pick<Vendor, "vendor_name" | "email" | "phone">,
+	body: Pick<Vendor, "vendor_name" | "email" | "phone" | "accounts">,
 ) {
 	const doc = {
 		...body,
 		vendor_id: nanoid(12),
 		created_at: new Date(Date.now()),
 		updated_at: new Date(Date.now()),
-		accounts: [],
 	};
 
 	const resp = await (await vendors()).insertOne(doc);
