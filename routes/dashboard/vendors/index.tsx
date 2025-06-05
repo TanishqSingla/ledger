@@ -1,11 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { GetAllVendors, VendorDocument } from "@db/Vendors.ts";
-import CreateVendorModal from "../../../islands/dashboard/vendors/CreateVendorModal.tsx";
 import VendorsData from "../../../islands/dashboard/vendors/vendors-data.tsx";
 import VendorSearchBox from "../../../islands/dashboard/vendors/VendorSearchbox.tsx";
 import DisplayPreference from "../../../islands/molecules/display-preference.tsx";
 import { KV_KEYS } from "@utils/constants.ts";
 import { kv } from "@utils/db.ts";
+import { buttonVariants } from "@components/Button.tsx";
 
 type Data = {
 	vendors: VendorDocument[];
@@ -40,7 +40,12 @@ export default function Vendors({ data }: PageProps<Data>) {
 				<div class="ml-auto flex gap-4">
 					<DisplayPreference />
 
-					<CreateVendorModal vendors={data.vendors} />
+					<a
+						href="/dashboard/vendors/create"
+						className={buttonVariants({ variant: "filled" })}
+					>
+						Create
+					</a>
 				</div>
 			</section>
 
