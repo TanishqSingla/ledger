@@ -101,7 +101,7 @@ export default function CreateBillForm() {
 
 	return (
 		<form
-			class="my-4 text-onSecondaryContainer max-w-screen-sm space-y-4 border border-secondary p-4 rounded-xl mx-auto"
+			class="my-4 text-onSecondaryContainer space-y-4 border border-secondary p-4 rounded-xl"
 			onSubmit={handleSubmit}
 		>
 			<label class="text-title-medium my-4 block" htmlFor="accountName">
