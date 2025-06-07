@@ -139,10 +139,10 @@ export default function Bills({ data }: PageProps<Data>) {
 											</a>
 										</td>
 										<td class="px-4 py-2 text-label-large">
-											{bill.created_at}
+											{new Date(bill.created_at).toLocaleString()}
 										</td>
 										<td class="px-4 py-2 text-label-large">
-											{bill.created_at}
+											{new Date(bill.updated_at).toLocaleString()}
 										</td>
 										<td class="px-4 py-2 text-label-large">
 											{Number(bill.amount).toLocaleString("en-IN")}

@@ -49,7 +49,7 @@ export async function QueryBills(
 	};
 
 	const resp = await (await bills()).find(filters, queryOptions).sort({
-		created_at: 1,
+		created_at: -1,
 	}).skip(skip).toArray();
 	return resp as BillDocument[];
 }
