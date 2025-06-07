@@ -2,7 +2,6 @@ import { Button } from "ketu";
 import { buttonVariants } from "@components/Button.tsx";
 import { NoData, TrashIcon } from "@components/icons/index.tsx";
 import useVendor from "@hooks/vendor/useVendor.ts";
-import { vendorSearch } from "./VendorSearchbox.tsx";
 import { VendorDocument } from "@db/Vendors.ts";
 
 export function VendorsGrid({ vendors }: { vendors: VendorDocument[] }) {
@@ -16,42 +15,38 @@ export function VendorsGrid({ vendors }: { vendors: VendorDocument[] }) {
 					<p className="text-center">No Data</p>
 				</div>
 			)}
-			{searchData.value && searchData.value.flatMap((vendor) =>
-				vendor.vendor_name.toLowerCase().startsWith(vendorSearch.value)
-					? (
-						<div className="bg-surfaceContainerLow border border-outlineVariant rounded-xl p-4">
-							<p className="text-title-large">{vendor.vendor_name}</p>
+			{searchData.value.map((vendor) => (
+				<div className="bg-surfaceContainerLow border border-outlineVariant rounded-xl p-4">
+					<p className="text-title-large">{vendor.vendor_name}</p>
 
-							<p className="text-label-large">
-								Date added: {new Date(vendor.created_at).toLocaleDateString()}
-							</p>
+					<p className="text-label-large">
+						Date added: {new Date(vendor.created_at).toLocaleDateString()}
+					</p>
 
-							<div className="mt-4 flex gap-4 items-center">
-								<Button
-									className={buttonVariants({
-										variant: "text",
-										className: "ml-auto",
-									})}
-									as="a"
-									href={`/dashboard/vendors/${vendor.vendor_id}`}
-								>
-									View
-								</Button>
+					<div className="mt-4 flex gap-4 items-center">
+						<Button
+							className={buttonVariants({
+								variant: "text",
+								className: "ml-auto",
+							})}
+							as="a"
+							href={`/dashboard/vendors/${vendor.vendor_id}`}
+						>
+							View
+						</Button>
 
-								<button
-									type="button"
-									title="Delete"
-									aria-label="delete vendor button"
-									onClick={() => handleDelete(vendor)}
-									disabled={deleteMutation.isLoading}
-								>
-									<TrashIcon />
-								</button>
-							</div>
-						</div>
-					)
-					: []
-			)}
+						<button
+							type="button"
+							title="Delete"
+							aria-label="delete vendor button"
+							onClick={() => handleDelete(vendor)}
+							disabled={deleteMutation.isLoading}
+						>
+							<TrashIcon />
+						</button>
+					</div>
+				</div>
+			))}
 		</div>
 	);
 }
