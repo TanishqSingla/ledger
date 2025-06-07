@@ -3,7 +3,7 @@ import Input from "@components/Input.tsx";
 import { FileUpload } from "./file-input.tsx";
 import { buttonVariants } from "@components/Button.tsx";
 import { uploadBillPayment } from "@queries/bill.ts";
-import { CrossIcon } from "@components/icons/index.tsx";
+import { CrossIcon, Loader } from "@components/icons/index.tsx";
 import { BillDocument } from "@db/Bills.ts";
 import { VendorDocument } from "@db/Vendors.ts";
 import { getVendorAccounts } from "@queries/vendor.ts";
@@ -156,13 +156,16 @@ export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 						<button
 							type="submit"
 							className={buttonVariants({ variant: "filled" })}
+							disabled={createPayment.isLoading}
 						>
+							{createPayment.isLoading && <Loader />}
 							Submit
 						</button>
 						<button
 							type="button"
 							className={buttonVariants({ variant: "destructive" })}
 							onClick={() => setEditMode(false)}
+							disabled={createPayment.isLoading}
 						>
 							Cancel
 						</button>
