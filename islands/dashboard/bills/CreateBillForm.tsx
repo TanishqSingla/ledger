@@ -136,7 +136,6 @@ export default function CreateBillForm() {
 			/>
 			<div className="flex flex-wrap gap-4">
 				{files && files.map((file, index) => {
-					console.log(file.type);
 					return (
 						<div className="flex flex-col border border-outlineVariant rounded-lg px-2">
 							<div className="inline-flex justify-between">

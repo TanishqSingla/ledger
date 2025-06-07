@@ -25,6 +25,18 @@ export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 				setVendorAccounts(data.accounts);
 			}
 		});
+
+		function handlePasteEvent(event: ClipboardEvent) {
+			if (event.clipboardData?.files) {
+				setFiles((prev) => [...prev, ...[event.clipboardData!.files][0]]);
+			}
+		}
+
+		document.addEventListener("paste", handlePasteEvent);
+
+		return () => {
+			document.removeEventListener("paste", handlePasteEvent);
+		};
 	}, []);
 
 	const handleSubmit = async (event: SubmitEvent) => {
@@ -135,16 +147,30 @@ export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 					<div className="flex flex-wrap gap-4">
 						{files && files.map((file, index) => {
 							return (
-								<div className="inline-flex items-center border border-outlineVariant h-8 rounded-lg px-2">
-									<span>{file.name}</span>
-									<button
-										type="button"
-										className="ml-2"
-										onClick={() => removeFile(index)}
-										aria-label="remove file"
-									>
-										<CrossIcon height={14} width={14} />
-									</button>
+								<div className="flex flex-col border border-outlineVariant rounded-lg px-2">
+									<div className="inline-flex justify-between">
+										<span>{file.name}</span>
+										<button
+											type="button"
+											className="ml-auto"
+											onClick={() => removeFile(index)}
+											aria-label="remove file"
+										>
+											<CrossIcon height={14} width={14} />
+										</button>
+									</div>
+									{file.type.startsWith("image/") && (
+										<figure className="w-60 inline-flex">
+											<img
+												src={URL.createObjectURL(file)}
+												className="object-contain"
+											/>
+										</figure>
+									)}
+
+									{file.type === "application/pdf" && (
+										<embed src={URL.createObjectURL(file)} width={240} />
+									)}
 								</div>
 							);
 						})}
