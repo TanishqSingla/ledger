@@ -3,6 +3,8 @@ import Input from "@components/Input.tsx";
 import AddVendorAccount from "../../../islands/dashboard/vendors/AddVendorAccount.tsx";
 import { buttonVariants } from "@components/Button.tsx";
 import { PutVendor, VendorDocument } from "@db/Vendors.ts";
+import { KV_KEYS } from "@utils/constants.ts";
+import { kv } from "@utils/db.ts";
 
 export const handler: Handlers = {
 	async POST(req, ctx) {
@@ -34,6 +36,9 @@ export const handler: Handlers = {
 
 		try {
 			const resp = await PutVendor(payload);
+
+			console.log("[Cache]: Invalidated", KV_KEYS.VENDORS);
+			kv.delete([KV_KEYS.VENDORS]);
 
 			return Response.redirect(
 				ctx.url.origin + "/dashboard/vendors/" + resp.data.vendor_id,

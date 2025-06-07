@@ -158,7 +158,9 @@ export default function CreateBillForm() {
 								</figure>
 							)}
 
-							{file.type === 'application/pdf' && <embed src={URL.createObjectURL(file)} width={240} />}
+							{file.type === "application/pdf" && (
+								<embed src={URL.createObjectURL(file)} width={240} />
+							)}
 						</div>
 					);
 				})}

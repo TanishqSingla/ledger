@@ -6,7 +6,7 @@ import { vendorSearch } from "./VendorSearchbox.tsx";
 import { VendorDocument } from "@db/Vendors.ts";
 
 export function VendorsGrid({ vendors }: { vendors: VendorDocument[] }) {
-	const { data, deleteMutation, handleDelete } = useVendor(vendors);
+	const { data, searchData, deleteMutation, handleDelete } = useVendor(vendors);
 
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -16,7 +16,7 @@ export function VendorsGrid({ vendors }: { vendors: VendorDocument[] }) {
 					<p className="text-center">No Data</p>
 				</div>
 			)}
-			{data.value && data.value.flatMap((vendor) =>
+			{searchData.value && searchData.value.flatMap((vendor) =>
 				vendor.vendor_name.toLowerCase().startsWith(vendorSearch.value)
 					? (
 						<div className="bg-surfaceContainerLow border border-outlineVariant rounded-xl p-4">

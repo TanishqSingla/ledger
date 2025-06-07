@@ -13,7 +13,7 @@ export default function VendorsData(
 		return (
 			<>
 				<p className="text-body-small my-4">
-					Showing {vendors.length} items
+					Found total {vendors.length} items
 				</p>
 				<section class="rounded-xl overflow-hidden relative border">
 					<VendorsTable vendors={vendors} />
