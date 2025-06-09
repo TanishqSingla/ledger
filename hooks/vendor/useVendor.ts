@@ -6,31 +6,34 @@ import { vendorSearch } from "../../islands/dashboard/vendors/VendorSearchbox.ts
 
 export const vendorsSignal = signal<VendorDocument[] | null>(null);
 
+let current = new Float64Array(256);
+let buffer = new Float64Array(256);
 function getEditDistance(word1: string, word2: string) {
-	let current = new Int32Array(word1.length + 1);
-	let buffer = new Int32Array(current.length);
+  const len1 = word1.length + 1;
+  const len2 = word2.length + 1;
 
-	for (let col = 0; col < current.length; col++) current[col] = col;
+  for (let col = 0; col < len1; ++col) current[col] = col;
 
-	for (let row = 1; row < word2.length + 1; row++) {
-		buffer[0] = row;
-		for (let col = 1; col < buffer.length; col++) {
-			if (word1[col - 1] == word2[row - 1]) {
-				buffer[col] = current[col - 1];
-			} else {
-				buffer[col] = Math.min(
-					buffer[col - 1] + 1,
-					current[col] + 1,
-					current[col - 1] + 1,
-				);
-			}
-		}
-		current = buffer;
-		buffer = new Int32Array(current.length + 1);
-	}
+  for (let row = 1; row < len2; ++row) {
+    buffer[0] = row;
+    for (let col = 1; col < len1; col++) {
+      if (word1[col - 1] == word2[row - 1]) {
+        buffer[col] = current[col - 1];
+      } else {
+        buffer[col] = Math.min(
+          buffer[col - 1] + 1,
+          current[col] + 1,
+          current[col - 1] + 1,
+        );
+      }
+    }
+    [buffer, current] = [current, buffer];
+  }
 
-	return current[word1.length];
+  return current[word1.length];
 }
+
+
 
 export default function useVendor(initialData: VendorDocument[]) {
 	const data = computed(() => {
