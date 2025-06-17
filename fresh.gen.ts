@@ -42,6 +42,7 @@ import * as $dashboard_archive_bills_ArchiveBillsTableActions from "./islands/da
 import * as $dashboard_bills_AddBillPayment from "./islands/dashboard/bills/AddBillPayment.tsx";
 import * as $dashboard_bills_CreateBillForm from "./islands/dashboard/bills/CreateBillForm.tsx";
 import * as $dashboard_bills_Invoices from "./islands/dashboard/bills/Invoices.tsx";
+import * as $dashboard_bills_MoveToArchiveDialog from "./islands/dashboard/bills/MoveToArchiveDialog.tsx";
 import * as $dashboard_bills_Pagination from "./islands/dashboard/bills/Pagination.tsx";
 import * as $dashboard_bills_PaymentsTable from "./islands/dashboard/bills/PaymentsTable.tsx";
 import * as $dashboard_bills_file_input from "./islands/dashboard/bills/file-input.tsx";
@@ -116,6 +117,8 @@ const manifest = {
 		"./islands/dashboard/bills/CreateBillForm.tsx":
 			$dashboard_bills_CreateBillForm,
 		"./islands/dashboard/bills/Invoices.tsx": $dashboard_bills_Invoices,
+		"./islands/dashboard/bills/MoveToArchiveDialog.tsx":
+			$dashboard_bills_MoveToArchiveDialog,
 		"./islands/dashboard/bills/Pagination.tsx": $dashboard_bills_Pagination,
 		"./islands/dashboard/bills/PaymentsTable.tsx":
 			$dashboard_bills_PaymentsTable,

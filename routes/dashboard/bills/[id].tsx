@@ -5,9 +5,9 @@ import AddBillPayment from "../../../islands/dashboard/bills/AddBillPayment.tsx"
 import { getFile } from "@queries/s3.ts";
 import { billStatusBadgeMap } from "@utils/constants.ts";
 import { MoveToArchive } from "@db/ArchiveBills.ts";
-import { buttonVariants } from "@components/Button.tsx";
 import PaymentsTable from "../../../islands/dashboard/bills/PaymentsTable.tsx";
 import Invoices from "../../../islands/dashboard/bills/Invoices.tsx";
+import MoveToArchiveDialog from "../../../islands/dashboard/bills/MoveToArchiveDialog.tsx";
 
 type Data = {
 	bill: Awaited<ReturnType<typeof GetBillFromId>>;
@@ -126,14 +126,7 @@ export default function Bill({ params, data }: PageProps<Data>) {
 			</section>
 
 			<section>
-				<form method="post">
-					<button
-						type="submit"
-						className={buttonVariants({ variant: "destructive" })}
-					>
-						Move to archive
-					</button>
-				</form>
+				<MoveToArchiveDialog label="Move to archive" />
 			</section>
 
 			<hr />
