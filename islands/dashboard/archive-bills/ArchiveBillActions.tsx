@@ -1,10 +1,13 @@
 import { buttonVariants } from "@components/Button.tsx";
 import { twMerge } from "tailwind-merge";
 import { fetcher } from "@queries/utils.ts";
+import { useRef } from "preact/hooks";
 
 export default function ArchiveBillActions(
 	{ archiveId }: { archiveId: string },
 ) {
+	const dialogRef = useRef<HTMLDialogElement>(null);
+
 	const handleRestore = async () => {
 		const resp = await fetcher.post(`/api/archive/${archiveId}/bill`);
 
@@ -45,10 +48,44 @@ export default function ArchiveBillActions(
 			<button
 				type="button"
 				className={buttonVariants({ variant: "destructive" })}
-				onClick={handleDelete}
+				onClick={() => dialogRef.current?.showModal()}
 			>
 				Delete
 			</button>
+			<div className="w-full">
+				<dialog
+					is="modal-dialog"
+					ref={dialogRef}
+					className="rounded-xl"
+				>
+					<div class="bg-white max-w-screen-md rounded-xl">
+						<div className="px-4 py-2">
+							<h1 className="text-title-large">Permanently delete bill</h1>
+						</div>
+
+						<div className="px-4 py-2">
+							<p className="text-body-medium">Permanently delete bill</p>
+						</div>
+
+						<div className="flex gap-2 px-4 py-2">
+							<button
+								className={buttonVariants({ variant: "destructive" })}
+								type="button"
+								onClick={() => dialogRef.current?.close()}
+							>
+								Close
+							</button>
+							<button
+								className={buttonVariants({ variant: "filled" })}
+								type="button"
+								onClick={handleDelete}
+							>
+								Confirm
+							</button>
+						</div>
+					</div>
+				</dialog>
+			</div>
 		</section>
 	);
 }
