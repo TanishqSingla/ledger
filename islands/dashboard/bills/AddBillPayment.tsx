@@ -142,6 +142,7 @@ export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 						handleUpload={handleUpload}
 						label="Attach payment"
 						multiple={false}
+						disabled={files.length > 0}
 					/>
 
 					<div className="flex flex-wrap gap-4">

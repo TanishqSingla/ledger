@@ -5,10 +5,11 @@ type FileUploadProps = {
 	handleUpload: (files: File[]) => void;
 	label: string;
 	multiple: boolean;
+	disabled?: boolean;
 };
 
 export const FileUpload = (
-	{ handleUpload, label, multiple }: FileUploadProps,
+	{ handleUpload, label, multiple, disabled }: FileUploadProps,
 ) => {
 	const [active, setActive] = useState(false);
 
@@ -57,7 +58,9 @@ export const FileUpload = (
 	return (
 		<>
 			<label
-				className={`h-40 rounded-xl w-full grid place-items-center bg-surfaceBright cursor-pointer border border-surfaceVariant border-dashed data-[active=true]:border-surfaceTint`}
+				className={`h-40 rounded-xl w-full grid place-items-center ${
+					disabled ? "bg-gray-100" : "bg-surfaceBright"
+				} cursor-pointer border border-surfaceVariant border-dashed data-[active=true]:border-surfaceTint`}
 				for="invoices"
 				ref={dropAreaRef}
 				onDragEnter={highlight}
@@ -79,6 +82,7 @@ export const FileUpload = (
 				class="hidden"
 				onChange={handleFileChange}
 				accept="image/*,.pdf"
+				disabled={disabled}
 			/>
 		</>
 	);
