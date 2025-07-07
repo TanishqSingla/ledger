@@ -73,6 +73,7 @@ export const FileUpload = (
 				<p>
 					{label}
 				</p>
+				<p className="text-label-medium">Allowed file types are images or .pdf</p>
 			</label>
 			<input
 				type="file"
