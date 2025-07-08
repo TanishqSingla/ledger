@@ -233,7 +233,7 @@ export const GridIcon = ({ width = 24, height = 24, fill = "none" }) => {
 	);
 };
 
-export const AddFiles = ({ height = "701.88002", width = "782.04441" }) => (
+export const AddFilesIcon = ({ height = "701.88002", width = "782.04441" }) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width={width}

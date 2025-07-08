@@ -1,5 +1,5 @@
 import { useRef, useState } from "preact/hooks";
-import { AddFiles } from "@components/icons/index.tsx";
+import { AddFilesIcon } from "@components/icons/index.tsx";
 
 type FileUploadProps = {
 	handleUpload: (files: File[]) => void;
@@ -69,7 +69,7 @@ export const FileUpload = (
 				onDrop={handleDrop}
 				data-active={active}
 			>
-				<AddFiles height="72" width="72" />
+				<AddFilesIcon height="72" width="72" />
 				<p>
 					{label}
 				</p>
