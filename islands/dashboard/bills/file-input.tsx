@@ -1,4 +1,4 @@
-import { useRef, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 import { AddFilesIcon } from "@components/icons/index.tsx";
 
 type FileUploadProps = {
@@ -12,8 +12,6 @@ export const FileUpload = (
 	{ handleUpload, label, multiple, disabled }: FileUploadProps,
 ) => {
 	const [active, setActive] = useState(false);
-
-	const dropAreaRef = useRef<HTMLLabelElement>(null);
 
 	const highlight = (event: DragEvent) => {
 		event.preventDefault();
@@ -62,7 +60,6 @@ export const FileUpload = (
 					disabled ? "bg-gray-100" : "bg-surfaceBright"
 				} cursor-pointer border border-surfaceVariant border-dashed data-[active=true]:border-surfaceTint`}
 				for="invoices"
-				ref={dropAreaRef}
 				onDragEnter={highlight}
 				onDragOver={highlight}
 				onDragLeave={unhighlight}

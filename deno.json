@@ -32,7 +32,8 @@
 		"@queries/": "./queries/",
 		"@db/": "./db/",
 		"@components/": "./components/",
-		"@hooks/": "./hooks/"
+		"@hooks/": "./hooks/",
+		"@islands/": "./islands/"
 	},
 	"compilerOptions": {
 		"jsx": "react-jsx",
