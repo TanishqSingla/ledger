@@ -3,7 +3,7 @@ import Input from "@components/Input.tsx";
 import { signal } from "@preact/signals";
 import { useMutation } from "@hooks/useMutation.ts";
 import { putVendor } from "@queries/vendor.ts";
-import { Vendor } from "@db/conn.ts";
+import { Vendor } from "@/types.ts";
 
 export const selectedVendor = signal<Vendor>();
 
