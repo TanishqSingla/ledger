@@ -5,9 +5,9 @@ import { buttonVariants } from "@components/Button.tsx";
 import { uploadBillPayment } from "@queries/bill.ts";
 import { CrossIcon, Loader } from "@components/icons/index.tsx";
 import { BillDocument } from "@db/Bills.ts";
-import { VendorDocument } from "@db/Vendors.ts";
 import { getVendorAccounts } from "@queries/vendor.ts";
 import usePayment from "@hooks/bills/usePayment.ts";
+import { VendorDocument } from "@/types.ts";
 
 export default function AddBillPayment({ bill }: { bill: BillDocument }) {
 	const [files, setFiles] = useState<File[]>([]);
