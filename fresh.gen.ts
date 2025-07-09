@@ -20,14 +20,17 @@ import * as $api_protected_vendor_vendor_id_accounts from "./routes/api/(protect
 import * as $auth_verify from "./routes/auth/verify.tsx";
 import * as $dashboard_layout from "./routes/dashboard/_layout.tsx";
 import * as $dashboard_middleware from "./routes/dashboard/_middleware.ts";
-import * as $dashboard_accounts_create from "./routes/dashboard/accounts/create.tsx";
-import * as $dashboard_accounts_index from "./routes/dashboard/accounts/index.tsx";
 import * as $dashboard_archive_bills_archive_id_ from "./routes/dashboard/archive-bills/[archive_id].tsx";
 import * as $dashboard_archive_bills_index from "./routes/dashboard/archive-bills/index.tsx";
 import * as $dashboard_bills_id_ from "./routes/dashboard/bills/[id].tsx";
 import * as $dashboard_bills_create from "./routes/dashboard/bills/create.tsx";
 import * as $dashboard_bills_index from "./routes/dashboard/bills/index.tsx";
+import * as $dashboard_companies_company_id_ from "./routes/dashboard/companies/[company_id].tsx";
+import * as $dashboard_companies_create from "./routes/dashboard/companies/create.tsx";
+import * as $dashboard_companies_index from "./routes/dashboard/companies/index.tsx";
 import * as $dashboard_index from "./routes/dashboard/index.tsx";
+import * as $dashboard_payments_create from "./routes/dashboard/payments/create.tsx";
+import * as $dashboard_payments_index from "./routes/dashboard/payments/index.tsx";
 import * as $dashboard_vendors_id_ from "./routes/dashboard/vendors/[id].tsx";
 import * as $dashboard_vendors_create from "./routes/dashboard/vendors/create.tsx";
 import * as $dashboard_vendors_index from "./routes/dashboard/vendors/index.tsx";
@@ -47,15 +50,16 @@ import * as $dashboard_bills_Pagination from "./islands/dashboard/bills/Paginati
 import * as $dashboard_bills_PaymentsTable from "./islands/dashboard/bills/PaymentsTable.tsx";
 import * as $dashboard_bills_file_input from "./islands/dashboard/bills/file-input.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
-import * as $dashboard_vendors_AddVendorAccount from "./islands/dashboard/vendors/AddVendorAccount.tsx";
 import * as $dashboard_vendors_AddVendorAccountModal from "./islands/dashboard/vendors/AddVendorAccountModal.tsx";
 import * as $dashboard_vendors_VendorAccountTable from "./islands/dashboard/vendors/VendorAccountTable.tsx";
 import * as $dashboard_vendors_VendorSearchbox from "./islands/dashboard/vendors/VendorSearchbox.tsx";
 import * as $dashboard_vendors_VendorsTable from "./islands/dashboard/vendors/VendorsTable.tsx";
 import * as $dashboard_vendors_vendors_data from "./islands/dashboard/vendors/vendors-data.tsx";
 import * as $dashboard_vendors_vendors_grid from "./islands/dashboard/vendors/vendors-grid.tsx";
+import * as $molecules_AccountForm from "./islands/molecules/AccountForm.tsx";
 import * as $molecules_display_preference from "./islands/molecules/display-preference.tsx";
 import * as $molecules_profile_dropdown from "./islands/molecules/profile-dropdown.tsx";
+import * as $organisms_FileUpload from "./islands/organisms/FileUpload.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -87,8 +91,6 @@ const manifest = {
 		"./routes/auth/verify.tsx": $auth_verify,
 		"./routes/dashboard/_layout.tsx": $dashboard_layout,
 		"./routes/dashboard/_middleware.ts": $dashboard_middleware,
-		"./routes/dashboard/accounts/create.tsx": $dashboard_accounts_create,
-		"./routes/dashboard/accounts/index.tsx": $dashboard_accounts_index,
 		"./routes/dashboard/archive-bills/[archive_id].tsx":
 			$dashboard_archive_bills_archive_id_,
 		"./routes/dashboard/archive-bills/index.tsx":
@@ -96,7 +98,13 @@ const manifest = {
 		"./routes/dashboard/bills/[id].tsx": $dashboard_bills_id_,
 		"./routes/dashboard/bills/create.tsx": $dashboard_bills_create,
 		"./routes/dashboard/bills/index.tsx": $dashboard_bills_index,
+		"./routes/dashboard/companies/[company_id].tsx":
+			$dashboard_companies_company_id_,
+		"./routes/dashboard/companies/create.tsx": $dashboard_companies_create,
+		"./routes/dashboard/companies/index.tsx": $dashboard_companies_index,
 		"./routes/dashboard/index.tsx": $dashboard_index,
+		"./routes/dashboard/payments/create.tsx": $dashboard_payments_create,
+		"./routes/dashboard/payments/index.tsx": $dashboard_payments_index,
 		"./routes/dashboard/vendors/[id].tsx": $dashboard_vendors_id_,
 		"./routes/dashboard/vendors/create.tsx": $dashboard_vendors_create,
 		"./routes/dashboard/vendors/index.tsx": $dashboard_vendors_index,
@@ -125,8 +133,6 @@ const manifest = {
 		"./islands/dashboard/bills/file-input.tsx": $dashboard_bills_file_input,
 		"./islands/dashboard/create/AddAccountForm.tsx":
 			$dashboard_create_AddAccountForm,
-		"./islands/dashboard/vendors/AddVendorAccount.tsx":
-			$dashboard_vendors_AddVendorAccount,
 		"./islands/dashboard/vendors/AddVendorAccountModal.tsx":
 			$dashboard_vendors_AddVendorAccountModal,
 		"./islands/dashboard/vendors/VendorAccountTable.tsx":
@@ -139,8 +145,10 @@ const manifest = {
 			$dashboard_vendors_vendors_data,
 		"./islands/dashboard/vendors/vendors-grid.tsx":
 			$dashboard_vendors_vendors_grid,
+		"./islands/molecules/AccountForm.tsx": $molecules_AccountForm,
 		"./islands/molecules/display-preference.tsx": $molecules_display_preference,
 		"./islands/molecules/profile-dropdown.tsx": $molecules_profile_dropdown,
+		"./islands/organisms/FileUpload.tsx": $organisms_FileUpload,
 	},
 	baseUrl: import.meta.url,
 } satisfies Manifest;
