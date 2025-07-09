@@ -12,7 +12,6 @@ if (!MONGODB_URI) {
 }
 if (!DB_NAME) {
 	console.error("DB_NAME not found");
-	Deno.exit(1);
 }
 
 class DbClient {
