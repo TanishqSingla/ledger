@@ -1,4 +1,4 @@
-import CreateBillForm from "../../../islands/dashboard/bills/CreateBillForm.tsx";
+import CreateBillForm from "@islands/dashboard/bills/CreateBillForm.tsx";
 
 export default function CreateBills() {
 	return (
