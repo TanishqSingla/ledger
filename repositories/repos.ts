@@ -8,7 +8,7 @@ import {
 } from "mongodb";
 import { Conn } from "@db/conn.ts";
 import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
-import { Vendor, VendorDocument } from "@/types.ts";
+import { CompanyDocument, Vendor, VendorDocument } from "@/types.ts";
 
 export class BaseRepository<T extends Document> {
 	model: Collection<T>;
@@ -110,3 +110,25 @@ export class VendorRepository extends BaseRepository<VendorDocument> {
 	}
 }
 export const vendors = new VendorRepository();
+
+export class CompanyRepository extends BaseRepository<CompanyDocument> {
+	constructor() {
+		super(Conn.Companies);
+	}
+
+	static NewAccount(
+		{ company_name , company_accounts}: {
+			company_name: string;
+			company_accounts: CompanyDocument["company_accounts"];
+		},
+	) {
+		return {
+			company_id: nanoid(12),
+			company_name,
+			company_accounts,
+			created_at: new Date(Date.now()),
+			updated_at: new Date(Date.now()),
+		};
+	}
+}
+export const company = new CompanyRepository();
