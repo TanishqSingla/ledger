@@ -1,10 +1,11 @@
 import { Handlers } from "$fresh/server.ts";
 import Input from "@components/Input.tsx";
-import AddVendorAccount from "../../../islands/dashboard/vendors/AddVendorAccount.tsx";
+import AddVendorAccount from "@islands/dashboard/vendors/AddVendorAccount.tsx";
 import { buttonVariants } from "@components/Button.tsx";
-import { PutVendor, VendorDocument } from "@db/Vendors.ts";
 import { KV_KEYS } from "@utils/constants.ts";
 import { kv } from "@utils/db.ts";
+import { VendorRepository, vendors } from "@repositories/repos.ts";
+import { VendorDocument } from "@/types.ts";
 
 export const handler: Handlers = {
 	async POST(req, ctx) {
@@ -25,17 +26,17 @@ export const handler: Handlers = {
 			}
 		}
 
-		const payload = {
+		const vendorDoc = VendorRepository.NewVendorDoc({
 			vendor_name: formData.get("vendor_name")!.toString(),
 			...(formData.get("email") &&
 				{ email: formData.get("email")!.toString() }),
 			...(formData.get("phone") &&
 				{ phone: formData.get("phone")!.toString() }),
 			accounts: Object.values(accounts) as VendorDocument["accounts"],
-		};
+		});
 
 		try {
-			const resp = await PutVendor(payload);
+			const resp = await vendors.InsertOne(vendorDoc);
 
 			console.log("[Cache]: Invalidated", KV_KEYS.VENDORS);
 			kv.delete([KV_KEYS.VENDORS]);

@@ -1,6 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { vendors } from "@repositories/repos.ts";
-import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
+import { VendorRepository, vendors } from "@repositories/repos.ts";
 
 export const handler: Handlers = {
 	POST: async function (req, _ctx) {
@@ -15,15 +14,12 @@ export const handler: Handlers = {
 	PUT: async function (req, _ctx) {
 		const values = await req.json();
 
-		const vendor = {
-			vendor_id: nanoid(12),
+		const vendor = VendorRepository.NewVendorDoc({
 			vendor_name: values["vendor_name"],
 			email: values["email"],
 			phone: values["phone"],
 			accounts: [],
-			created_at: new Date(Date.now()),
-			updated_at: new Date(Date.now()),
-		};
+		});
 
 		const resp = await vendors.InsertOne(vendor);
 

@@ -1,11 +1,12 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { GetAllVendors, VendorDocument } from "@db/Vendors.ts";
-import VendorsData from "../../../islands/dashboard/vendors/vendors-data.tsx";
-import VendorSearchBox from "../../../islands/dashboard/vendors/VendorSearchbox.tsx";
-import DisplayPreference from "../../../islands/molecules/display-preference.tsx";
+import VendorsData from "@islands/dashboard/vendors/vendors-data.tsx";
+import VendorSearchBox from "@islands/dashboard/vendors/VendorSearchbox.tsx";
+import DisplayPreference from "@islands/molecules/display-preference.tsx";
 import { KV_KEYS } from "@utils/constants.ts";
 import { kv } from "@utils/db.ts";
 import { buttonVariants } from "@components/Button.tsx";
+import { VendorDocument } from "@/types.ts";
+import { vendors } from "@repositories/repos.ts";
 
 type Data = {
 	vendors: VendorDocument[];
@@ -21,7 +22,7 @@ export const handler: Handlers = {
 		}
 
 		console.log("[Cache]: vendors miss");
-		const data = await GetAllVendors();
+		const data = await vendors.GetAll();
 		kv.set([KV_KEYS.VENDORS], data);
 
 		return ctx.render({ vendors: data });

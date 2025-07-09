@@ -35,6 +35,7 @@
 		"@hooks/": "./hooks/",
 		"@islands/": "./islands/",
 		"@repositories/": "./repositories/"
+		"@/": "./"
 	},
 	"compilerOptions": {
 		"jsx": "react-jsx",

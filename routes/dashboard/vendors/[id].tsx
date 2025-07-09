@@ -2,11 +2,12 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import Badge from "@components/atoms/badge.tsx";
 import { NoData } from "@components/icons/index.tsx";
 import { BillDocument, QueryBills } from "@db/Bills.ts";
-import { GetVendorFromId, VendorDocument } from "@db/Vendors.ts";
 import { billStatusBadgeMap } from "@utils/constants.ts";
-import AddVendorAccountModal from "../../../islands/dashboard/vendors/AddVendorAccountModal.tsx";
+import AddVendorAccountModal from "@islands/dashboard/vendors/AddVendorAccountModal.tsx";
 import { buttonVariants } from "@components/Button.tsx";
-import VendorAccountTable from "../../../islands/dashboard/vendors/VendorAccountTable.tsx";
+import VendorAccountTable from "@islands/dashboard/vendors/VendorAccountTable.tsx";
+import { vendors } from "@repositories/repos.ts";
+import { VendorDocument } from "@/types.ts";
 
 type Data = {
 	vendor: VendorDocument;
@@ -18,7 +19,7 @@ export const handler: Handlers = {
 		const { id } = ctx.params;
 
 		const queries = await Promise.all([
-			GetVendorFromId(id),
+			vendors.GetById(id),
 			QueryBills({
 				limit: 5,
 				vendor_id: id,
