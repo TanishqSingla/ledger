@@ -20,8 +20,8 @@ const SidebarConfig = [
 		label: "Vendors",
 	},
 	{
-		slug: "/dashboard/accounts",
-		label: "Accounts",
+		slug: "/dashboard/companies",
+		label: "Companies",
 	},
 	{
 		slug: "/dashboard/archive-bills",
