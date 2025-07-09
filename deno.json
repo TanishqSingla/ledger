@@ -33,7 +33,8 @@
 		"@db/": "./db/",
 		"@components/": "./components/",
 		"@hooks/": "./hooks/",
-		"@islands/": "./islands/"
+		"@islands/": "./islands/",
+		"@repositories/": "./repositories/"
 	},
 	"compilerOptions": {
 		"jsx": "react-jsx",

@@ -1,16 +1,12 @@
 import { Handlers } from "$fresh/server.ts";
-import {
-	AddAccountToVendor,
-	DeleteVendorAccount,
-	GetVendorAccounts,
-} from "@db/Vendors.ts";
+import { vendors } from "@repositories/repos.ts";
 
 export const handler: Handlers = {
 	GET: async function (_req, ctx) {
 		const vendor_id = ctx.params.vendor_id;
 
 		try {
-			const resp = await GetVendorAccounts(vendor_id);
+			const resp = await vendors.GetAccounts(vendor_id);
 
 			return Response.json(resp);
 		} catch (err: any) {
@@ -25,7 +21,7 @@ export const handler: Handlers = {
 		const vendor_id = ctx.params.vendor_id;
 
 		try {
-			const resp = await AddAccountToVendor(vendor_id, payload);
+			const resp = await vendors.AddAccount(vendor_id, payload);
 
 			return new Response(JSON.stringify(resp), { status: 200 });
 		} catch (err: any) {
@@ -40,7 +36,7 @@ export const handler: Handlers = {
 		const vendor_id = ctx.params.vendor_id;
 
 		try {
-			const resp = await DeleteVendorAccount(vendor_id, payload.accountId);
+			const resp = await vendors.DeleteAccount(vendor_id, payload.accountId);
 
 			return new Response(JSON.stringify(resp), { status: 200 });
 		} catch (err: any) {

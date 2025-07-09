@@ -53,34 +53,3 @@ export async function GetVendorFromId(id: string) {
 
 	return resp;
 }
-
-export async function GetVendorAccounts(vendor_id: string) {
-	const resp = await (await vendors()).findOne({ vendor_id }, {
-		projection: { accounts: 1 },
-	});
-
-	return resp;
-}
-
-export async function AddAccountToVendor(
-	vendor_id: string,
-	accounts: Required<Vendor>["accounts"][0],
-) {
-	const resp = await (await vendors()).updateOne({ vendor_id }, {
-		//@ts-ignore: mongo
-		"$push": { accounts },
-	});
-
-	return resp;
-}
-
-export async function DeleteVendorAccount(
-	vendor_id: string,
-	accountId: string,
-) {
-	const resp = await (await vendors()).updateOne({ vendor_id }, {
-		"$pull": { accounts: { id: accountId } },
-	});
-
-	return resp;
-}
