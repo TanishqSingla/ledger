@@ -13,7 +13,7 @@ export const handler: Handlers = {
 		const accounts = getFormDataAccounts(formData);
 
 		const companyDoc = CompanyRepository.NewAccount({
-			company_name: formData.get("account_name")!.toString(),
+			company_name: formData.get("company_name")!.toString(),
 			company_accounts: Object.values(
 				accounts,
 			) as CompanyDocument["company_accounts"],

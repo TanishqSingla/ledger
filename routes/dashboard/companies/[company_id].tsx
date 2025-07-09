@@ -8,9 +8,9 @@ type Data = {
 
 export const handler: Handlers = {
 	GET: async function (_req, ctx) {
-		const { id } = ctx.params;
+		const { company_id } = ctx.params;
 
-		const data = await company.GetById(id);
+		const data = await company.GetById(company_id);
 
 		return ctx.render({ company: data });
 	},

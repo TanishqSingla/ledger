@@ -131,8 +131,8 @@ export class CompanyRepository extends BaseRepository<CompanyDocument> {
 		};
 	}
 
-	async GetById(id: string) {
-		const resp = await this.model.findOne({ company_id: id });
+	async GetById(company_id: string) {
+		const resp = await this.model.findOne({ company_id });
 
 		return resp;
 	}
