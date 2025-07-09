@@ -8,6 +8,7 @@ env:
   JWT_SECRET: temp
   RESEND_API_KEY: re_123545
   MONGODB_URI: mongodb://user:password@localhost:27017
+  DB_NAME: ledger
   AWS_ACCESS_KEY_ID: temp
   SECRET_ACCESS_KEY: temp
 
