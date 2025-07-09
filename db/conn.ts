@@ -1,7 +1,9 @@
-import { MongoClient } from "mongodb";
+import { Db, MongoClient } from "mongodb";
 import { ArchiveDocument } from "./ArchiveBills.ts";
 import { BillDocument } from "./Bills.ts";
 import { VendorDocument } from "./Vendors.ts";
+import { AccountDocument } from "./Accounts.ts";
+import { PaymentDocument } from "./Payments.ts";
 
 const MONGODB_URI = Deno.env.get("MONGODB_URI");
 const DB_NAME = Deno.env.get("DB_NAME");
@@ -14,6 +16,38 @@ if (!DB_NAME) {
 	console.error("DB_NAME not found");
 	Deno.exit(1);
 }
+
+class DbClient {
+	private client: MongoClient;
+	private db: Db;
+
+	constructor(MONGODB_URI: string, DB_NAME: string) {
+		this.client = new MongoClient(MONGODB_URI);
+		this.db = this.client.db(DB_NAME);
+	}
+
+	get Vendors() {
+		return this.db.collection<VendorDocument>("vendors");
+	}
+
+	get Bills() {
+		return this.db.collection<BillDocument>("bills");
+	}
+
+	get ArchiveBills() {
+		return this.db.collection<VendorDocument>("archive_bills");
+	}
+
+	get Accounts() {
+		return this.db.collection<AccountDocument>("accounts");
+	}
+
+	get Payments() {
+		return this.db.collection<PaymentDocument>("payments");
+	}
+}
+
+export const Conn = new DbClient(MONGODB_URI, DB_NAME);
 
 export const getClient = async () => {
 	const client = new MongoClient(MONGODB_URI);
