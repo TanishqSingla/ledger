@@ -41,7 +41,9 @@ export class BaseRepository<T extends Document> {
 	async InsertOne(payload: OptionalUnlessRequiredId<T>) {
 		const resp = await this.model.insertOne(payload);
 
-		return { ...resp, data: payload };
+		return resp;
+	}
+}
 	}
 }
 

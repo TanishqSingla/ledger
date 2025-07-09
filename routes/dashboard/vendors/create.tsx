@@ -13,7 +13,7 @@ export const handler: Handlers = {
 		const formData = await req.formData();
 
 		const accounts = getFormDataAccounts(formData);
-		
+
 		const vendorDoc = VendorRepository.NewVendorDoc({
 			vendor_name: formData.get("vendor_name")!.toString(),
 			...(formData.get("email") &&
@@ -26,12 +26,16 @@ export const handler: Handlers = {
 		try {
 			const resp = await vendors.InsertOne(vendorDoc);
 
-			console.log("[Cache]: Invalidated", KV_KEYS.VENDORS);
-			kv.delete([KV_KEYS.VENDORS]);
+			if (resp.acknowledged) {
+				console.log("[Cache]: Invalidated", KV_KEYS.VENDORS);
+				kv.delete([KV_KEYS.VENDORS]);
 
-			return Response.redirect(
-				ctx.url.origin + "/dashboard/vendors/" + resp.data.vendor_id,
-			);
+				return Response.redirect(
+					ctx.url.origin + "/dashboard/vendors/" + vendorDoc.vendor_id,
+				);
+			}
+
+			return Response.json({}, { status: 500 })
 		} catch (err) {
 			console.log(err);
 

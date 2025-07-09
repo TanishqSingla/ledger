@@ -22,8 +22,14 @@ export const handler: Handlers = {
 		try {
 			const resp = await company.InsertOne(companyDoc);
 
+			if (!resp.acknowledged) {
+				return Response.json({ error: "Error adding company" }, {
+					status: 500,
+				});
+			}
+
 			return Response.redirect(
-				ctx.url.origin + "/dashboard/companies/" + resp.data.company_id,
+				ctx.url.origin + "/dashboard/companies/" + companyDoc.company_id,
 			);
 		} catch (err) {
 			console.log(err);

@@ -27,7 +27,7 @@ export const handler: Handlers = {
 			return new Response(
 				JSON.stringify({
 					message: "Vendor added successfully",
-					data: resp.data,
+					data: vendor,
 				}),
 				{ status: 201 },
 			);
