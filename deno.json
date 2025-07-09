@@ -34,7 +34,7 @@
 		"@components/": "./components/",
 		"@hooks/": "./hooks/",
 		"@islands/": "./islands/",
-		"@repositories/": "./repositories/"
+		"@repositories/": "./repositories/",
 		"@/": "./"
 	},
 	"compilerOptions": {
