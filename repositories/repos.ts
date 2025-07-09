@@ -70,7 +70,7 @@ export class VendorRepository extends BaseRepository<VendorDocument> {
 	}
 
 	async GetById(id: string) {
-		const resp = await this.model.findOne({ id }, {
+		const resp = await this.model.findOne({ vendor_id: id }, {
 			projection: { accounts: 1 },
 		});
 
