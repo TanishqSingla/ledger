@@ -1,5 +1,5 @@
 import { signal } from "@preact/signals";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { JSX } from "preact/src/index.d.ts";
 import { twMerge } from "tailwind-merge";
 import { CrossIcon } from "@components/icons/index.tsx";
@@ -10,6 +10,8 @@ export const fileUploadErrorSignal = signal("");
 
 export function FileUpload(props: FileUploadProps) {
 	const [active, setActive] = useState(false);
+
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		function handlePasteEvent(event: ClipboardEvent) {
@@ -26,6 +28,15 @@ export function FileUpload(props: FileUploadProps) {
 			document.removeEventListener("paste", handlePasteEvent);
 		};
 	}, []);
+
+	useEffect(() => {
+		if (fileInputRef.current) {
+			const dataTransfer = new DataTransfer();
+
+			fileUploadSignal.value.forEach((file) => dataTransfer.items.add(file));
+			fileInputRef.current.files = dataTransfer.files
+		}
+	}, [fileUploadSignal.value]);
 
 	const handleFileChange: JSX.InputEventHandler<HTMLInputElement> = (event) => {
 		const { currentTarget } = event;
@@ -92,6 +103,7 @@ export function FileUpload(props: FileUploadProps) {
 				type="file"
 				onChange={handleFileChange}
 				className="hidden"
+				ref={fileInputRef}
 			/>
 			{props.children}
 		</label>
