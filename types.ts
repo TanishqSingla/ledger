@@ -26,7 +26,7 @@ export type Company = {
 		id: string;
 		bank_name?: string;
 		branch_name?: string;
-		company_number: string;
+		account_number: string;
 		ifsc: string;
 	}[];
 };

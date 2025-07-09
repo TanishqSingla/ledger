@@ -117,7 +117,7 @@ export class CompanyRepository extends BaseRepository<CompanyDocument> {
 	}
 
 	static NewAccount(
-		{ company_name , company_accounts}: {
+		{ company_name, company_accounts }: {
 			company_name: string;
 			company_accounts: CompanyDocument["company_accounts"];
 		},
@@ -129,6 +129,12 @@ export class CompanyRepository extends BaseRepository<CompanyDocument> {
 			created_at: new Date(Date.now()),
 			updated_at: new Date(Date.now()),
 		};
+	}
+
+	async GetById(id: string) {
+		const resp = await this.model.findOne({ company_id: id });
+
+		return resp;
 	}
 }
 export const company = new CompanyRepository();
