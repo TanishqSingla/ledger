@@ -10,6 +10,10 @@ if (!MONGODB_URI) {
 	console.error("MONGODB_URI not found");
 	Deno.exit(1);
 }
+if (!DB_NAME) {
+	console.error("DB_NAME not found");
+	Deno.exit(1);
+}
 
 export const getClient = async () => {
 	const client = new MongoClient(MONGODB_URI);
