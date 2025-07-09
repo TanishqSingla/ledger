@@ -3,6 +3,35 @@ export type MongoDocument = {
 	updated_at: Date;
 };
 
+type BillHistoryTypes =
+	| {
+		action: "CREATE" | "ARCHIVE" | "RESTORE";
+	}
+	| {
+		action: "UPDATE";
+		type: "ADD_PAYMENT" | "REMOVE_PAYMENT" | "REMOVE_INVOICE";
+	};
+
+type History = BillHistoryTypes & { user: string; timestamp: number };
+
+export type Bill = {
+	bill_id: string;
+	amount?: number | string;
+	vendor_id: string;
+	vendor_name: string;
+	status: "PENDING" | "IN_PAYMENT" | "PAID";
+	history: History[];
+	comments?: { comment: string; user: string }[];
+	payments?: {
+		reference_number?: string;
+		vendor_account?: string;
+		file?: string;
+	}[];
+	invoices?: string[];
+};
+
+export type BillDocument = Bill & MongoDocument;
+
 export type Vendor = {
 	vendor_id: string;
 	vendor_name: string;

@@ -1,6 +1,6 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { ArchiveDocument, GetArchiveBillById } from "@db/ArchiveBills.ts";
-import ArchiveBillActions from "../../../islands/dashboard/archive-bills/ArchiveBillActions.tsx";
+import ArchiveBillActions from "@islands/dashboard/archive-bills/ArchiveBillActions.tsx";
 
 export const handler: Handlers = {
 	async GET(_req, ctx) {

@@ -8,7 +8,14 @@ import {
 } from "mongodb";
 import { Conn } from "@db/conn.ts";
 import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
-import { CompanyDocument, Vendor, VendorDocument } from "@/types.ts";
+import {
+	type Bill,
+	type BillDocument,
+	type CompanyDocument,
+	type PaymentDocument,
+	type Vendor,
+	type VendorDocument,
+} from "@/types.ts";
 
 export class BaseRepository<T extends Document> {
 	model: Collection<T>;

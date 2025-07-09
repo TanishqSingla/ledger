@@ -1,7 +1,11 @@
 import { Db, MongoClient } from "mongodb";
 import { ArchiveDocument } from "./ArchiveBills.ts";
-import { BillDocument } from "./Bills.ts";
-import { CompanyDocument, PaymentDocument, VendorDocument } from "@/types.ts";
+import {
+	type BillDocument,
+	type CompanyDocument,
+	type PaymentDocument,
+	type VendorDocument,
+} from "@/types.ts";
 
 const MONGODB_URI = Deno.env.get("MONGODB_URI");
 const DB_NAME = Deno.env.get("DB_NAME");

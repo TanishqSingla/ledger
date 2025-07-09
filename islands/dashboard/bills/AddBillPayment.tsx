@@ -4,7 +4,7 @@ import { FileUpload } from "./file-input.tsx";
 import { buttonVariants } from "@components/Button.tsx";
 import { uploadBillPayment } from "@queries/bill.ts";
 import { CrossIcon, Loader } from "@components/icons/index.tsx";
-import { BillDocument } from "@db/Bills.ts";
+import { type BillDocument } from "@/types.ts";
 import { getVendorAccounts } from "@queries/vendor.ts";
 import usePayment from "@hooks/bills/usePayment.ts";
 import { VendorDocument } from "@/types.ts";
