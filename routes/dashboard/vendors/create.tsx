@@ -1,31 +1,19 @@
 import { Handlers } from "$fresh/server.ts";
 import Input from "@components/Input.tsx";
-import AddVendorAccount from "@islands/dashboard/vendors/AddVendorAccount.tsx";
 import { buttonVariants } from "@components/Button.tsx";
 import { KV_KEYS } from "@utils/constants.ts";
 import { kv } from "@utils/db.ts";
 import { VendorRepository, vendors } from "@repositories/repos.ts";
 import { VendorDocument } from "@/types.ts";
+import { getFormDataAccounts } from "@utils/utils.ts";
+import AddAccountForm from "@islands/molecules/AccountForm.tsx";
 
 export const handler: Handlers = {
 	async POST(req, ctx) {
 		const formData = await req.formData();
 
-		const accounts: Record<string, Record<string, string>> = {};
-		// Group accounts
-		for (const [key, value] of formData.entries()) {
-			const match = key.match(/.*_(\$[A-Za-z0-9-_]+$)/);
-
-			if (match) {
-				const [, id] = match;
-				if (!accounts[id]) accounts[id] = {};
-
-				if (!accounts[id].id) accounts[id].id = id.replace("$", "");
-
-				accounts[id][key.replace(`_${id}`, "")] = value.toString();
-			}
-		}
-
+		const accounts = getFormDataAccounts(formData);
+		
 		const vendorDoc = VendorRepository.NewVendorDoc({
 			vendor_name: formData.get("vendor_name")!.toString(),
 			...(formData.get("email") &&
@@ -80,7 +68,7 @@ export default function CreateVendor() {
 					</label>
 				</div>
 
-				<AddVendorAccount />
+				<AddAccountForm />
 
 				<div class="flex items-center justify-end gap-2">
 					<button

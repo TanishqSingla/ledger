@@ -3,9 +3,10 @@ import { buttonVariants } from "@components/Button.tsx";
 import { useEffect, useState } from "preact/hooks";
 import Input from "@components/Input.tsx";
 import { nanoid } from "https://cdn.jsdelivr.net/npm/nanoid/nanoid.js";
-import { BankInfo, getBankInfo } from "@queries/vendor.ts";
+import { getBankInfo } from "@queries/vendor.ts";
+import { BankInfo } from "@/types.ts";
 
-const AddVendorAccountForm = ({ id }: { id: string }) => {
+const AccountForm = ({ id }: { id: string }) => {
 	const [ifsc, setIfsc] = useState("");
 	const [bankInfo, setBankInfo] = useState<BankInfo | null>(null);
 
@@ -66,7 +67,7 @@ const AddVendorAccountForm = ({ id }: { id: string }) => {
 	);
 };
 
-export default function AddVendorAccount() {
+export default function AddAccountForm() {
 	const [formIds, setFormIds] = useState<string[]>([]);
 
 	const appendForms = () => {
@@ -91,7 +92,7 @@ export default function AddVendorAccount() {
 							<TrashIcon />
 						</button>
 					</div>
-					<AddVendorAccountForm key={id} id={id} />
+					<AccountForm key={id} id={id} />
 				</div>
 			))}
 
