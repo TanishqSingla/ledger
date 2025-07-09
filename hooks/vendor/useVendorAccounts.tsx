@@ -1,7 +1,7 @@
 import { computed, signal } from "@preact/signals";
 import { useMutation } from "../useMutation.ts";
 import { addVendorAccount, deleteVendorAccount } from "@queries/vendor.ts";
-import { VendorDocument } from "@db/Vendors.ts";
+import { VendorDocument } from "@/types.ts";
 
 export const accountsSignal = signal<VendorDocument["accounts"] | null>(null);
 

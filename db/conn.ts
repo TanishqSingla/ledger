@@ -1,7 +1,7 @@
 import { Db, MongoClient } from "mongodb";
 import { ArchiveDocument } from "./ArchiveBills.ts";
 import { BillDocument } from "./Bills.ts";
-import { AccountDocument, PaymentDocument, VendorDocument } from "@/types.ts";
+import { CompanyDocument, PaymentDocument, VendorDocument } from "@/types.ts";
 
 const MONGODB_URI = Deno.env.get("MONGODB_URI");
 const DB_NAME = Deno.env.get("DB_NAME");
@@ -36,8 +36,8 @@ class DbClient {
 		return this.db.collection<VendorDocument>("archive_bills");
 	}
 
-	get Accounts() {
-		return this.db.collection<AccountDocument>("accounts");
+	get Companies() {
+		return this.db.collection<CompanyDocument>("companies");
 	}
 
 	get Payments() {
@@ -57,12 +57,6 @@ export const getClient = async () => {
 		console.error(err);
 		Deno.exit(1);
 	}
-};
-
-export const vendors = async () => {
-	const db = (await getClient()).db(DB_NAME);
-
-	return db.collection<VendorDocument>("vendors");
 };
 
 export const bills = async () => {

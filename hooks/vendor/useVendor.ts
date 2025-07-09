@@ -1,8 +1,8 @@
-import { VendorDocument } from "@db/Vendors.ts";
+import { VendorDocument } from "@/types.ts";
 import { deleteVendor, putVendor } from "@queries/vendor.ts";
 import { useMutation } from "../useMutation.ts";
 import { computed, signal } from "@preact/signals";
-import { vendorSearch } from "../../islands/dashboard/vendors/VendorSearchbox.tsx";
+import { vendorSearch } from "@islands/dashboard/vendors/VendorSearchbox.tsx";
 
 export const vendorsSignal = signal<VendorDocument[] | null>(null);
 
