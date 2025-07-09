@@ -4,6 +4,7 @@ import { signal } from "@preact/signals";
 import { useMutation } from "@hooks/useMutation.ts";
 import { putVendor } from "@queries/vendor.ts";
 import { Vendor } from "@/types.ts";
+import { JSX } from "preact/jsx-runtime/src/index.d.ts";
 
 export const selectedVendor = signal<Vendor>();
 
@@ -29,7 +30,7 @@ export const VendorComboBox = () => {
 		createMutation.mutate({ vendor_name: value });
 	};
 
-	const handleInput = (event: any) => {
+	const handleInput: JSX.InputEventHandler<HTMLInputElement> = (event) => {
 		if (valueSelected) setValueSelected(false);
 		setValue(event.currentTarget.value);
 	};
@@ -100,7 +101,7 @@ export const VendorComboBox = () => {
 							<div
 								class="bg-white hover:bg-surfaceContainerLow py-2 px-4 cursor-pointer"
 								key={vendor.vendor_id}
-								onClick={(event) => {
+								onClick={() => {
 									handleSelect(vendor);
 								}}
 							>
