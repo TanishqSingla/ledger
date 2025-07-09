@@ -1,5 +1,4 @@
-import { MongoDocument } from "../types.ts";
-import { Bill } from "./Bills.ts";
+import type { Bill, MongoDocument } from "@/types.ts";
 import { archiveBills, bills, getClient } from "./conn.ts";
 
 export type Archive = Bill;

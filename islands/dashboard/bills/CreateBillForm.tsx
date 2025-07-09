@@ -1,6 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import Input from "@components/Input.tsx";
-import { Bill } from "@db/Bills.ts";
+import type { Bill } from "@/types.ts";
 import { CrossIcon, Loader } from "@components/icons/index.tsx";
 import { selectedVendor, VendorComboBox } from "../../Combobox.tsx";
 import { buttonVariants } from "@components/Button.tsx";

@@ -1,5 +1,5 @@
 import usePayment from "@hooks/bills/usePayment.ts";
-import { Bill } from "@db/Bills.ts";
+import type { Bill } from "@/types.ts";
 import { NoData, TrashIcon } from "@components/icons/index.tsx";
 import { buttonVariants } from "@components/Button.tsx";
 

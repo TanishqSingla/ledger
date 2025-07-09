@@ -24,6 +24,10 @@ const SidebarConfig = [
 		label: "Companies",
 	},
 	{
+		slug: "/dashboard/payments",
+		label: "Payments",
+	},
+	{
 		slug: "/dashboard/archive-bills",
 		label: "Archive Bills",
 	},

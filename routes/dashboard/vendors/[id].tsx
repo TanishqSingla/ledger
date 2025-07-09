@@ -1,13 +1,13 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Badge from "@components/atoms/badge.tsx";
 import { NoData } from "@components/icons/index.tsx";
-import { BillDocument, QueryBills } from "@db/Bills.ts";
 import { billStatusBadgeMap } from "@utils/constants.ts";
 import AddVendorAccountModal from "@islands/dashboard/vendors/AddVendorAccountModal.tsx";
 import { buttonVariants } from "@components/Button.tsx";
 import VendorAccountTable from "@islands/dashboard/vendors/VendorAccountTable.tsx";
 import { vendors } from "@repositories/repos.ts";
-import { VendorDocument } from "@/types.ts";
+import type { BillDocument, VendorDocument } from "@/types.ts";
+import { QueryBills } from "@db/Bills.ts";
 
 type Data = {
 	vendor: VendorDocument;

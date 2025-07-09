@@ -2,7 +2,7 @@ import useInvoice from "@hooks/bills/useInvoice.ts";
 import { TrashIcon } from "@components/icons/index.tsx";
 import { buttonVariants } from "@components/Button.tsx";
 import { twMerge } from "tailwind-merge";
-import { BillDocument } from "@db/Bills.ts";
+import type { BillDocument } from "@/types.ts";
 
 export default function Invoices(
 	{ bill, invoices }: { bill: BillDocument; invoices: Record<string, string> },
