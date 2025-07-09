@@ -1,9 +1,9 @@
 import { useEffect, useState } from "preact/hooks";
 import Input from "@components/Input.tsx";
-import { Vendor } from "@db/Vendors.ts";
 import { signal } from "@preact/signals";
-import { useMutation } from "../hooks/useMutation.ts";
+import { useMutation } from "@hooks/useMutation.ts";
 import { putVendor } from "@queries/vendor.ts";
+import { Vendor } from "@db/conn.ts";
 
 export const selectedVendor = signal<Vendor>();
 
