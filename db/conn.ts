@@ -44,7 +44,7 @@ class DbClient {
 	}
 }
 
-export const Conn = new DbClient(MONGODB_URI, DB_NAME);
+export const Conn = new DbClient(MONGODB_URI, DB_NAME!);
 
 export const getClient = async () => {
 	const client = new MongoClient(MONGODB_URI);
