@@ -4,10 +4,10 @@ import { twMerge } from "tailwind-merge";
 import { buttonVariants } from "@components/Button.tsx";
 import { CrossIcon, Loader, PlusIcon } from "@components/icons/index.tsx";
 import { useRef, useState } from "preact/hooks";
-import { Vendor, VendorDocument } from "@db/Vendors.ts";
 import { useVendorAccounts } from "@hooks/vendor/useVendorAccounts.tsx";
-import { BankInfo, getBankInfo } from "@queries/vendor.ts";
+import { getBankInfo } from "@queries/vendor.ts";
 import { effect, signal } from "@preact/signals";
+import { BankInfo, Vendor, VendorDocument } from "@/types.ts";
 
 const ifscInputSignal = signal("");
 const bankInfoSignal = signal<BankInfo | null>(null);

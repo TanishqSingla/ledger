@@ -2,7 +2,7 @@ import { Button } from "ketu";
 import { buttonVariants } from "@components/Button.tsx";
 import { NoData, TrashIcon } from "@components/icons/index.tsx";
 import useVendor from "@hooks/vendor/useVendor.ts";
-import { VendorDocument } from "@db/Vendors.ts";
+import { VendorDocument } from "@/types.ts";
 
 export function VendorsGrid({ vendors }: { vendors: VendorDocument[] }) {
 	const { data, searchData, deleteMutation, handleDelete } = useVendor(vendors);

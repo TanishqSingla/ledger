@@ -1,4 +1,4 @@
-import { VendorDocument } from "@db/Vendors.ts";
+import { VendorDocument } from "@/types.ts";
 import {
 	DISPLAY_TYPE,
 	displayTypeSignal,

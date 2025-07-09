@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import { buttonVariants } from "@components/Button.tsx";
 import { NoData, TrashIcon } from "@components/icons/index.tsx";
-import { VendorDocument } from "@db/Vendors.ts";
+import { VendorDocument } from "@/types.ts";
 import { useVendorAccounts } from "@hooks/vendor/useVendorAccounts.tsx";
 
 export default function VendorAccountTable(

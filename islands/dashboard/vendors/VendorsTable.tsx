@@ -7,7 +7,7 @@ import {
 	TrashIcon,
 } from "@components/icons/index.tsx";
 import useVendor from "@hooks/vendor/useVendor.ts";
-import { VendorDocument } from "@db/Vendors.ts";
+import { VendorDocument } from "@/types.ts";
 
 export function VendorsTable({ vendors }: { vendors: VendorDocument[] }) {
 	const { data, deleteMutation, searchData, handleDelete } = useVendor(vendors);
