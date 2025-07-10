@@ -77,12 +77,6 @@ export async function MoveToBill(bill_id: string, user: string) {
 	}
 }
 
-export async function GetPaginationInfo() {
-	const resp = await (await bills()).estimatedDocumentCount();
-
-	return resp;
-}
-
 export async function DeletePayment(
 	{ bill_id, user, reference_number, file }: {
 		bill_id: string;

@@ -1,5 +1,5 @@
 import { computed, signal } from "@preact/signals";
-import { BillDocument } from "@db/Bills.ts";
+import type { BillDocument } from "@/types.ts";
 import { useMutation } from "../useMutation.ts";
 
 const invoiceSignal = signal<BillDocument["invoices"] | null>(null);
