@@ -4,6 +4,7 @@ import type {
 	BillDocument,
 	CompanyDocument,
 	PaymentDocument,
+	User,
 	VendorDocument,
 } from "@/types.ts";
 

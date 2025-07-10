@@ -87,5 +87,10 @@ export type Payment = {
 	bill_to: string;
 	paid_from: Company;
 	payment_time: Date;
+	attachments: { name: string; url: string }[];
 };
 export type PaymentDocument = Payment & MongoDocument;
+
+export type User = {
+	email_id: string
+}

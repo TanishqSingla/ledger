@@ -13,6 +13,7 @@ import type {
 	BillDocument,
 	CompanyDocument,
 	PaymentDocument,
+	User,
 	Vendor,
 	VendorDocument,
 } from "@/types.ts";
