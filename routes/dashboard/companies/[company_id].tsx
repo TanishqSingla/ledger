@@ -26,13 +26,12 @@ const columnConfig = [
 export default function Company({ data }: PageProps<Data>) {
 	return (
 		<main class="p-4">
-			<h1 class="text-display-small">
+			<h1 class="text-display-small mb-8">
 				{data.company.company_name}
 			</h1>
 
-			<section>
-				<p className="text-title-medium">Accounts</p>
-
+			<p className="text-headline-small my-4">Accounts</p>
+			<section class="rounded-xl overflow-hidden relative border">
 				<table class="table-auto w-full border-collapse">
 					<thead>
 						<tr>
@@ -41,8 +40,6 @@ export default function Company({ data }: PageProps<Data>) {
 									{col.name}
 								</th>
 							))}
-
-							<th class="px-4 py-2 bg-surfaceContainer text-left">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
