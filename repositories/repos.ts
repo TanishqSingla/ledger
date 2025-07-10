@@ -51,8 +51,74 @@ export class BaseRepository<T extends Document> {
 		return resp;
 	}
 }
+
+export class BillsRepository extends BaseRepository<BillDocument> {
+	constructor() {
+		super(Conn.Bills);
+	}
+
+	static NewBill(values: Omit<Bill, "bill_id">, user: string) {
+		return {
+			...values,
+			bill_id: nanoid(12),
+			created_at: new Date(Date.now()),
+			updated_at: new Date(Date.now()),
+			history: [{ action: "CREATE", user, timestamp: Date.now() }],
+		} satisfies BillDocument;
+	}
+
+	async GetById(bill_id: string) {
+		return await this.model.findOne({ bill_id });
+	}
+
+	async GetDocumentsCount() {
+		return await this.model.estimatedDocumentCount();
+	}
+
+	async SearchBill(query: string) {
+		const resp = await this.model.find({
+			$or: [{ vendor_name: { $regex: query, $options: "i" } }],
+		}).toArray();
+
+		return resp as BillDocument[];
 	}
 }
+export const bills = new BillsRepository();
+
+export class CompanyRepository extends BaseRepository<CompanyDocument> {
+	constructor() {
+		super(Conn.Companies);
+	}
+
+	static NewAccount(
+		{ company_name, company_accounts }: {
+			company_name: string;
+			company_accounts: CompanyDocument["company_accounts"];
+		},
+	) {
+		return {
+			company_id: nanoid(12),
+			company_name,
+			company_accounts,
+			created_at: new Date(Date.now()),
+			updated_at: new Date(Date.now()),
+		};
+	}
+
+	async GetById(company_id: string) {
+		const resp = await this.model.findOne({ company_id });
+
+		return resp;
+	}
+}
+export const company = new CompanyRepository();
+
+export class PaymentRepository extends BaseRepository<PaymentDocument> {
+	constructor() {
+		super(Conn.Payments);
+	}
+}
+export const payments = new PaymentRepository();
 
 export class VendorRepository extends BaseRepository<VendorDocument> {
 	constructor() {
@@ -119,31 +185,3 @@ export class VendorRepository extends BaseRepository<VendorDocument> {
 	}
 }
 export const vendors = new VendorRepository();
-
-export class CompanyRepository extends BaseRepository<CompanyDocument> {
-	constructor() {
-		super(Conn.Companies);
-	}
-
-	static NewAccount(
-		{ company_name, company_accounts }: {
-			company_name: string;
-			company_accounts: CompanyDocument["company_accounts"];
-		},
-	) {
-		return {
-			company_id: nanoid(12),
-			company_name,
-			company_accounts,
-			created_at: new Date(Date.now()),
-			updated_at: new Date(Date.now()),
-		};
-	}
-
-	async GetById(company_id: string) {
-		const resp = await this.model.findOne({ company_id });
-
-		return resp;
-	}
-}
-export const company = new CompanyRepository();
