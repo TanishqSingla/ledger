@@ -9,9 +9,9 @@ COPY . .
 # Compile the main app
 RUN deno cache --allow-import main.ts
 
-RUN deno task build
+RUN deno compile --include static --include _fresh --include deno.json -A --unstable-kv main.ts
 
-COPY ./_fresh /app/
+EXPOSE 8000
 
 # Run the app
-CMD ["deno", "task", "preview"]
+CMD ["./ledger"]
