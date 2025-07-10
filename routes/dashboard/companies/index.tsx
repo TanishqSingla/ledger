@@ -33,20 +33,42 @@ export default function Accounts({ data }: PageProps<Data>) {
 				</Button>
 			</div>
 
-			{data.companies.length
-				? (
-					<div class="rounded-xl overflow-hidden relative mt-8 border">
-						{data.companies.map((company) => (
-							<p key={company.company_id}>{company.company_name}</p>
-						))}
-					</div>
-				)
-				: (
-					<div className="flex gap-4 flex-col items-center justify-center rounded-xl overflow-hidden relative mt-8 border min-h-60">
-						<NoData width={128} height={128} />
-						<p className="text-center">No Data</p>
-					</div>
-				)}
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+				{data.companies.length
+					? (
+						<div class="rounded-xl overflow-hidden relative mt-8 border">
+							{data.companies.map((company) => (
+								<div className="bg-surfaceContainerLow border border-outlineVariant rounded-xl p-4">
+									<p className="text-title-large">{company.company_name}</p>
+
+									<p className="text-label-large">
+										Date added:{" "}
+										{new Date(company.created_at).toLocaleDateString()}
+									</p>
+
+									<div className="mt-4 flex gap-4 items-center">
+										<Button
+											className={buttonVariants({
+												variant: "text",
+												className: "ml-auto",
+											})}
+											as="a"
+											href={`/dashboard/companies/${company.company_id}`}
+										>
+											View
+										</Button>
+									</div>
+								</div>
+							))}
+						</div>
+					)
+					: (
+						<div className="flex flex-col items-center justify-center my-8">
+							<NoData width={128} height={128} />
+							<p className="text-center">No Data</p>
+						</div>
+					)}
+			</div>
 		</div>
 	);
 }
