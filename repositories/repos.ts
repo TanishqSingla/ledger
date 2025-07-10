@@ -185,3 +185,15 @@ export class VendorRepository extends BaseRepository<VendorDocument> {
 	}
 }
 export const vendors = new VendorRepository();
+
+class UserRepository extends BaseRepository<User> {
+	constructor() {
+		super(Conn.Users)
+	}
+
+	async GetUser(email_id: string) {
+		return await this.model.findOne({ email_id })
+	}
+}
+export const users = new UserRepository();
+

@@ -46,6 +46,10 @@ class DbClient {
 	get Payments() {
 		return this.db.collection<PaymentDocument>("payments");
 	}
+
+	get Users() {
+		return this.db.collection<User>("users");
+	}
 }
 
 export const Conn = new DbClient(MONGODB_URI, DB_NAME!);
