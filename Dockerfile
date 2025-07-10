@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Compile the main app
-RUN deno cache main.ts
+RUN deno cache --allow-import main.ts
 
 # Run the app
 CMD ["deno", "run", "-A --unstable-kv", "main.ts"]
