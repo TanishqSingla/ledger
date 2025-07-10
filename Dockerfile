@@ -23,4 +23,4 @@ RUN deno compile --include static/ --include _fresh/ --include deno.json -A --un
 EXPOSE 8000
 
 # Run the app
-CMD ["./ledger"]
+CMD ["./app"]
