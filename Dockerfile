@@ -9,5 +9,9 @@ COPY . .
 # Compile the main app
 RUN deno cache --allow-import main.ts
 
+RUN deno task build
+
+COPY ./_fresh /app/
+
 # Run the app
-CMD ["deno", "run", "-A --unstable-kv", "main.ts"]
+CMD ["deno", "task", "preview"]
