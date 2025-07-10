@@ -9,7 +9,9 @@ COPY . .
 # Compile the main app
 RUN deno cache --allow-import main.ts
 
-RUN deno compile --include static --include _fresh --include deno.json -A --unstable-kv main.ts
+RUN deno task build
+
+RUN deno compile --include static/ --include _fresh/ --include deno.json -A --unstable-kv main.ts
 
 EXPOSE 8000
 
