@@ -1,17 +1,14 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Button } from "ketu";
-import {
-	BillDocument,
-	GetPaginationInfo,
-	QueryBills,
-	SearchBills,
-} from "@db/Bills.ts";
+import { QueryBills } from "@db/Bills.ts";
 import Input from "@components/Input.tsx";
 import Badge from "@components/atoms/badge.tsx";
 import { billStatusBadgeMap } from "@utils/constants.ts";
 import { NoData } from "@components/icons/index.tsx";
 import { buttonVariants } from "@components/Button.tsx";
-import Pagination from "../../../islands/dashboard/bills/Pagination.tsx";
+import Pagination from "@islands/dashboard/bills/Pagination.tsx";
+import { BillDocument } from "@/types.ts";
+import { bills } from "@repositories/repos.ts";
 
 type Data = {
 	bills: BillDocument[];
@@ -30,7 +27,7 @@ export const handler: Handlers = {
 
 		const searchTerm = ctx.url.searchParams.get("search_term");
 		if (searchTerm) {
-			const data = await SearchBills({ query: searchTerm });
+			const data = await bills.SearchBill(searchTerm);
 			return ctx.render(
 				{
 					bills: data,
@@ -43,7 +40,7 @@ export const handler: Handlers = {
 			);
 		}
 		const data = await QueryBills({ limit, vendor_id, page });
-		const total_count = await GetPaginationInfo();
+		const total_count = await bills.GetDocumentsCount();
 
 		return ctx.render(
 			{

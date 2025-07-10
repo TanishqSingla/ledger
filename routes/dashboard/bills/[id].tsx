@@ -1,16 +1,17 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Badge from "@components/atoms/badge.tsx";
-import { GetBillFromId } from "@db/Bills.ts";
-import AddBillPayment from "../../../islands/dashboard/bills/AddBillPayment.tsx";
+import AddBillPayment from "@islands/dashboard/bills/AddBillPayment.tsx";
 import { getFile } from "@queries/s3.ts";
 import { billStatusBadgeMap } from "@utils/constants.ts";
 import { MoveToArchive } from "@db/ArchiveBills.ts";
-import PaymentsTable from "../../../islands/dashboard/bills/PaymentsTable.tsx";
-import Invoices from "../../../islands/dashboard/bills/Invoices.tsx";
-import MoveToArchiveDialog from "../../../islands/dashboard/bills/MoveToArchiveDialog.tsx";
+import PaymentsTable from "@islands/dashboard/bills/PaymentsTable.tsx";
+import Invoices from "@islands/dashboard/bills/Invoices.tsx";
+import MoveToArchiveDialog from "@islands/dashboard/bills/MoveToArchiveDialog.tsx";
+import { bills } from "@repositories/repos.ts";
+import { BillDocument } from "@/types.ts";
 
 type Data = {
-	bill: Awaited<ReturnType<typeof GetBillFromId>>;
+	bill: BillDocument;
 	invoices: Record<string, string>;
 	payments: Record<string, string>;
 };
@@ -19,7 +20,10 @@ export const handler: Handlers<unknown, { email_id: string }> = {
 	async GET(_req, ctx) {
 		const { id } = ctx.params;
 
-		const bill = await GetBillFromId(id);
+		const bill = await bills.GetById(id);
+		if (!bill) {
+			return ctx.render({}, { status: 404 });
+		}
 
 		const invoices: Record<string, string> = {};
 		if (bill?.invoices?.length) {

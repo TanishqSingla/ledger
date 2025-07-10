@@ -1,20 +1,18 @@
 import { Handlers } from "$fresh/server.ts";
-import { PutBill } from "@db/Bills.ts";
+import { bills, BillsRepository } from "@repositories/repos.ts";
 
-export const handler: Handlers = {
+export const handler: Handlers<unknown, { email_id: string }> = {
 	PUT: async function (req, ctx) {
 		const values = await req.json();
 
-		const resp = await PutBill({ ...values }, ctx.state.email_id as string);
+		const billDoc = BillsRepository.NewBill({ ...values }, ctx.state.email_id);
+		const response = await bills.InsertOne(billDoc);
 
-		if (resp.acknowledged) {
-			return new Response(
-				JSON.stringify({
-					message: "Vendor added successfully",
-					data: resp.data,
-				}),
-				{ status: 201 },
-			);
+		if (response.acknowledged) {
+			return Response.json({
+				message: "Bill added successfully",
+				data: billDoc,
+			}, { status: 201 });
 		}
 
 		return new Response(JSON.stringify({ message: "error adding vendor" }), {
