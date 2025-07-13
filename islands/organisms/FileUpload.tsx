@@ -1,5 +1,5 @@
 import { signal } from "@preact/signals";
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 import { JSX } from "preact/src/index.d.ts";
 import { twMerge } from "tailwind-merge";
 import { CrossIcon } from "@components/icons/index.tsx";
@@ -9,8 +9,7 @@ export const fileUploadSignal = signal<File[]>([]);
 export const fileUploadErrorSignal = signal("");
 
 export function FileUpload(props: FileUploadProps) {
-	const [active, setActive] = useState(false);
-
+	const fileLabelRef = useRef<HTMLLabelElement>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -34,7 +33,7 @@ export function FileUpload(props: FileUploadProps) {
 			const dataTransfer = new DataTransfer();
 
 			fileUploadSignal.value.forEach((file) => dataTransfer.items.add(file));
-			fileInputRef.current.files = dataTransfer.files
+			fileInputRef.current.files = dataTransfer.files;
 		}
 	}, [fileUploadSignal.value]);
 
@@ -61,22 +60,21 @@ export function FileUpload(props: FileUploadProps) {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (active) return;
-		setActive(true);
+		fileLabelRef.current!.dataset.active = "true";
 	};
 	const unhighlight = (event: DragEvent) => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (!active) return;
-		setActive(false);
+
+		fileLabelRef.current!.dataset.active = "false";
 	};
 
 	const handleDrop = (event: DragEvent) => {
 		event.preventDefault();
 		event.stopPropagation();
 
-		setActive(false);
+		fileLabelRef.current!.dataset.active = "false";
 
 		const files = event.dataTransfer?.files;
 		if (files) {
@@ -95,8 +93,8 @@ export function FileUpload(props: FileUploadProps) {
 			onDragOver={highlight}
 			onDragLeave={unhighlight}
 			onDrop={handleDrop}
-			data-active={active}
 			aria-disabled={props.disabled}
+			ref={fileLabelRef}
 		>
 			<input
 				{...props}

@@ -1,7 +1,7 @@
 import { FreshContext } from "$fresh/server.ts";
 import { getCookies } from "@std/http/cookie";
 import { verify } from "@zaubrik/djwt";
-import { cryptoKey } from "../../utils/secrets.ts";
+import { cryptoKey } from "@utils/secrets.ts";
 
 export async function handler(req: Request, ctx: FreshContext) {
 	const cookies = getCookies(req.headers);
