@@ -10,6 +10,9 @@ export const putVendor = async (body: PutVendorPayload) => {
 	const response = await fetch("/api/vendor", {
 		method: "PUT",
 		body: JSON.stringify(body),
+		headers: {
+			"Cache-Control": "must-revalidate",
+		},
 	});
 
 	const data: { message: string; data: VendorDocument } = await response.json();
