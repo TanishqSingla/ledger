@@ -12,7 +12,12 @@ type BillHistoryTypes =
 		type: "ADD_PAYMENT" | "REMOVE_PAYMENT" | "REMOVE_INVOICE";
 	};
 
-type History = BillHistoryTypes & { user: string; timestamp: number };
+type PaymentHistoryTypes = {
+	action: "CREATE";
+} | { action: "UPDATE"; type: "UPDATE_AMOUNT" };
+
+type BillHistory = BillHistoryTypes & BaseHistoryType;
+type PaymentHistory = BaseHistoryType & PaymentHistoryTypes;
 
 export type Bill = {
 	bill_id: string;
@@ -83,14 +88,19 @@ export type BankInfo = {
 };
 
 export type Payment = {
-	reference_number: string;
-	bill_to: string;
-	paid_from: Company;
-	payment_time: Date;
-	attachments: { name: string; url: string }[];
+	/** Reference number of payment by the bank */
+	reference_number?: string;
+	amount?: string;
+	paid_to: string;
+	paid_from: {
+		company: Company;
+		account_id: Company["company_accounts"][0]["id"];
+	};
+	files: { name: string; url: string }[];
+	history: PaymentHistory;
 };
 export type PaymentDocument = Payment & MongoDocument;
 
 export type User = {
-	email_id: string
-}
+	email_id: string;
+};

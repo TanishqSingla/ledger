@@ -1,6 +1,6 @@
 import { FindOptions } from "mongodb";
 import { archiveBills, bills, getClient } from "./conn.ts";
-import { type Bill, type BillDocument } from "@/types.ts";
+import type { BillDocument } from "@/types.ts";
 
 export async function QueryBills(
 	{ limit, vendor_id, page = 1 }: {
