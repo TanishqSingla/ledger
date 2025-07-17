@@ -3,6 +3,11 @@ export type MongoDocument = {
 	updated_at: Date;
 };
 
+type ActionHistory = {
+	user: string;
+	timestamp: number;
+};
+
 type BillHistoryTypes =
 	| {
 		action: "CREATE" | "ARCHIVE" | "RESTORE";
@@ -16,8 +21,8 @@ type PaymentHistoryTypes = {
 	action: "CREATE";
 } | { action: "UPDATE"; type: "UPDATE_AMOUNT" };
 
-type BillHistory = BillHistoryTypes & BaseHistoryType;
-type PaymentHistory = BaseHistoryType & PaymentHistoryTypes;
+type BillHistory = BillHistoryTypes & ActionHistory;
+type PaymentHistory = ActionHistory & PaymentHistoryTypes;
 
 export type Bill = {
 	bill_id: string;
@@ -25,7 +30,7 @@ export type Bill = {
 	vendor_id: string;
 	vendor_name: string;
 	status: "PENDING" | "IN_PAYMENT" | "PAID";
-	history: History[];
+	history: BillHistory[];
 	comments?: { comment: string; user: string }[];
 	payments?: {
 		reference_number?: string;
@@ -97,7 +102,7 @@ export type Payment = {
 		account_id: Company["company_accounts"][0]["id"];
 	};
 	files: { name: string; url: string }[];
-	history: PaymentHistory;
+	history: PaymentHistory[];
 };
 export type PaymentDocument = Payment & MongoDocument;
 

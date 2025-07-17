@@ -1,6 +1,5 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Badge from "@components/atoms/badge.tsx";
-import AddBillPayment from "@islands/dashboard/bills/AddBillPayment.tsx";
 import { getFile } from "@queries/s3.ts";
 import { billStatusBadgeMap } from "@utils/constants.ts";
 import { MoveToArchive } from "@db/ArchiveBills.ts";
@@ -9,6 +8,8 @@ import Invoices from "@islands/dashboard/bills/Invoices.tsx";
 import MoveToArchiveDialog from "@islands/dashboard/bills/MoveToArchiveDialog.tsx";
 import { bills } from "@repositories/repos.ts";
 import { BillDocument } from "@/types.ts";
+import { buttonVariants } from "@components/Button.tsx";
+import { Button } from "ketu";
 
 type Data = {
 	bill: BillDocument;
@@ -125,7 +126,14 @@ export default function Bill({ params, data }: PageProps<Data>) {
 				</div>
 
 				<div className="my-4">
-					<AddBillPayment bill={data.bill} />
+					<Button
+						type="button"
+						as="a"
+						href="/dashboard/payments/create"
+						className={buttonVariants({ variant: "filled" })}
+					>
+						Add payment
+					</Button>
 				</div>
 			</section>
 
