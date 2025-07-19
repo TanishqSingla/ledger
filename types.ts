@@ -96,12 +96,12 @@ export type Payment = {
 	/** Reference number of payment by the bank */
 	reference_number?: string;
 	amount?: string;
-	paid_to: string;
+	paid_to: { vendor: VendorDocument; account_id: Vendor["accounts"][0]["id"] };
 	paid_from: {
 		company: Company;
 		account_id: Company["company_accounts"][0]["id"];
 	};
-	files: { name: string; url: string }[];
+	files: string[];
 	history: PaymentHistory[];
 };
 export type PaymentDocument = Payment & MongoDocument;

@@ -50,6 +50,7 @@ import * as $dashboard_bills_Pagination from "./islands/dashboard/bills/Paginati
 import * as $dashboard_bills_PaymentsTable from "./islands/dashboard/bills/PaymentsTable.tsx";
 import * as $dashboard_bills_file_input from "./islands/dashboard/bills/file-input.tsx";
 import * as $dashboard_create_AddAccountForm from "./islands/dashboard/create/AddAccountForm.tsx";
+import * as $dashboard_payments_VendorSelect from "./islands/dashboard/payments/VendorSelect.tsx";
 import * as $dashboard_vendors_AddVendorAccountModal from "./islands/dashboard/vendors/AddVendorAccountModal.tsx";
 import * as $dashboard_vendors_VendorAccountTable from "./islands/dashboard/vendors/VendorAccountTable.tsx";
 import * as $dashboard_vendors_VendorSearchbox from "./islands/dashboard/vendors/VendorSearchbox.tsx";
@@ -133,6 +134,8 @@ const manifest = {
 		"./islands/dashboard/bills/file-input.tsx": $dashboard_bills_file_input,
 		"./islands/dashboard/create/AddAccountForm.tsx":
 			$dashboard_create_AddAccountForm,
+		"./islands/dashboard/payments/VendorSelect.tsx":
+			$dashboard_payments_VendorSelect,
 		"./islands/dashboard/vendors/AddVendorAccountModal.tsx":
 			$dashboard_vendors_AddVendorAccountModal,
 		"./islands/dashboard/vendors/VendorAccountTable.tsx":
